@@ -28,5 +28,7 @@ public class myWorld extends World
     {
         hook hook = new hook();
         addObject(hook,502,70);
+        cargo cargo = new cargo();
+        addObject(cargo,507,417);
     }
 }
