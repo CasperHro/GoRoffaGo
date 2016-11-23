@@ -17,5 +17,11 @@ public class Game1Harbour extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
+        
+        //Create a boat object
+        Boat1 boat = new Boat1();
+        
+        //Add boat to the world
+        addObject(boat, 10, getHeight()/2);
     }
 }
