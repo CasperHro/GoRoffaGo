@@ -14,7 +14,7 @@ public class GameOver extends Actor
      */
     public GameOver()
     {
-        //set size of the boat
+        //set size of thE picture
         GreenfootImage image = getImage();
         image.scale(image.getWidth(), image.getHeight());
         setImage(image);

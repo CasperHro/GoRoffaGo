@@ -13,8 +13,9 @@ public class Boat1 extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int SPEED = 3;
-    int TURN_ANGLE = 2;
-    int CRASH = 50;
+    int TURN_ANGLE = 3;
+    int CRASH = 45;
+    int DOCKHEIGHT = 80;
     
     public Boat1()
     {
@@ -32,12 +33,24 @@ public class Boat1 extends Actor
         turn(-TURN_ANGLE);
         }
        
-       if (Greenfoot.isKeyDown("right"))
+       if (Greenfoot.isKeyDown("down"))
        {
         turn(TURN_ANGLE);
        }
+       
+       if (Greenfoot.isKeyDown("right"))
+       {
+        move(SPEED*2);
+       }
+       
+       if (Greenfoot.isKeyDown("left"))
+       {
+        move(-SPEED);
+       }
+       
       setLocation(getX(), getY());
-        //
+    
+        //If the boat reach the borders - Game Over
        if (getY() > getWorld().getHeight() -CRASH || getY() < CRASH || getX() > getWorld().getWidth() -CRASH)
        {
          GameOver gameOver = new GameOver();
@@ -45,5 +58,7 @@ public class Boat1 extends Actor
          Greenfoot.stop();
   
        }
-    }
+       
+     
+}
 }
