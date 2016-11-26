@@ -1,6 +1,36 @@
 #BlueJ class context
 comment0.target=Game1Harbour
-comment0.text=\n\ Write\ a\ description\ of\ class\ Game1Harbour\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ Game1Harbour\ is\ the\ main\ game\ world.\ When\ started\ boats\ will\ be\ created\ in\ the\ waters.\n\ The\ main\ goal\ is\ to\ dock\ the\ different\ boats\ in\ the\ right\ harbour\ so\ they\ can\ unload\ \n\ the\ cargo.\ When\ a\ ship\ is\ docked\ a\ point\ is\ scored.\ When\ a\ ship\ crashes\ it\ will\n\ dissapear.\ Multiple\ crashes\ and\ the\ game\ is\ over\!\n\ \n\ @author\ C.\ Karreman\n\ @version\ 1.0\n
 comment1.params=
 comment1.target=Game1Harbour()
+<<<<<<< HEAD
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Game1Harbour.\n\ The\ constructor\ is\ called\ only\ ones\ when\ the\ class\ is\ initialized.\n
+comment10.params=increase
+comment10.target=void\ addCrash(int)
+comment2.params=
+comment2.target=void\ prepare()
+comment2.text=\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\n
+comment3.params=
+comment3.target=void\ startGame()
+comment3.text=\n\ StartGame\ is\ called\ to\ start\ a\ new\ game.\ Score\ and\ other\ counters\ are\ reset\n\ to\ begin\ with\ the\ game\ defaults.\n
+comment4.params=
+comment4.target=void\ gameOver()
+comment4.text=\n\ The\ end\ of\ the\ game.\ \n
+comment5.params=
+comment5.target=void\ act()
+comment5.text=\n\ Act\ is\ the\ game\ step.\ In\ this\ world\ boats\ are\ created\ with\ a\ time\ interval.\ A\ boat\n\ mut\ be\ selected\ to\ take\ over\ the\ controls.\ Use\ "S"\ to\ select\ a\ boat\ or\ click\ on\ one.\n
+comment6.params=
+comment6.target=void\ createBoat()
+comment6.text=\n\ createBoat\ initializes\ a\ new\ boat\ class\ and\ adds\ is\ to\ the\ world.\n
+comment7.params=
+comment7.target=void\ checkBoats()
+comment7.text=\n\ checkBoats\ checks\ the\ locations\ of\ all\ the\ boats\ on\ the\ map.\ The\ boats\ must\n\ be\ in\ the\ watered\ area\ on\ the\ waters\ image.\ When\ a\ boats\ is\ on\ land\ it\ crashes.\n
+comment8.params=
+comment8.target=void\ selectNextBoat()
+comment8.text=\n\ When\ the\ S-key\ is\ pressed\ the\ current\ boat\ is\ left\ uncontrolled,\ the\ next\ boat\ in\ \n\ line\ is\ selected\ to\ handle\ by\ the\ player.\n
+comment9.params=increase
+comment9.target=void\ addScore(int)
+numComments=11
+=======
 numComments=2
+>>>>>>> origin/Cas-Game-1
