@@ -4,10 +4,10 @@ import java.util.*;
 
 /**
  * Game1Harbour is the main game world. When started boats will be created in the waters.
- * The main goal is to dock the different boats in the right harbour so they can unload 
+ * The main goal is to dock the different boats in the right harbour so they can unload
  * the cargo. When a ship is docked a point is scored. When a ship crashes it will
  * dissapear. Multiple crashes and the game is over!
- * 
+ *
  * @author C. Karreman
  * @version 1.0
  */
@@ -25,16 +25,15 @@ public class Game1Harbour extends World
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
     private GreenfootImage waters; // Image to load available sailing area
     private String lastKey = ""; // To prevent multiple strokes
-    
+
     /**
      * Constructor for objects of class Game1Harbour.
      * The constructor is called only ones when the class is initialized.
      */
     int DOCKHEIGHT = 60;
-    
+
     public Game1Harbour()
-    {    
-<<<<<<< HEAD
+    {
         // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
         super(800, 600, 1);
         // Load the sailing area
@@ -42,7 +41,7 @@ public class Game1Harbour extends World
 
         // Prepare the game
         prepare();
-        
+
         // TODO: Show the game info until clicked, when info is hidden startGame() must be called.
         startGame();
     }
@@ -73,28 +72,28 @@ public class Game1Harbour extends World
         g1_dock3.setRotation(64);
         g1_dock3.setLocation(317,459);
         g1_dock3.setCargo("oil");
-        
+
         G1_Dock g1_dock4 = new G1_Dock();
         addObject(g1_dock4,417,98);
         g1_dock4.setRotation(20);
         g1_dock4.setLocation(411,94);
-        
+
         G1_Dock g1_dock5 = new G1_Dock();
         addObject(g1_dock5,641,89);
         g1_dock5.setRotation(20);
         g1_dock5.setLocation(638,79);
-        
+
         G1_Dock g1_dock6 = new G1_Dock();
         addObject(g1_dock6,571,225);
         g1_dock6.setRotation(20);
         g1_dock6.setLocation(555,205);
-        
+
         G1_Dock g1_dock7 = new G1_Dock();
         addObject(g1_dock7,471,554);
         g1_dock7.setRotation(-13);
         g1_dock7.setLocation(466,561);
         g1_dock7.setCargo("solids");
-        
+
         G1_Dock g1_dock8 = new G1_Dock();
         addObject(g1_dock8,633,558);
         g1_dock8.setRotation(24);
@@ -114,7 +113,7 @@ public class Game1Harbour extends World
         crashes = 0;
         score = 0;
         running = true;
-        
+
         // To show the current score call AddScore()
         addScore(0);
 
@@ -123,23 +122,23 @@ public class Game1Harbour extends World
     }
 
     /**
-     * The end of the game. 
+     * The end of the game.
      */
     public void gameOver()
     {
         // Reset running flag and stop game loop
         running = false;
         Greenfoot.stop();
-        
-        // TODO: Show game over spash screen, options there are return to 
+
+        // TODO: Show game over spash screen, options there are return to
         //       main menu or restart game
     }
-    
+
     /**
      * Act is the game step. In this world boats are created with a time interval. A boat
      * mut be selected to take over the controls. Use "S" to select a boat or click on one.
      */
-    public void act() 
+    public void act()
     {
         // Check running, when not running nothing is done. Game info is till visible.
         if (running)
@@ -150,11 +149,11 @@ public class Game1Harbour extends World
             {
                 createBoat();
             }
-            
+
             // While switching the controls to an other boat the isKeyDown() gets true
             // multiple times. Every act run registers the keydown but we only want to
-            // react ones. The getKey() should solve this issue but because of the boats 
-            // that use isKeyDown() the getKey() stays empty. So wee have to use 
+            // react ones. The getKey() should solve this issue but because of the boats
+            // that use isKeyDown() the getKey() stays empty. So wee have to use
             // isKeyDown().
             // To prevent the S-key from multiple hits when holding down remember and
             // check the last proceded keystroke.
@@ -171,7 +170,7 @@ public class Game1Harbour extends World
                     lastKey = "";
                 }
             }
-            
+
             // First check if all boats are still in the water area.
             checkBoats();
 
@@ -181,21 +180,6 @@ public class Game1Harbour extends World
                 gameOver();
             }
         }
-=======
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(800, 600, 1); 
-        
-        //Create a boat object
-        Boat1 boat = new Boat1();
-        //Add boat to the world
-        addObject(boat, 10, getHeight()/2);
-        
-        //Create Dock
-        Dock1 dock = new Dock1();
-        //Add Dock to the World
-        addObject(dock, getWidth()/3, 0 + DOCKHEIGHT);
-        
->>>>>>> origin/Cas-Game-1
     }
 
     /**
@@ -206,20 +190,20 @@ public class Game1Harbour extends World
         // Create random boat type depending on the different docks
         List<G1_Dock> docks = getObjects(G1_Dock.class);
         int rnd = Greenfoot.getRandomNumber(docks.size() - 1);
-        
+
         G1_Boat boat = new G1_Boat();
         // Now add the boat to the world, increase the boatcounter and reset the stepcounter
         addObject(boat, 5, 270 + Greenfoot.getRandomNumber(35));
         boat.setCargo(docks.get(rnd).getCargo());
         boatCounter++;
         newBoatSteps = 0;
-        
+
         // If only one boat is in this world this one gets controled by default
         if (getObjects(G1_Boat.class).size() == 1)
         {
             boat.takeControls();
         }
-        
+
         // After 5 boats decrease the interval of boat creating
         if (boatCounter % 5 == 0)
         {
@@ -250,7 +234,7 @@ public class Game1Harbour extends World
                 {
                     // The color on the map determines water or land.
                     Color c = waters.getColorAt(boat.getX(), boat.getY());
-                    
+
                     // Blue is water so no blue is land
                     if (c.getBlue() == 0)
                     {
@@ -262,9 +246,9 @@ public class Game1Harbour extends World
             }
         }
     }
-    
+
     /**
-     * When the S-key is pressed the current boat is left uncontrolled, the next boat in 
+     * When the S-key is pressed the current boat is left uncontrolled, the next boat in
      * line is selected to handle by the player.
      */
     public void selectNextBoat()
@@ -280,7 +264,7 @@ public class Game1Harbour extends World
                 break;
             }
         }
-        
+
         // Then find next in line
         int nextBoat = current +1;
         // When the last boat is selected select the first one next.
@@ -297,13 +281,13 @@ public class Game1Harbour extends World
             boats.get(nextBoat).takeControls();
         }
     }
-    
+
     public void addScore(int increase)
     {
         score += increase;
         showText("Score: "+score, 730, 20);
     }
-    
+
     public void addCrash(int increase)
     {
         crashes += increase;
