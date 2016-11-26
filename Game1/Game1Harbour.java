@@ -30,8 +30,11 @@ public class Game1Harbour extends World
      * Constructor for objects of class Game1Harbour.
      * The constructor is called only ones when the class is initialized.
      */
+    int DOCKHEIGHT = 60;
+    
     public Game1Harbour()
     {    
+<<<<<<< HEAD
         // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
         super(800, 600, 1);
         // Load the sailing area
@@ -178,6 +181,21 @@ public class Game1Harbour extends World
                 gameOver();
             }
         }
+=======
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(800, 600, 1); 
+        
+        //Create a boat object
+        Boat1 boat = new Boat1();
+        //Add boat to the world
+        addObject(boat, 10, getHeight()/2);
+        
+        //Create Dock
+        Dock1 dock = new Dock1();
+        //Add Dock to the World
+        addObject(dock, getWidth()/3, 0 + DOCKHEIGHT);
+        
+>>>>>>> origin/Cas-Game-1
     }
 
     /**

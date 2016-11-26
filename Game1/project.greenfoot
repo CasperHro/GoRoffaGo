@@ -1,5 +1,5 @@
 #Greenfoot properties
-#Sat Nov 26 14:13:12 CET 2016
+#Sat Nov 26 15:18:16 CET 2016
 target4.type=ClassTarget
 class.Dock1.superclass=greenfoot.Actor
 class.Game1Harbour.image=Game1Background.png
@@ -40,7 +40,7 @@ class.Boat1.superclass=greenfoot.Actor
 package.numTargets=4
 target1.type=ClassTarget
 class.G1_Boat.superclass=greenfoot.Actor
-editor.swing.0.width=816
+editor.swing.0.width=817
 editor.swing.0.y=22
 target1.typeParameters=
 editor.swing.0.x=1103

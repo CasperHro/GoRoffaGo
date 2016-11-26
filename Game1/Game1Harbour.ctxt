@@ -3,6 +3,7 @@ comment0.target=Game1Harbour
 comment0.text=\n\ Game1Harbour\ is\ the\ main\ game\ world.\ When\ started\ boats\ will\ be\ created\ in\ the\ waters.\n\ The\ main\ goal\ is\ to\ dock\ the\ different\ boats\ in\ the\ right\ harbour\ so\ they\ can\ unload\ \n\ the\ cargo.\ When\ a\ ship\ is\ docked\ a\ point\ is\ scored.\ When\ a\ ship\ crashes\ it\ will\n\ dissapear.\ Multiple\ crashes\ and\ the\ game\ is\ over\!\n\ \n\ @author\ C.\ Karreman\n\ @version\ 1.0\n
 comment1.params=
 comment1.target=Game1Harbour()
+<<<<<<< HEAD
 comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Game1Harbour.\n\ The\ constructor\ is\ called\ only\ ones\ when\ the\ class\ is\ initialized.\n
 comment10.params=increase
 comment10.target=void\ addCrash(int)
@@ -30,3 +31,6 @@ comment8.text=\n\ When\ the\ S-key\ is\ pressed\ the\ current\ boat\ is\ left\ u
 comment9.params=increase
 comment9.target=void\ addScore(int)
 numComments=11
+=======
+numComments=2
+>>>>>>> origin/Cas-Game-1
