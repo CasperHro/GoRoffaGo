@@ -8,8 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Transport extends Actor
 {
-    int reset = 0;
     Actor Cargo = null;
+    public int resetTransport = 0;
+    public int transportCount = 0;
+    int pause = 140;
     
     /**
      * Act - do whatever the Transport wants to do. This method is called whenever
@@ -17,14 +19,33 @@ public class Transport extends Actor
      */
     public void act() 
     {
-        Cargo = getOneObjectAtOffset(10, 0, Cargo.class);
-        if (Cargo != null) {
-            resetTransport();
+        Cargo = getOneObjectAtOffset(0, 0, Cargo.class);
+        if (Cargo != null || Greenfoot.isKeyDown("r")) {
+            resetTransport = 1;
         }
         
-    }   
-    
-    public void resetTransport() {
-        move(8);
+        if (resetTransport == 1) {
+            if(pause > 0) {
+                setLocation(getX()+3, getY());
+                pause--;
+            }
+              
+            if(pause == 0) {
+                if (getX() >= 888) {
+                    setLocation(getX()-3, getY());
+                }
+                else {
+                    resetTransport = 0;
+                    pause = 140;
+                    transportCount += 1;
+                    World world;
+                    world = getWorld();
+                }
+                
+
+            }
+
+        }
+        
     }
 }
