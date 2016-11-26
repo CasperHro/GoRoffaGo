@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class G1_Captain here.
+ * The G1_Captain does nothing. It only shows the controlled boat.
  * 
  * @author (your name) 
  * @version (a version number or a date)

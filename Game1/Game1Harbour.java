@@ -24,6 +24,7 @@ public class Game1Harbour extends World
     private int maxCrashes = 5; // Maximum crashes before game over
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
     private GreenfootImage waters; // Image to load available sailing area
+    private String lastKey = ""; // To prevent multiple strokes
     
     /**
      * Constructor for objects of class Game1Harbour.
@@ -146,11 +147,26 @@ public class Game1Harbour extends World
             {
                 createBoat();
             }
-                        
-            // The s-key selects the next boat for controls.
-            if (Greenfoot.isKeyDown("s"))
+            
+            // While switching the controls to an other boat the isKeyDown() gets true
+            // multiple times. Every act run registers the keydown but we only want to
+            // react ones. The getKey() should solve this issue but because of the boats 
+            // that use isKeyDown() the getKey() stays empty. So wee have to use 
+            // isKeyDown().
+            // To prevent the S-key from multiple hits when holding down remember and
+            // check the last proceded keystroke.
+            if (lastKey == "" || !Greenfoot.isKeyDown(lastKey))
             {
-                selectNextBoat();
+                // The s-key selects the next boat for controls.
+                if (Greenfoot.isKeyDown("s"))
+                {
+                    lastKey = "s";
+                    selectNextBoat();
+                }
+                else
+                {
+                    lastKey = "";
+                }
             }
             
             // First check if all boats are still in the water area.

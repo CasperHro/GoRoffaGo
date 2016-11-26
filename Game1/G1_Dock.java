@@ -11,8 +11,8 @@ public class G1_Dock extends Actor
     private String cargo = "container"; // The cargo of this dock
     
     /**
-     * Act - do whatever the G1_Dock wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Act - The dock checks for a ship nearby and when the speed is low enough
+     * it attached the ship to the dock.
      */
     public void act() 
     {
