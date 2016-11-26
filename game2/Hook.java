@@ -6,9 +6,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class hook extends Actor
+public class Hook extends Actor
 {
-    Actor cargo = null;
+    Actor Cargo = null;
     int movingSpeed = 3;
 
     /**
@@ -21,39 +21,39 @@ public class hook extends Actor
     }
     
     public void hookMovement() {
-        if (cargo == null) {
-            cargo = getOneObjectAtOffset(0, 0, cargo.class);        
+        if (Cargo == null) {
+            Cargo = getOneObjectAtOffset(10, 0, Cargo.class);        
         }
 
         if (Greenfoot.isKeyDown("down")) {
             setLocation(getX(), getY()+3);
         
-            if (cargo != null) {
-                cargo.setLocation(getX(), getY()+3);
+            if (Cargo != null) {
+                Cargo.setLocation(getX(), getY()+3);
             }
         }
         
         if (Greenfoot.isKeyDown("up")) {
             setLocation(getX(), getY()-3);
             
-            if (cargo != null) {
-                cargo.setLocation(getX(), getY()-3);
+            if (Cargo != null) {
+                Cargo.setLocation(getX(), getY()-3);
             }
         }
         
         if (Greenfoot.isKeyDown("right")) {
             setLocation(getX()+3, getY());
             
-            if (cargo != null) {
-                cargo.setLocation(getX()+3, getY());
+            if (Cargo != null) {
+                Cargo.setLocation(getX()+3, getY());
             }
         }
         
         if (Greenfoot.isKeyDown("left")) {
             setLocation(getX()-3, getY());
             
-            if (cargo != null) {
-                cargo.setLocation(getX()-3, getY());
+            if (Cargo != null) {
+                Cargo.setLocation(getX()-3, getY());
             }
         }
     }

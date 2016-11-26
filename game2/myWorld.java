@@ -16,7 +16,8 @@ public class myWorld extends World
     public myWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1000, 800, 1); 
+        // False makes the world boundless.
+        super(1000, 800, 1, false);
         prepare();
     }
 
@@ -26,9 +27,28 @@ public class myWorld extends World
      */
     private void prepare()
     {
-        hook hook = new hook();
+        Hook hook = new Hook();
         addObject(hook,502,70);
-        cargo cargo = new cargo();
+        Cargo cargo = new Cargo();
         addObject(cargo,507,417);
+        Harbor harbor = new Harbor();
+        addObject(harbor,954,754);
+        Harbor harbor2 = new Harbor();
+        addObject(harbor2,854,761);
+        harbor2.setLocation(847,753);
+        harbor2.setLocation(848,754);
+        harbor.setLocation(953,761);
+        harbor.setLocation(952,754);
+        Harbor harbor3 = new Harbor();
+        addObject(harbor3,855,658);
+        harbor3.setLocation(848,658);
+        Harbor harbor4 = new Harbor();
+        addObject(harbor4,962,665);
+        harbor4.setLocation(953,659);
+        harbor4.setLocation(952,659);
+        harbor4.setLocation(952,658);
+        Transport transport = new Transport();
+        addObject(transport,888,567);
+        transport.setLocation(888,563);
     }
 }
