@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class cargo extends Actor
+public class Cargo extends Actor
 {
     /**
      * Act - do whatever the cargo wants to do. This method is called whenever

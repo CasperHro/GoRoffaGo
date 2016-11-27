@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.target=hook
+comment0.target=Hook
 comment0.text=\n\ Write\ a\ description\ of\ class\ hook\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=void\ act()
@@ -7,5 +7,5 @@ comment1.text=\n\ Act\ -\ do\ whatever\ the\ hook\ wants\ to\ do.\ This\ method\
 comment2.params=
 comment2.target=void\ hookMovement()
 comment3.params=
-comment3.target=void\ atWorldEdge()
+comment3.target=void\ cargoInTransport()
 numComments=4
