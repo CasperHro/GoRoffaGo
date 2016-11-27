@@ -38,15 +38,15 @@ public class G1_Boat extends Actor
         cargo = value;
         if (cargo.equals("oil"))
         {
-            setImage(new GreenfootImage("Boat3.png"));
+            setImage(new GreenfootImage("BoatOil.png"));
         }
         else if (cargo.equals("solids"))
         {
-            setImage(new GreenfootImage("Boat2.png"));
+            setImage(new GreenfootImage("BoatSolids.png"));
         }
         else
         {
-            setImage(new GreenfootImage("Boat1.png"));
+            setImage(new GreenfootImage("BoatContainer.png"));
         }
     }
     
