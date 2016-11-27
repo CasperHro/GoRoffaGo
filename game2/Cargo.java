@@ -8,6 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Cargo extends Actor
 {
+    public Cargo()
+    {
+        GreenfootImage image = getImage();  
+        image.scale(80, 35);
+        setImage(image);
+    }
+    
     /**
      * Act - do whatever the cargo wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.

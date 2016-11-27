@@ -9,6 +9,10 @@ import java.awt.Color;
  */
 public class myWorld extends World
 {   
+    int shipCentre = 405;
+    int waterLevel = 680;
+    int width = 4; //number of cargo
+    
     /**
      * Constructor for objects of class myWorld.
      * 
@@ -28,35 +32,51 @@ public class myWorld extends World
      */
     private void prepare()
     {
+        sky sky = new sky();
+        sky sky2 = new sky();
+        Water water = new Water();
         Hook hook = new Hook();
-        addObject(hook,502,70);
-        Cargo cargo = new Cargo();
-        addObject(cargo,507,417);
         Harbor harbor = new Harbor();
-        addObject(harbor,954,754);
         Harbor harbor2 = new Harbor();
-        addObject(harbor2,854,761);
-        harbor2.setLocation(847,753);
-        harbor2.setLocation(848,754);
-        harbor.setLocation(953,761);
-        harbor.setLocation(952,754);
         Harbor harbor3 = new Harbor();
-        addObject(harbor3,855,658);
-        harbor3.setLocation(848,658);
         Harbor harbor4 = new Harbor();
-        addObject(harbor4,962,665);
-        harbor4.setLocation(953,659);
-        harbor4.setLocation(952,659);
-        harbor4.setLocation(952,658);
         Transport transport = new Transport();
-        addObject(transport,888,567);
-        transport.setLocation(888,563);
+        
         Counter counter = new Counter();
+        
+        Deck deck = new Deck();
+
+        addObject(sky,500,200);
+        addObject(sky2,500,500);
+        addObject(water,500,750);
+        addObject(hook,502,70);
+        addObject(harbor,952,754);
+        addObject(harbor2,848,754);
+        addObject(harbor3,848,658);
+        addObject(harbor4,952,658);
+        addObject(transport,888,563);
         addObject(counter,958,650);
-        Cargo cargo2 = new Cargo();
-        addObject(cargo2,562,423);
-        Cargo cargo3 = new Cargo();
-        addObject(cargo3,482,269);
-        cargo3.setLocation(406,430);
+        addObject(deck,shipCentre,waterLevel);
+
+        setCargo();
+        //transport.setLocation(888,563); je zet dit al goed bij addObject(name, x ,y);
+        //cargo3.setLocation(4056,430);
+    }
+    
+    public void setCargo() {
+        int cargoHeight = 50;
+        int i = 0;
+        int x = shipCentre-(85*(width/2)-40);
+        
+        while(i<width){
+            Cargo cargo = new Cargo();
+            addObject(cargo,x,waterLevel-50);
+            x = x+85;
+            i++;
+        }
+    }
+    
+    public void getWeight() {
+        
     }
 }
