@@ -1,7 +1,7 @@
 #Greenfoot project file
 class.Boat1.image=boat1.png
 class.Boat1.superclass=greenfoot.Actor
-class.G1_Boat.image=Boat1.png
+class.G1_Boat.image=BoatContainer.png
 class.G1_Boat.superclass=greenfoot.Actor
 class.G1_Captain.image=captain.png
 class.G1_Captain.superclass=greenfoot.Actor
@@ -27,10 +27,10 @@ editor.fx.0.height=700
 editor.fx.0.width=700
 editor.fx.0.x=0
 editor.fx.0.y=0
-editor.swing.0.height=982
-editor.swing.0.width=790
-editor.swing.0.x=1129
-editor.swing.0.y=22
+editor.swing.0.height=877
+editor.swing.0.width=764
+editor.swing.0.x=676
+editor.swing.0.y=23
 mainWindow.height=725
 mainWindow.width=1059
 mainWindow.x=52

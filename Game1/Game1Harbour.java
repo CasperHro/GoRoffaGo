@@ -189,12 +189,16 @@ public class Game1Harbour extends World
     {
         // Create random boat type depending on the different docks
         List<G1_Dock> docks = getObjects(G1_Dock.class);
-        int rnd = Greenfoot.getRandomNumber(docks.size() - 1);
+        int rndY = Greenfoot.getRandomNumber(40);
+        int rndDock = Greenfoot.getRandomNumber(docks.size() - 1);
 
         G1_Boat boat = new G1_Boat();
         // Now add the boat to the world, increase the boatcounter and reset the stepcounter
-        addObject(boat, 5, 270 + Greenfoot.getRandomNumber(35));
-        boat.setCargo(docks.get(rnd).getCargo());
+        addObject(boat, 5, 270 + rndY);
+        // Set the angle based on the y location, otherwise it crashes into shore to fast
+        boat.setRotation(rndY / -2);
+        // Random cargo is dependant on the docks
+        boat.setCargo(docks.get(rndDock).getCargo());
         boatCounter++;
         newBoatSteps = 0;
 
