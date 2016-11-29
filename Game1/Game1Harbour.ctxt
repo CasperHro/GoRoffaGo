@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Game1Harbour
-comment0.text=\n\ Game1Harbour\ is\ the\ main\ game\ world.\ When\ started\ boats\ will\ be\ created\ in\ the\ waters.\n\ The\ main\ goal\ is\ to\ dock\ the\ different\ boats\ in\ the\ right\ harbour\ so\ they\ can\ unload\n\ the\ cargo.\ When\ a\ ship\ is\ docked\ a\ point\ is\ scored.\ When\ a\ ship\ crashes\ it\ will\n\ dissapear.\ Multiple\ crashes\ and\ the\ game\ is\ over\!\n\n\ @author\ C.\ Karreman\n\ @version\ 1.0\n
+comment0.text=\n\ Game1Harbour\ is\ the\ game1\ world.\ When\ started\ boats\ will\ be\ created\ in\ the\ waters.\n\ The\ main\ goal\ is\ to\ dock\ the\ different\ boats\ in\ the\ right\ harbour\ so\ they\ can\ unload\n\ the\ cargo.\ When\ a\ ship\ is\ docked\ a\ point\ is\ scored.\ When\ a\ ship\ crashes\ it\ will\n\ dissapear.\ Multiple\ crashes\ and\ the\ game\ is\ over\!\n\n\ @author\ C.\ Karreman\n\ @version\ 1.0\n
 comment1.params=
 comment1.target=Game1Harbour()
 comment10.params=increase

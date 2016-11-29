@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.*;
 
 /**
- * Game1Harbour is the main game world. When started boats will be created in the waters.
+ * Game1Harbour is the game1 world. When started boats will be created in the waters.
  * The main goal is to dock the different boats in the right harbour so they can unload
  * the cargo. When a ship is docked a point is scored. When a ship crashes it will
  * dissapear. Multiple crashes and the game is over!
@@ -58,44 +58,44 @@ public class Game1Harbour extends World
         G1_Dock g1_dock = new G1_Dock();
         addObject(g1_dock,143,404);
         g1_dock.setRotation(-17);
-        g1_dock.setLocation(134,404);
+        //g1_dock.setLocation(134,404);
         g1_dock.setCargo("oil");
 
         G1_Dock g1_dock2 = new G1_Dock();
-        addObject(g1_dock2,120,550);
+        addObject(g1_dock2,116,553);
         g1_dock2.setRotation(-18);
-        g1_dock2.setLocation(116,553);
+        //g1_dock2.setLocation(116,553);
         g1_dock2.setCargo("oil");
 
         G1_Dock g1_dock3 = new G1_Dock();
-        addObject(g1_dock3,296,359);
+        addObject(g1_dock3,317,459);
         g1_dock3.setRotation(64);
-        g1_dock3.setLocation(317,459);
+        //g1_dock3.setLocation(317,459);
         g1_dock3.setCargo("oil");
 
         G1_Dock g1_dock4 = new G1_Dock();
-        addObject(g1_dock4,417,98);
+        addObject(g1_dock4,411,94);
         g1_dock4.setRotation(20);
-        g1_dock4.setLocation(411,94);
+        //g1_dock4.setLocation(411,94);
 
         G1_Dock g1_dock5 = new G1_Dock();
-        addObject(g1_dock5,641,89);
+        addObject(g1_dock5,638,79);
         g1_dock5.setRotation(20);
-        g1_dock5.setLocation(638,79);
+        //g1_dock5.setLocation(638,79);
 
         G1_Dock g1_dock6 = new G1_Dock();
-        addObject(g1_dock6,571,225);
+        addObject(g1_dock6,555,205);
         g1_dock6.setRotation(20);
-        g1_dock6.setLocation(555,205);
+        //g1_dock6.setLocation(555,205);
 
         G1_Dock g1_dock7 = new G1_Dock();
-        addObject(g1_dock7,471,554);
+        addObject(g1_dock7,466,561);
         g1_dock7.setRotation(-13);
-        g1_dock7.setLocation(466,561);
+        //g1_dock7.setLocation(466,561);
         g1_dock7.setCargo("solids");
 
         G1_Dock g1_dock8 = new G1_Dock();
-        addObject(g1_dock8,633,558);
+        addObject(g1_dock8,626,561);
         g1_dock8.setRotation(24);
         g1_dock8.setLocation(626,561);
         g1_dock8.setCargo("solids");
@@ -128,6 +128,11 @@ public class Game1Harbour extends World
     {
         // Reset running flag and stop game loop
         running = false;
+        
+        Actor gameOver = new GameOver();
+        addObject(gameOver,getWidth() / 2, getHeight() / 2);
+        
+        
         Greenfoot.stop();
 
         // TODO: Show game over spash screen, options there are return to
@@ -276,13 +281,9 @@ public class Game1Harbour extends World
         {
             nextBoat = 0;
         }
-        while(nextBoat < boats.size() && boats.get(nextBoat).getCrashed())
+        while(nextBoat < boats.size() && !boats.get(nextBoat).takeControls())
         {
             nextBoat++;
-        }
-        if (nextBoat < boats.size())
-        {
-            boats.get(nextBoat).takeControls();
         }
     }
 
