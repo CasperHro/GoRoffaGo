@@ -1,7 +1,7 @@
 #Greenfoot project file
 class.G1_Boat.image=BoatContainer.png
 class.G1_Boat.superclass=greenfoot.Actor
-class.G1_Captain.image=captain.png
+class.G1_Captain.image=BoatActive.png
 class.G1_Captain.superclass=greenfoot.Actor
 class.G1_Dock.image=dock1.png
 class.G1_Dock.superclass=greenfoot.Actor

@@ -58,46 +58,38 @@ public class Game1Harbour extends World
         G1_Dock g1_dock = new G1_Dock();
         addObject(g1_dock,143,404);
         g1_dock.setRotation(-17);
-        //g1_dock.setLocation(134,404);
         g1_dock.setCargo("oil");
 
         G1_Dock g1_dock2 = new G1_Dock();
         addObject(g1_dock2,116,553);
         g1_dock2.setRotation(-18);
-        //g1_dock2.setLocation(116,553);
         g1_dock2.setCargo("oil");
 
         G1_Dock g1_dock3 = new G1_Dock();
         addObject(g1_dock3,317,459);
         g1_dock3.setRotation(64);
-        //g1_dock3.setLocation(317,459);
         g1_dock3.setCargo("oil");
 
         G1_Dock g1_dock4 = new G1_Dock();
         addObject(g1_dock4,411,94);
         g1_dock4.setRotation(20);
-        //g1_dock4.setLocation(411,94);
 
         G1_Dock g1_dock5 = new G1_Dock();
         addObject(g1_dock5,638,79);
         g1_dock5.setRotation(20);
-        //g1_dock5.setLocation(638,79);
 
         G1_Dock g1_dock6 = new G1_Dock();
         addObject(g1_dock6,555,205);
         g1_dock6.setRotation(20);
-        //g1_dock6.setLocation(555,205);
 
         G1_Dock g1_dock7 = new G1_Dock();
         addObject(g1_dock7,466,561);
         g1_dock7.setRotation(-13);
-        //g1_dock7.setLocation(466,561);
         g1_dock7.setCargo("solids");
 
         G1_Dock g1_dock8 = new G1_Dock();
         addObject(g1_dock8,626,561);
         g1_dock8.setRotation(24);
-        g1_dock8.setLocation(626,561);
         g1_dock8.setCargo("solids");
     }
 

@@ -8,12 +8,27 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class G1_Captain extends Actor
 {
+    private int opacity = 255;
+    private int opacityStep = -16;
+    
     /**
-     * Act - do whatever the G1_Captain wants to do. This method is called whenever
+     * Acts - do whatever the G1_Captain wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        // Add your action code here.
+        opacity += opacityStep;
+        if (opacity <= 96)
+        {
+            opacity = 96;
+            opacityStep = 16;
+        }
+        if (opacity >= 255)
+        {
+            opacity = 255;
+            opacityStep = -16;
+        }
+        
+        getImage().setTransparency(opacity);
     }    
 }
