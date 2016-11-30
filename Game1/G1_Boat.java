@@ -18,9 +18,12 @@ public class G1_Boat extends Actor
     private int speed = 3; // Current speed
     private boolean controlled = false; // Is True when the boat must react on user input
     private boolean crashed = false; // Flag if boat is crashed, animation can still be running
+    private boolean docked = false; // Flag if the boat is docked. This state prevents movement and controls
     private int crashLoop = 0; // Crash animation stepcounter
     private String cargo = "container"; // The cargo of this ship
     private G1_Captain captain;
+    
+    private static int CRASH_TIMEOUT = 70;
     
     /**
      * Return the cargo to the rest of the world, read only.
@@ -57,7 +60,7 @@ public class G1_Boat extends Actor
     public void act() 
     {
         // When crashed no handling is done, instead the sinking is started
-        if (!crashed)
+        if (!crashed && !docked)
         {
             // When controlled check the cursor keys to speed up or slow down 
             // or change the direction.
@@ -98,12 +101,17 @@ public class G1_Boat extends Actor
             checkCollision();
 
         }
-        else
+        else if (crashed)
         {
             // Crash animation
             crashLoop++;
-            if (crashLoop > 70)
+            if (crashLoop < CRASH_TIMEOUT)
             {
+                getImage().setTransparency(255 - (255 / CRASH_TIMEOUT * crashLoop));
+            }
+            if (crashLoop > CRASH_TIMEOUT)
+            {
+                // Remove ship from world
                 releaseControls();
                 getWorld().removeObject(this);
             }
@@ -149,19 +157,23 @@ public class G1_Boat extends Actor
      * controlled by the player so remove controls from the others bofore taking
      * over the controls.
      */
-    public void takeControls()
+    public boolean takeControls()
     {
-        // Remove control from other ships.
-        for(G1_Boat boat : getWorld().getObjects(G1_Boat.class))
+        if (!crashed && !docked)
         {
-            boat.releaseControls();
+            // Remove control from other ships.
+            for(G1_Boat boat : getWorld().getObjects(G1_Boat.class))
+            {
+                boat.releaseControls();
+            }
+            
+            // And get the user input from now on.
+            controlled = true;
+            captain = new G1_Captain();
+            getWorld().addObject(captain, getX(), getY());
+            captain.setRotation(getRotation());
         }
-        
-        // And get the user input from now on.
-        controlled = true;
-        captain = new G1_Captain();
-        getWorld().addObject(captain, getX(), getY());
-        captain.setRotation(getRotation());
+        return controlled;
     }
     
     /**
@@ -181,8 +193,8 @@ public class G1_Boat extends Actor
         // TODO: Add Explosion and crash sound
         
         // Set the crashed flag, the act() function handles the sink animation 
-        releaseControls();
         crashed = true;
+        releaseControls();
     }
     
     /**
@@ -191,5 +203,23 @@ public class G1_Boat extends Actor
     public boolean getCrashed()
     {
         return crashed;
+    }
+    
+    /**
+     * Returns the current speed.
+     */
+    public int getSpeed()
+    {
+        return speed;
+    }
+    
+    /**
+     * setDocked flags the ship as docked and releases the controls
+     */
+    public void dock()
+    {
+        // Make the boat docked and release the controls
+        docked = true;
+        releaseControls();
     }
 }
