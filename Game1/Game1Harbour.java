@@ -30,6 +30,8 @@ public class Game1Harbour extends World
      * Constructor for objects of class Game1Harbour.
      * The constructor is called only ones when the class is initialized.
      */
+    GreenfootSound backgroundMusic = new GreenfootSound("theme.mp3");
+    
     int DOCKHEIGHT = 60;
 
     public Game1Harbour()
@@ -38,12 +40,16 @@ public class Game1Harbour extends World
         super(800, 600, 1);
         // Load the sailing area
         waters = new GreenfootImage("Game1BgBit.png");
+        
+        backgroundMusic.playLoop();
+        backgroundMusic.setVolume(70);
 
         // Prepare the game
         prepare();
 
         // TODO: Show the game info until clicked, when info is hidden startGame() must be called.
         startGame();
+        
     }
 
     /**
@@ -103,11 +109,15 @@ public class Game1Harbour extends World
         newBoatInterval = 120;
         boatCounter = 0;
         crashes = 0;
+        
         score = 0;
         running = true;
 
         // To show the current score call AddScore()
         addScore(0);
+        
+        //To show the current crashes call AddCrash()
+        addCrash(0);
 
         // Now create a boat soon (5 steps delay)
         newBoatSteps = newBoatInterval - 5;
@@ -124,11 +134,14 @@ public class Game1Harbour extends World
         Actor gameOver = new GameOver();
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
-        
+        backgroundMusic.pause();
+       
         Greenfoot.stop();
 
         // TODO: Show game over spash screen, options there are return to
         //       main menu or restart game
+        
+        
     }
 
     /**
@@ -240,7 +253,8 @@ public class Game1Harbour extends World
                     if (c.getBlue() == 0)
                     {
                         // Increase the crash counter and make the boat sink
-                        crashes++;
+                        //crashes++;
+                        addCrash(1);
                         boat.crash();
                     }
                 }
@@ -282,12 +296,13 @@ public class Game1Harbour extends World
     public void addScore(int increase)
     {
         score += increase;
-        showText("Score: "+score, 730, 20);
+        showText("Score: "+score, 60, 20);
     }
 
     public void addCrash(int increase)
     {
         crashes += increase;
+        showText("Crashes: "+crashes, 70, 50);
     }
 
 }
