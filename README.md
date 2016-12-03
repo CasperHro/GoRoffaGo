@@ -33,7 +33,7 @@ Inleveren
 - Burndown chart sprint 2
 
 
-ma 19-12-2016 Sprint 2
+ma 19-12-2016 Sprint 3
 
 Voor cijfer
 - Sprint backlog (voorstel Sprint 4)
@@ -44,7 +44,7 @@ Inleveren
 - Scrum board
 - Burndown chart sprint 3
 
-ma 16-01-2017 Sprint 2
+ma 16-01-2017 Sprint 4
 
 Voor cijfer
 - Product backlog
