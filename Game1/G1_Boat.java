@@ -23,6 +23,8 @@ public class G1_Boat extends Actor
     private String cargo = "container"; // The cargo of this ship
     private G1_Captain captain;
     
+    private G1_Explosion explosion;
+    
     private static int CRASH_TIMEOUT = 70;
     
     /**
@@ -108,13 +110,16 @@ public class G1_Boat extends Actor
             if (crashLoop < CRASH_TIMEOUT)
             {
                 getImage().setTransparency(255 - (255 / CRASH_TIMEOUT * crashLoop));
+                
             }
             if (crashLoop > CRASH_TIMEOUT)
             {
                 // Remove ship from world
                 releaseControls();
                 getWorld().removeObject(this);
+                
             }
+            
         }
     }
     
@@ -138,6 +143,7 @@ public class G1_Boat extends Actor
             crash();
             
             // Now register the crash of 2 boats in the world
+            
             ((Game1Harbour)getWorld()).addCrash(crashCount);
         }
     }
@@ -190,7 +196,11 @@ public class G1_Boat extends Actor
      */
     public void crash()
     {
-        // TODO: Add Explosion and crash sound
+        //Explosion and crash sound
+        Greenfoot.playSound("metalcrash.mp3");
+        explosion = new G1_Explosion();
+        getWorld().addObject(explosion, getX(), getY());
+        explosion.setRotation(getRotation());
         
         // Set the crashed flag, the act() function handles the sink animation 
         crashed = true;
@@ -221,5 +231,6 @@ public class G1_Boat extends Actor
         // Make the boat docked and release the controls
         docked = true;
         releaseControls();
+        Greenfoot.playSound("shiphorn.mp3");
     }
 }

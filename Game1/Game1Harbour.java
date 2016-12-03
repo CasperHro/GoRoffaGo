@@ -22,28 +22,32 @@ public class Game1Harbour extends World
     private int score = 0; // Game score
     private int crashes = 0; // Crash counter
     private int maxCrashes = 5; // Maximum crashes before game over
+    private boolean firstStep = true; // Does the first step routine
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
     private GreenfootImage waters; // Image to load available sailing area
     private String lastKey = ""; // To prevent multiple strokes
 
+    private GreenfootSound backgroundMusic = new GreenfootSound("theme.mp3");
+    
+    
     /**
      * Constructor for objects of class Game1Harbour.
      * The constructor is called only ones when the class is initialized.
      */
-    int DOCKHEIGHT = 60;
-
     public Game1Harbour()
     {
         // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
         super(800, 600, 1);
         // Load the sailing area
         waters = new GreenfootImage("Game1BgBit.png");
+        
+        // This is a setting for the speed of the game. Tested to be playable.
+        Greenfoot.setSpeed(40);
+
+        backgroundMusic.setVolume(70);
 
         // Prepare the game
         prepare();
-
-        // TODO: Show the game info until clicked, when info is hidden startGame() must be called.
-        startGame();
     }
 
     /**
@@ -52,9 +56,6 @@ public class Game1Harbour extends World
      */
     private void prepare()
     {
-        // This is a setting for the speed of the game. Tested to be playable.
-        Greenfoot.setSpeed(40);
-
         G1_Dock g1_dock = new G1_Dock();
         addObject(g1_dock,143,404);
         g1_dock.setRotation(-17);
@@ -94,6 +95,22 @@ public class Game1Harbour extends World
     }
 
     /**
+     * Does the run initialization. To prevent 
+     */
+    private void firstStep()
+    {
+        // Reset the flag to prevent another call to this function
+        firstStep = false;
+        
+        // Start music
+        backgroundMusic.playLoop();
+        
+        // And show game info overlay
+        G1_GameInfo g1_info = new G1_GameInfo();
+        addObject(g1_info, getWidth() / 2, getHeight() / 2); // Centered on screen
+    }
+    
+    /**
      * StartGame is called to start a new game. Score and other counters are reset
      * to begin with the game defaults.
      */
@@ -103,11 +120,15 @@ public class Game1Harbour extends World
         newBoatInterval = 120;
         boatCounter = 0;
         crashes = 0;
+        
         score = 0;
         running = true;
 
         // To show the current score call AddScore()
         addScore(0);
+        
+        //To show the current crashes call AddCrash()
+        addCrash(0);
 
         // Now create a boat soon (5 steps delay)
         newBoatSteps = newBoatInterval - 5;
@@ -124,11 +145,9 @@ public class Game1Harbour extends World
         Actor gameOver = new GameOver();
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
-        
+        backgroundMusic.pause();
+       
         Greenfoot.stop();
-
-        // TODO: Show game over spash screen, options there are return to
-        //       main menu or restart game
     }
 
     /**
@@ -137,6 +156,12 @@ public class Game1Harbour extends World
      */
     public void act()
     {
+        // Only start music when running the game
+        if (firstStep)
+        {
+            firstStep();
+        }
+
         // Check running, when not running nothing is done. Game info is till visible.
         if (running)
         {
@@ -161,6 +186,22 @@ public class Game1Harbour extends World
                 {
                     lastKey = "s";
                     selectNextBoat();
+                }
+                else if (Greenfoot.isKeyDown("m"))
+                {
+                    lastKey = "m";
+                    if (backgroundMusic.isPlaying())
+                    {
+                        backgroundMusic.stop();
+                    }
+                }
+                else if (Greenfoot.isKeyDown("p"))
+                {
+                    lastKey = "p";
+                    if (!backgroundMusic.isPlaying())
+                    {
+                        backgroundMusic.playLoop();
+                    }
                 }
                 else
                 {
@@ -240,7 +281,8 @@ public class Game1Harbour extends World
                     if (c.getBlue() == 0)
                     {
                         // Increase the crash counter and make the boat sink
-                        crashes++;
+                        //crashes++;
+                        addCrash(1);
                         boat.crash();
                     }
                 }
@@ -282,12 +324,13 @@ public class Game1Harbour extends World
     public void addScore(int increase)
     {
         score += increase;
-        showText("Score: "+score, 730, 20);
+        showText("Score: "+score, 60, 20);
     }
 
     public void addCrash(int increase)
     {
         crashes += increase;
+        showText("Crashes: "+crashes, 70, 50);
     }
 
 }
