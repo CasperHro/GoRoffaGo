@@ -8,6 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Cargo extends Actor
 {
+    
+    protected int weight;
+    protected String color;
+    
     public Cargo()
     {
         GreenfootImage image = getImage();  
@@ -23,4 +27,12 @@ public class Cargo extends Actor
     {
         // Add your action code here.
     }    
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public String getColor() {
+        return color;
+    }
 }
