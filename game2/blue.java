@@ -10,7 +10,7 @@ public class blue extends Cargo
 {
     
     public blue(){
-        super.weight=20;
+        super.weight=10;
         super.color="Blue";
     }
     
