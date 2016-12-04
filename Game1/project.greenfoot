@@ -1,7 +1,7 @@
 #Greenfoot project file
 =\=\=\=\=\=\=
-<<<<<<<=HEAD
->>>>>>>=master
+<<<<<<<=Updated\ upstream
+>>>>>>>=Stashed\ changes
 class.Boat1.image=boat4.png
 class.Boat1.superclass=greenfoot.Actor
 class.G1_Boat.image=BoatContainer.png
@@ -53,13 +53,13 @@ editor.fx.0.x=0
 editor.fx.0.y=0
 editor.swing.0.height=0
 editor.swing.0.width=0
-editor.swing.0.x=51
-editor.swing.0.y=22
-mainWindow.height=723
-mainWindow.width=1059
-mainWindow.x=52
-mainWindow.y=22
-package.numDependencies=10
+editor.swing.0.x=0
+editor.swing.0.y=23
+mainWindow.height=726
+mainWindow.width=1280
+mainWindow.x=0
+mainWindow.y=23
+package.numDependencies=8
 package.numTargets=7
 project.charset=UTF-8
 readme.height=58
