@@ -96,16 +96,12 @@ public class myWorld extends World
                 tilt = getTilt();
                 
                 deck.adjustShip();
-                if(tilt>0){
-                    stepsCount++;
-                }else if(tilt<0){
-                    stepsCount--;
-                }
+                
                 System.out.println("rotation "+deck.getRotation());
                 showText("CargoWeight :"+tilt,shipCentre,waterLevel+50);
                 
                 showText("looted         :"+looted,720,530);
-                showText("Transport score:"+looted,720,550);
+                //showText("Transport score:"+looted,720,550);
                 
                 
                 

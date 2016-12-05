@@ -38,11 +38,20 @@ public class Deck extends Actor
         int swaying = world.tilt;
         if(swaying>0){
             turn(-1);
+            world.stepsCount++;
         } else 
-        if (swaying<1) {
+        if (swaying<0) {
             turn(1);
+            world.stepsCount--;
         }else{
-            turn(0);
+            if(world.stepsCount>0){
+                world.stepsCount--;
+                turn(1);
+            } else
+            if(world.stepsCount<0){
+                world.stepsCount++;
+                turn(-1);
+            }
         }
         
         return 0;
