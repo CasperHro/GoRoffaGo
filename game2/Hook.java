@@ -10,7 +10,7 @@ public class Hook extends Actor
 {
     Cargo cargo = null;
     Actor Transport = null;
-    int movingSpeed = 3;
+    int movingSpeed = 4;
 
     /**
      * Act - do whatever the hook wants to do. This method is called whenever
@@ -29,6 +29,7 @@ public class Hook extends Actor
             if(cargo!=null){
                 myWorld world = getWorldOfType(myWorld.class);
                 int indexCargo = world.liftCargo(cargo);
+                world.looted += world.getWeight(indexCargo);
                 world.grid[indexCargo] = null;
                 System.out.println(indexCargo);
             }

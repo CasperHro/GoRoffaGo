@@ -11,8 +11,8 @@ import java.util.Arrays;
  */
 public class myWorld extends World
 {   
-    int shipCentre = 405;
-    int waterLevel = 680;
+    int shipCentre = 375;
+    int waterLevel = 525;
     int width = 4; //number of cargo
     int cargoWidth = 80+5; //cargo=80px, padding = 5px
     
@@ -22,11 +22,23 @@ public class myWorld extends World
     Cargo[] grid;
     
     
+    sky sky = new sky();
+    sky sky2 = new sky();
+    Water water = new Water();
+    Hook hook = new Hook();
+    Harbor harbor = new Harbor();
+    Harbor harbor2 = new Harbor();
+    Harbor harbor3 = new Harbor();
+    Harbor harbor4 = new Harbor();
+    Transport transport = new Transport();
     Deck deck = new Deck();
+    
+    Counter scoreCounter = new Counter();
     public int tilt;
     
-    int looted;
+    public int looted = 0;
     
+    boolean gameOver = false;
     int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     int stepsCount=0;
     int counter =0;
@@ -41,7 +53,7 @@ public class myWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         // False makes the world boundless.
-        super(1000, 800, 1, false);
+        super(800, 600, 1, false);
         createGrid(maxHeight,maxWidth);
         printGrid();
         prepare();   
@@ -58,42 +70,28 @@ public class myWorld extends World
      */
     private void prepare()
     {
-        sky sky = new sky();
-        sky sky2 = new sky();
-        Water water = new Water();
-        Hook hook = new Hook();
-        Harbor harbor = new Harbor();
-        Harbor harbor2 = new Harbor();
-        Harbor harbor3 = new Harbor();
-        Harbor harbor4 = new Harbor();
-        Transport transport = new Transport();
-        
-        Counter counter = new Counter();
         
 
-        addObject(sky,500,200);
-        addObject(sky2,500,500);
-        addObject(water,500,750);
-        addObject(hook,502,70);
-        addObject(harbor,952,754);
-        addObject(harbor2,848,754);
-        addObject(harbor3,848,658);
-        addObject(harbor4,952,658);
-        addObject(transport,888,563);
-        addObject(counter,958,650);
+        addObject(sky,400,200);
+        addObject(sky2,400,500);
+        addObject(water,400,600);
+        addObject(hook,400,70);
+        addObject(harbor,750,550);
+        addObject(harbor2,700,550);
+        addObject(harbor3,750,500);
+        addObject(harbor4,700,500);
+        addObject(transport,720,420);
+        addObject(scoreCounter,750,500);
         addObject(deck,shipCentre,waterLevel);
 
         setCargo();
-        //transport.setLocation(888,563); je zet dit al goed bij addObject(name, x ,y);
-        //cargo3.setLocation(4056,430);
     }
     
     
     public void act(){
             counter++;
-            if(counter ==100){
-                delayTiltTimer++;
-                System.out.println(delayTiltTimer);
+            if(counter ==120 && !gameOver){ //om de 7(1~sec) ticks code uitvoeren
+                delayTiltTimer++; //
                 
                 tilt = getTilt();
                 
@@ -104,10 +102,20 @@ public class myWorld extends World
                     stepsCount--;
                 }
                 System.out.println("rotation "+deck.getRotation());
-                //System.out.println("this should be 5"+tilt);
                 showText("CargoWeight :"+tilt,shipCentre,waterLevel+50);
                 
+                showText("looted         :"+looted,720,530);
+                showText("Transport score:"+looted,720,550);
+                
+                
+                
+                
+                
                 counter=0;
+            }else if (gameOver){
+                showText("Game over "+"looted  :"+looted,shipCentre,waterLevel-250);
+            }else if (stepsCount>10 || stepsCount<-10){
+                gameOver=true;
             }
         }
     
@@ -117,10 +125,7 @@ public class myWorld extends World
         
         //@@ preparation
         
-    public int liftCargo(Cargo cargo){
-        //Arrays.binarySearch(grid,cargo);
-        
-        //System.out.println(Arrays.binarySearch(grid,cargo));
+    public int liftCargo(Cargo cargo){//cargo->grid[ID]
         int i =0;
         for(Cargo c :grid){
             if(c==cargo){
@@ -184,7 +189,7 @@ public class myWorld extends World
             i++;
        }
        windSpeed = halfLeft-halfRight;
-       if(halfLeft>halfRight{
+       if(halfLeft>halfRight){
            tilt = 1;
        }else if (halfLeft<halfRight){
            tilt = -1;
@@ -192,8 +197,8 @@ public class myWorld extends World
            tilt=0;
        }
         
-       System.out.println(windSpeed+" : tilt = "+tilt);
-       System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
+       System.out.println("Balans = "+windSpeed);
+       //System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
        return windSpeed;
     }
     
@@ -266,6 +271,10 @@ public class myWorld extends World
     public Cargo getValue(int x,int y){
         int spot = (x*maxHeight)+y;
         return grid[spot];
+    }
+    
+    public int getWeight(int spot){
+        return grid[spot].getWeight();
     }
     
     public void printGrid(){
