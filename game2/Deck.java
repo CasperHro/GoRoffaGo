@@ -26,23 +26,25 @@ public class Deck extends Actor
     {
        
         
+            //turn(1);
         //int swaying = ((myWorld)getworld()).tilt;
         //turn(1);
     }    
     
     public int adjustShip() {
-        //int swaying = ((myWorld)getworld()).getTilt();
+       // int swaying = ((myWorld)getworld()).getTilt();
         //int swaying = getWorld(myWorld.class).getTilt();
-        
-        //swaying = getWorld(myWorld.class).tilt();
-      /*  if(swaying>0){
-            turn(1);
+        myWorld world = getWorldOfType(myWorld.class);
+        int swaying = world.tilt;
+        if(swaying>0){
+            turn(-1);
         } else 
         if (swaying<1) {
-            turn(-1);
+            turn(1);
         }else{
             turn(0);
-        }*
+        }
+        
         return 0;
     }
 }

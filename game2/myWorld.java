@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
 
 /**
  * Write a description of class myWorld here.
@@ -18,13 +19,18 @@ public class myWorld extends World
     
     int maxHeight = 4;
     int maxWidth = width;
-    int[] grid;
+    Cargo[] grid;
     
+    
+    Deck deck = new Deck();
     public int tilt;
+    
+    int looted;
     
     int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     int stepsCount=0;
     int counter =0;
+    //WeightCounter WeightCounter = new WeightCounter();
     
     
     /**
@@ -63,9 +69,7 @@ public class myWorld extends World
         Transport transport = new Transport();
         
         Counter counter = new Counter();
-        WeightCounter WeightCounter = new WeightCounter();
         
-        Deck deck = new Deck();
 
         addObject(sky,500,200);
         addObject(sky2,500,500);
@@ -77,7 +81,6 @@ public class myWorld extends World
         addObject(harbor4,952,658);
         addObject(transport,888,563);
         addObject(counter,958,650);
-        addObject(WeightCounter,shipCentre,waterLevel+50);
         addObject(deck,shipCentre,waterLevel);
 
         setCargo();
@@ -93,10 +96,16 @@ public class myWorld extends World
                 System.out.println(delayTiltTimer);
                 
                 tilt = getTilt();
+                
+                deck.adjustShip();
                 if(tilt>0){
-                        //Deck.adjustShip();
-                        //deck.adjustShip();
-                    }
+                    stepsCount++;
+                }else if(tilt<0){
+                    stepsCount--;
+                }
+                System.out.println("rotation "+deck.getRotation());
+                //System.out.println("this should be 5"+tilt);
+                showText("CargoWeight :"+tilt,shipCentre,waterLevel+50);
                 
                 counter=0;
             }
@@ -107,6 +116,21 @@ public class myWorld extends World
         
         
         //@@ preparation
+        
+    public int liftCargo(Cargo cargo){
+        //Arrays.binarySearch(grid,cargo);
+        
+        //System.out.println(Arrays.binarySearch(grid,cargo));
+        int i =0;
+        for(Cargo c :grid){
+            if(c==cargo){
+                break;
+            }
+            i++;
+        }
+        return i;
+    }    
+        
         
     public void setCargo() {
         int cargoHeight = 40;
@@ -122,19 +146,19 @@ public class myWorld extends World
             if(randomCargoType==1){
                 Cargo cargo = new red();
                 addObject(cargo,x,StackHeight);
-                grid[i]=cargo.getWeight();
+                grid[i]=cargo;
                 //System.out.println(cargo.getColor());
                 //System.out.println(cargo.getWeight());
             }
             if(randomCargoType==2){
                 Cargo cargo = new blue();
                 addObject(cargo,x,StackHeight);
-                grid[i]=cargo.getWeight();
+                grid[i]=cargo;
             }
             if(randomCargoType==3){
                 Cargo cargo = new green();
                 addObject(cargo,x,StackHeight);
-                grid[i]=cargo.getWeight();
+                grid[i]=cargo;
             }
             
             x = x+cargoWidth;
@@ -155,12 +179,12 @@ public class myWorld extends World
         int windSpeed;
         
        while(i<half){
-            halfLeft+=getWeightPerX(i);
-            halfRight+=getWeightPerX(i+half);
+            halfLeft+=getWeightPerX(i)*(half-i);
+            halfRight+=getWeightPerX(width-i-1)*(half-i);
             i++;
        }
        windSpeed = halfLeft-halfRight;
-       if(halfLeft>halfRight){
+       if(halfLeft>halfRight{
            tilt = 1;
        }else if (halfLeft<halfRight){
            tilt = -1;
@@ -168,9 +192,9 @@ public class myWorld extends World
            tilt=0;
        }
         
-       System.out.println(windSpeed+": tilt = "+tilt);
+       System.out.println(windSpeed+" : tilt = "+tilt);
        System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
-       return tilt;
+       return windSpeed;
     }
     
     public int getWeightPerX(int x){
@@ -179,7 +203,9 @@ public class myWorld extends World
         while(i < maxHeight){
             int spot = x+(i*width);
             //System.out.println("spot no "+spot);
-                weight+=grid[spot];
+            if(grid[spot]!=null){
+                weight+=grid[spot].getWeight();
+            }
             i++;
         }
         return weight;
@@ -208,12 +234,12 @@ public class myWorld extends World
     //@@@ Grid functies
     public void createGrid(int x,int y){
         int gridSize = getSizeGrid(x,y);
-        grid = new int[gridSize];
+        grid = new Cargo[gridSize];
     }
         
     public int getSpot(int x, int y){
         int spot = (x*maxHeight)+y;
-        return grid[spot];
+        return grid[spot].getWeight();
     }
         
     public int getCoordX(int spot){
@@ -227,18 +253,17 @@ public class myWorld extends World
         return y;
     }
         
-    public boolean setCoord(int x,int y,int value){
+    public boolean setCoord(int x,int y,Cargo value){
         int spot = (x*maxHeight)+y;
         grid[spot] = value;
         return true;
     }     
     
-    public boolean setGrid(int spot,int value){
+    public void setGrid(int spot,Cargo value){
         grid[spot] = value;
-        return true;
     }
     
-    public int getValue(int x,int y){
+    public Cargo getValue(int x,int y){
         int spot = (x*maxHeight)+y;
         return grid[spot];
     }
