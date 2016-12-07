@@ -11,7 +11,14 @@ public class Transport extends Actor
     Actor Cargo = null;
     public int resetTransport = 0;
     public int transportCount = 0;
-    int pause = 140;
+    int pause = 40;
+    
+    public Transport()
+    {
+        GreenfootImage image = getImage();  
+        image.scale(120, 60);
+        setImage(image);
+    }
     
     /**
      * Act - do whatever the Transport wants to do. This method is called whenever
@@ -31,12 +38,12 @@ public class Transport extends Actor
             }
               
             if(pause == 0) {
-                if (getX() >= 888) {
+                if (getX() >= 720) {
                     setLocation(getX()-3, getY());
                 }
                 else {
                     resetTransport = 0;
-                    pause = 140;
+                    pause = 40;
                     transportCount += 1;
                     World world;
                     world = getWorld();
