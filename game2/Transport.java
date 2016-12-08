@@ -12,6 +12,7 @@ public class Transport extends Actor
     public int resetTransport = 0;
     public int transportCount = 0;
     int pause = 40;
+    protected String color;
     
     public Transport()
     {
@@ -54,5 +55,9 @@ public class Transport extends Actor
 
         }
         
+    }
+    
+    public String getColor() {
+        return color;
     }
 }

@@ -84,10 +84,10 @@ public class myWorld extends World
         addObject(harbor2,700,550);
         addObject(harbor3,750,500);
         addObject(harbor4,700,500);
-        addObject(transport,720,420);
         addObject(scoreCounter,750,500);
         addObject(deck,shipCentre,waterLevel);
 
+        setTransport();
         setCargo();
     }
     
@@ -143,7 +143,23 @@ public class myWorld extends World
             i++;
         }
         return i;
-    }    
+    }
+    
+    public void setTransport() {
+        int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        if(randomCargoType==1){
+            Transport transport = new BlueTransport();
+            addObject(transport,720,420);
+        }
+        if(randomCargoType==2){
+            Transport transport = new RedTransport();
+            addObject(transport,720,420);
+        }
+        if(randomCargoType==3){
+            Transport transport = new GreenTransport();
+            addObject(transport,720,420);
+        }
+    }
         
         
     public void setCargo() {
