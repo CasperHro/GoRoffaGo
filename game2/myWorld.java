@@ -77,8 +77,8 @@ public class myWorld extends World
         addObject(sky,400,200);
         addObject(sky2,400,500);
         addObject(water,400,600);
-        addObject(hook,400,90);
-        addObject(line,400,-970);
+        addObject(hook,400,110);
+        addObject(line,400,-950);
         addObject(bar,400,20);
         addObject(harbor,750,550);
         addObject(harbor2,700,550);
