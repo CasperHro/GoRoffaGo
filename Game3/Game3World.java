@@ -45,7 +45,7 @@ public class Game3World extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
         // This is a setting for the speed of the game. Tested to be playable.
-        Greenfoot.setSpeed(40);
+        Greenfoot.setSpeed(45);
         
         //backgroundMusic.setVolume(70);
         
@@ -73,7 +73,6 @@ public class Game3World extends World
         // Reset counters
         crashes = 0;
         score = 0;
-        programStep = 0;
         showText("Level: ", 60, 20);
         addScore(0);
         addCrash(0);
@@ -94,6 +93,7 @@ public class Game3World extends World
     {
         // First clear all current trucks
         programming = null;
+        programStep = 0;
         for(Actor a : getObjects(G3_FieldObject.class))
         {
             removeObject(a);
@@ -110,7 +110,7 @@ public class Game3World extends World
         }
         else
         {
-            timeOut = 30;//300;
+            timeOut = 300;
         }
         
         if (level > 2)
@@ -120,8 +120,15 @@ public class Game3World extends World
         
         // In the first levels create as many trucks as the level but create at most maxTrucks
         createTrucks(Math.min(level, maxTrucks));
-        addObject(new G3_BtnAllDone(), 700, 575);
         
+        // Create the program options
+        addObject(new G3_CmdLeft(), 655, 505);
+        addObject(new G3_CmdRight(), 745, 505);
+        addObject(new G3_CmdForward(), 700, 505);
+        addObject(new G3_CmdFFwd(), 725, 565);
+        addObject(new G3_CmdPark(), 675, 565);
+        addObject(new G3_BtnAllDone(), 700, 20);
+                
         // To show the current score call AddScore()
         addScore(0);
         // To show the current crashes call AddCrash()
@@ -224,7 +231,7 @@ public class Game3World extends World
                     boolean hasMore = false;
                     for(G3_Truck t : getObjects(G3_Truck.class))
                     {
-                        hasMore = hasMore && (t.getProgramLength() > 0);
+                        hasMore = hasMore || (t.getProgramLength() > 0);
                     }
                     
                     if (hasMore)
@@ -232,6 +239,11 @@ public class Game3World extends World
                         Greenfoot.delay(20);
                         programStep++;
                         showText("Execute step: " + programStep, 700, 60);
+                        
+                        for(G3_Truck t : getObjects(G3_Truck.class))
+                        {
+                            t.executeStep();
+                        }
                     }
                     else
                     {
@@ -242,22 +254,34 @@ public class Game3World extends World
             else if (gameStage == GameStage.EVALUATING)
             {
                 // TODO: Count the points and show the results
-                
                 int scored = 0;
+                
+                for(G3_Destination d : getObjects(G3_Destination.class))
+                {
+                    for(G3_Truck t : getObjects(G3_Truck.class))
+                    {
+                        if (t.getColor() == d.getColor() && t.getX() == d.getX() && t.getX() == d.getX())
+                        {
+                            t.setActive(true);
+                            scored++;
+                        }
+                    }
+                }
                 
                 String msg = "";
                 if (scored == 0)
                 {
                     msg = "You scored no points this round. Too bad.\nTry harder next level.";
                 }
-                else if (score > 3)
+                else if (scored > 3)
                 {
-                    msg = String.format("Wow you scored %d points, good job!!!\nOn to the next level.", score);
+                    msg = String.format("Wow you scored %d points, good job!!!\nOn to the next level.", scored);
                 }
                 else
                 {
-                    msg = String.format("You scored %d points, nice!\nOn to the next level.", score);
+                    msg = String.format("You scored %d points, nice!\nOn to the next level.", scored);
                 }
+                addScore(scored);
                 startStage(GameStage.PROGRAMMING, msg);
             }
             
@@ -475,9 +499,14 @@ public class Game3World extends World
         }
         else
         {
-            for (G3_BtnAllDone b : getObjects(G3_BtnAllDone.class))
+            // Clear all programming tools
+            for (G3_BtnAllDone o : getObjects(G3_BtnAllDone.class))
             {
-                removeObject(b);
+                removeObject(o);
+            }
+            for (G3_Command o : getObjects(G3_Command.class))
+            {
+                removeObject(o);
             }
         
             gameStage = stage;
