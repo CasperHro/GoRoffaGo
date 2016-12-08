@@ -11,7 +11,7 @@ public class green extends Cargo
     
     public green(){
         super.weight=5;
-        super.color="Green";
+        super.color="green";
     }
     
     /**

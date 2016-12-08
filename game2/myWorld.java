@@ -146,6 +146,9 @@ public class myWorld extends World
     }
     
     public void setTransport() {
+
+        
+        
         int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
         if(randomCargoType==1){
             Transport transport = new BlueTransport();
