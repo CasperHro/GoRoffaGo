@@ -27,7 +27,7 @@ public class Transport extends Actor
     public void act() 
     {
         Cargo = getOneObjectAtOffset(0, 0, Cargo.class);
-        if (Cargo != null || Greenfoot.isKeyDown("r")) {
+        if (Cargo != null) {
             resetTransport = 1;
         }
         

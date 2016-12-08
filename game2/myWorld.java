@@ -26,6 +26,8 @@ public class myWorld extends World
     sky sky2 = new sky();
     Water water = new Water();
     Hook hook = new Hook();
+    Line line = new Line();
+    Bar bar = new Bar();
     Harbor harbor = new Harbor();
     Harbor harbor2 = new Harbor();
     Harbor harbor3 = new Harbor();
@@ -75,7 +77,9 @@ public class myWorld extends World
         addObject(sky,400,200);
         addObject(sky2,400,500);
         addObject(water,400,600);
-        addObject(hook,400,70);
+        addObject(hook,400,90);
+        addObject(line,400,-970);
+        addObject(bar,400,20);
         addObject(harbor,750,550);
         addObject(harbor2,700,550);
         addObject(harbor3,750,500);
@@ -87,6 +91,15 @@ public class myWorld extends World
         setCargo();
     }
     
+    public Actor getHook()
+    {
+        return hook;
+    }
+    
+    public Actor getLine()
+    {
+        return line;
+    }
     
     public void act(){
             counter++;
