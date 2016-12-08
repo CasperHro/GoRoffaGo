@@ -19,11 +19,18 @@ public class G3_Truck extends G3_FieldObject
     private int crashLoop = 0; // Crash animation stepcounter
     private String container = ""; // The container on this truck
     private int id;
-    private boolean executing = false;
+    private int executing = 0;
     private boolean active = false;
     private int blinkStep = -15;
     
-    
+    private static final int executeSteps = 40;
+    private int startDirection;
+    private int startX;
+    private int startY;
+    private int endDirection;
+    private int endX;
+    private int endY;
+
     
     /**
      * Contructor for the truck needs a color;
@@ -97,6 +104,19 @@ public class G3_Truck extends G3_FieldObject
             }
             img.setTransparency(nextStep);
         }
+        
+        if (executing > 0)
+        {
+            executing--;
+
+            // Do step towards the destinasion
+            setRotation(endDirection - ((endDirection - startDirection) * executing / executeSteps));
+            setLocation(endX - ((endX - startX) * executing / executeSteps),
+                        endY - ((endY - startY) * executing / executeSteps));
+            
+            // TODO: Check for crash or out of playfield
+            
+        }
     }
     
     public int getID()
@@ -106,7 +126,7 @@ public class G3_Truck extends G3_FieldObject
     
     public boolean getExecuting()
     {
-        return executing;
+        return (executing > 0);
     }
     
     public int getProgramLength()
@@ -114,23 +134,84 @@ public class G3_Truck extends G3_FieldObject
         return program.size();
     }
     
+    public boolean getActive()
+    {
+        return active;
+    }
+    
     public void setActive(boolean value)
     {
         active = value;
         // When active deactivate all other trucks
-        if (active)
-        {
-            for(G3_Truck t : getWorld().getObjects(G3_Truck.class))
-            {
-                if (t != this)
-                {
-                    t.setActive(false);
-                }
-            }
-        }
-        else
+        if (!active)
         {
             getImage().setTransparency(255);
         }
+    }
+    
+    /**
+     * Adds a command to the program and returns the index of the new element
+     */
+    public int addCommand(String value)
+    {
+        program.add(value);
+        
+        return program.size() -1;
+    }
+    
+    public void executeStep()
+    {
+        if (executing == 0 && program.size() > 0)
+        {
+            // first record the current position and orientation
+            startDirection = getRotation();
+            startX = getX();
+            startY = getY();
+            endDirection = startDirection;
+            endX = startX;
+            endY = startY;
+            
+            // Calculate the new coordinates to move to. 1 step = 40 pixelfs or 90 degrees
+            switch(program.get(0))
+            {
+                case "left":
+                    endDirection = startDirection - 90;
+                    endX = startX + (startDirection <= 90 ? 40 : -40);
+                    endY = startY + (startDirection % 270 != 0 ? 40 : -40);
+                    break;
+                case "right":
+                    endDirection = startDirection + 90;
+                    endX = startX + (startDirection % 270 == 0 ? 40 : -40);
+                    endY = startY + (startDirection <= 90 ? 40 : -40);
+                    break;
+                case "forward":
+                    if (startDirection % 180 == 0)
+                    {
+                        endX = startX + (startDirection == 0 ? 40 : -40);
+                    }
+                    else
+                    {
+                        endY = startY + (startDirection == 90 ? 40 : -40);
+                    }
+                    break;
+                case "ffwd":
+                    if (startDirection % 180 == 0)
+                    {
+                        endX = startX + (startDirection == 0 ? 80 : -80);
+                    }
+                    else
+                    {
+                        endY = startY + (startDirection == 90 ? 80 : -80);
+                    }
+                    break;
+            }
+            program.remove(0);
+            executing = executeSteps;
+        }
+    }
+    
+    public String getColor()
+    {
+        return container;
     }
 }

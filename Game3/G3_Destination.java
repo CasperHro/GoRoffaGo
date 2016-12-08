@@ -55,5 +55,10 @@ public class G3_Destination extends G3_FieldObject
     public void act() 
     {
         // This class does nothing really. It just sits where it's placed
-    }    
+    }
+    
+    public String getColor()
+    {
+        return color;
+    }
 }
