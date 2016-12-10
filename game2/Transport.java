@@ -29,8 +29,6 @@ public class Transport extends Actor
     {
         cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
         if (cargo != null) {
-            System.out.println(getColor());
-            System.out.println(cargo.getColor());
             if (cargo.getColor() == getColor()) {
                 resetTransport = 1;
             }
@@ -43,7 +41,6 @@ public class Transport extends Actor
             }
               
             if(pause == 0) {
-                // @TODO: NEW RANDOM TRANSPORT ACTOR.
                 if (getX() >= 720) {
                     setLocation(getX()-3, getY());
                 }
@@ -51,6 +48,10 @@ public class Transport extends Actor
                     resetTransport = 0;
                     pause = 120;
                     transportCount += 1;
+                    
+                    myWorld world = (myWorld) getWorld();
+                    world.setTransport(getX(), getY());
+                    world.removeObject(this);
                 }
                 
 

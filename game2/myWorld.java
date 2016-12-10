@@ -87,7 +87,7 @@ public class myWorld extends World
         addObject(scoreCounter,750,500);
         addObject(deck,shipCentre,waterLevel);
 
-        setTransport();
+        setTransport(720, 420);
         setCargo();
     }
     
@@ -145,22 +145,19 @@ public class myWorld extends World
         return i;
     }
     
-    public void setTransport() {
-
-        
-        
-        int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-        if(randomCargoType==1){
-            Transport transport = new BlueTransport();
-            addObject(transport,720,420);
+    public void setTransport(int paramX, int paramY) {
+        int randomTransportType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        if(randomTransportType==1){
+            transport = new BlueTransport();
+            addObject(transport, paramX, paramY);
         }
-        if(randomCargoType==2){
-            Transport transport = new RedTransport();
-            addObject(transport,720,420);
+        if(randomTransportType==2){
+            transport = new RedTransport();
+            addObject(transport, paramX, paramY);
         }
-        if(randomCargoType==3){
-            Transport transport = new GreenTransport();
-            addObject(transport,720,420);
+        if(randomTransportType==3){
+            transport = new GreenTransport();
+            addObject(transport, paramX, paramY);
         }
     }
         
