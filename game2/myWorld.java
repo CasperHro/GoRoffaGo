@@ -34,6 +34,7 @@ public class myWorld extends World
     Harbor harbor4 = new Harbor();
     Transport transport = new Transport();
     Deck deck = new Deck();
+    Clock clock = new Clock(false, true, 0, null);
     
     Counter scoreCounter = new Counter();
     public int tilt;
@@ -72,8 +73,6 @@ public class myWorld extends World
      */
     private void prepare()
     {
-        
-
         addObject(sky,400,200);
         addObject(sky2,400,500);
         addObject(water,400,600);
@@ -86,7 +85,8 @@ public class myWorld extends World
         addObject(harbor4,700,500);
         addObject(scoreCounter,750,500);
         addObject(deck,shipCentre,waterLevel);
-
+        addObject(clock,750,580);
+        
         setTransport(720, 420);
         setCargo();
     }
