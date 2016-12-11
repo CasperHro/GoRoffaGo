@@ -30,16 +30,16 @@ public class G3_Destination extends G3_FieldObject
         switch(color)
         {
             case "red":
-                colored.setColor(new Color(255, 160, 160));
+                colored.setColor(new Color(255, 0, 0, 90));
                 break;
             case "green":
-                colored.setColor(new Color(160, 255, 160));
+                colored.setColor(new Color(0, 255, 0, 90));
                 break;
             case "yellow":
-                colored.setColor(new Color(240, 240, 160));
+                colored.setColor(new Color(255, 255, 0, 90));
                 break;
             case "blue":
-                colored.setColor(new Color(160, 160, 255));
+                colored.setColor(new Color(0, 0, 255, 90));
                 break;
         }
         
@@ -60,5 +60,20 @@ public class G3_Destination extends G3_FieldObject
     public String getColor()
     {
         return color;
+    }
+    
+    public G3_Truck getParkedTruck()
+    {
+        for(G3_Truck t : getWorld().getObjects(G3_Truck.class))
+        {
+            // Color, location and orientation must be the same (north/south are good and east/west are equal)
+            if (t.getColor() == color && 
+                t.getX() == getX() && t.getY() == getY() && 
+                Math.abs(t.getRotation() - 90) % 180 == Math.abs(getRotation() - 90) % 180)
+            {
+                return t;
+            }
+        }
+        return null;
     }
 }

@@ -12,19 +12,40 @@ public class G3_Explosion extends Actor
      * Act - do whatever the G3_Explotion wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    private int timer = 15;
+    private int explosionStep = 16;
+    private int step = -1;
+    private int wait = 2;
+    private GreenfootImage[] images = new GreenfootImage[16];
+    
+    public G3_Explosion()
+    {
+        for(int i = 1; i < 16; i++)
+        {
+            images[i] = new GreenfootImage("exp" + i + ".png");
+        }
+    }
     
     public void act() 
     {
         // Add your action code here.
-        if (timer > 0)
+        if (wait > 0)
         {
-            setImage("exp" + timer + ".png");
-            timer--;
+            wait--;
         }
-        if (timer == 0)
+        else
         {
-            getWorld().removeObject(this);
+            explosionStep = explosionStep + step;
+            setImage(images[explosionStep]);
+            wait = 3;
+        }
+        
+        if (explosionStep < 5)
+        {
+            step = 2;
+        }
+        if (explosionStep > 8)
+        {
+            step = -1;
         }
     }
 }

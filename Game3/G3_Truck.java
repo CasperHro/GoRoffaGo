@@ -24,6 +24,7 @@ public class G3_Truck extends G3_FieldObject
     private int blinkStep = -15;
     
     private static final int executeSteps = 40;
+    private int gridSize;
     private int startDirection;
     private int startX;
     private int startY;
@@ -46,6 +47,8 @@ public class G3_Truck extends G3_FieldObject
      */
     protected void addedToWorld(World world)
     {
+        gridSize = ((Game3World)world).gridSize;
+        
         // Draw the color under the container sprite
         GreenfootImage overlay = new GreenfootImage("Container.png");
         GreenfootImage colored = new GreenfootImage(overlay.getWidth(), overlay.getHeight());
@@ -58,7 +61,7 @@ public class G3_Truck extends G3_FieldObject
                 colored.setColor(new Color(0, 225, 0));
                 break;
             case "yellow":
-                colored.setColor(new Color(96, 196, 0));
+                colored.setColor(new Color(255, 255, 0));
                 break;
             case "blue":
                 colored.setColor(new Color(0, 0, 225));
@@ -90,6 +93,7 @@ public class G3_Truck extends G3_FieldObject
         }
         else if (active)
         {
+            // Blink loop
             GreenfootImage img = getImage();
             int nextStep = img.getTransparency() + blinkStep;
             if (nextStep < 64)
@@ -105,17 +109,53 @@ public class G3_Truck extends G3_FieldObject
             img.setTransparency(nextStep);
         }
         
-        if (executing > 0)
+        if (!crashed && executing > 0)
         {
             executing--;
 
             // Do step towards the destinasion
-            setRotation(endDirection - ((endDirection - startDirection) * executing / executeSteps));
-            setLocation(endX - ((endX - startX) * executing / executeSteps),
-                        endY - ((endY - startY) * executing / executeSteps));
+// This lineair movement didn't show nice when rotating. We now implemented 
+// rotation via angular positions based on the radius.
+//            setRotation(endDirection - ((endDirection - startDirection) * executing / executeSteps));
+//            setLocation(endX - ((endX - startX) * executing / executeSteps),
+//                        endY - ((endY - startY) * executing / executeSteps));
+            if (endDirection == startDirection)
+            {
+                setLocation(endX - ((endX - startX) * executing / executeSteps),
+                            endY - ((endY - startY) * executing / executeSteps));
+            }
+            else 
+            {
+                int r = startDirection + ((endDirection - startDirection) * (executeSteps - executing) / executeSteps);
+                setRotation(r);
+
+                if (startDirection % 180 == 0)
+                {
+                    setLocation(endX - (int)(40 * Math.cos(Math.toRadians(r))),
+                                startY + (int)(40 * Math.sin(Math.toRadians(r))));
+                }
+                else
+                {
+                    setLocation(startX + (int)(40 * Math.cos(Math.toRadians(r))),
+                                endY - (int)(40 * Math.sin(Math.toRadians(r))));
+                }
+            }
             
             // TODO: Check for crash or out of playfield
-            
+            for(G3_FieldObject o : getWorld().getObjects(G3_Obstacle.class))
+            {
+                if (o != this && o.getX() == getX() && o.getY() == getY())
+                {
+                    setCrashed();
+                }
+            }
+            for(G3_FieldObject o : getWorld().getObjects(G3_Truck.class))
+            {
+                if (o != this && o.getX() == getX() && o.getY() == getY())
+                {
+                    setCrashed();
+                }
+            }
         }
     }
     
@@ -126,12 +166,17 @@ public class G3_Truck extends G3_FieldObject
     
     public boolean getExecuting()
     {
-        return (executing > 0);
+        return (!crashed && executing > 0);
     }
     
     public int getProgramLength()
     {
-        return program.size();
+        return (crashed ? 0 : program.size());
+    }
+    
+    public List<String> getProgram()
+    {
+        return program;
     }
     
     public boolean getActive()
@@ -155,13 +200,31 @@ public class G3_Truck extends G3_FieldObject
     public int addCommand(String value)
     {
         program.add(value);
-        
         return program.size() -1;
+    }
+    
+    /**
+     * Remove the programstep
+     */
+    public void removeCommandAt(int step)
+    {
+        program.remove(step);
+        if (active)
+        {
+            // Set new step on all visual steps on screen
+            for(G3_ProgramStep s : getWorld().getObjects(G3_ProgramStep.class))
+            {
+                if (s.getStep() > step)
+                {
+                    s.setStep(s.getStep() - 1);
+                }
+            }
+        }
     }
     
     public void executeStep()
     {
-        if (executing == 0 && program.size() > 0)
+        if (!crashed && executing == 0 && program.size() > 0)
         {
             // first record the current position and orientation
             startDirection = getRotation();
@@ -176,32 +239,32 @@ public class G3_Truck extends G3_FieldObject
             {
                 case "left":
                     endDirection = startDirection - 90;
-                    endX = startX + (startDirection <= 90 ? 40 : -40);
-                    endY = startY + (startDirection % 270 != 0 ? 40 : -40);
+                    endX = startX + (startDirection <= 90 ? gridSize : -gridSize);
+                    endY = startY + (startDirection % 270 != 0 ? gridSize : -gridSize);
                     break;
                 case "right":
                     endDirection = startDirection + 90;
-                    endX = startX + (startDirection % 270 == 0 ? 40 : -40);
-                    endY = startY + (startDirection <= 90 ? 40 : -40);
+                    endX = startX + (startDirection % 270 == 0 ? gridSize : -gridSize);
+                    endY = startY + (startDirection <= 90 ? gridSize : -gridSize);
                     break;
                 case "forward":
                     if (startDirection % 180 == 0)
                     {
-                        endX = startX + (startDirection == 0 ? 40 : -40);
+                        endX = startX + (startDirection == 0 ? gridSize : -gridSize);
                     }
                     else
                     {
-                        endY = startY + (startDirection == 90 ? 40 : -40);
+                        endY = startY + (startDirection == 90 ? gridSize : -gridSize);
                     }
                     break;
                 case "ffwd":
                     if (startDirection % 180 == 0)
                     {
-                        endX = startX + (startDirection == 0 ? 80 : -80);
+                        endX = startX + (startDirection == 0 ? 2 * gridSize : -2 * gridSize);
                     }
                     else
                     {
-                        endY = startY + (startDirection == 90 ? 80 : -80);
+                        endY = startY + (startDirection == 90 ? 2 * gridSize : -2 * gridSize);
                     }
                     break;
             }
@@ -213,5 +276,20 @@ public class G3_Truck extends G3_FieldObject
     public String getColor()
     {
         return container;
+    }
+    
+    /**
+     * Sets the crashed flag and adds a point to the worlds crash counter.
+     * The explosion is also added to the crashed object.
+     */
+    public void setCrashed()
+    {
+        if (!crashed)
+        {
+            crashed = true;
+            getWorldOfType(Game3World.class).addCrash(1);
+        }
+        G3_Explosion e = new G3_Explosion();
+        getWorld().addObject(e, getX(), getY());
     }
 }
