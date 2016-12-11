@@ -14,7 +14,7 @@ public class Deck extends Actor
     public Deck()
     {
         GreenfootImage image = getImage();  
-        image.scale(390, 60);
+        image.scale(550, 500);
         setImage(image);
     }
     
@@ -36,11 +36,12 @@ public class Deck extends Actor
         //int swaying = getWorld(myWorld.class).getTilt();
         myWorld world = getWorldOfType(myWorld.class);
         int swaying = world.tilt;
-        if(swaying>0){
+        System.out.println(" sway "+swaying);
+        if(swaying>20){
             turn(-1);
             world.stepsCount++;
         } else 
-        if (swaying<0) {
+        if (swaying<-20) {
             turn(1);
             world.stepsCount--;
         }else{
@@ -52,6 +53,8 @@ public class Deck extends Actor
                 world.stepsCount++;
                 turn(-1);
             }
+
+            System.out.println(" tilt 0 "+tilt);
         }
         
         return 0;

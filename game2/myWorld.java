@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class myWorld extends World
 {   
-    int shipCentre = 375;
+    int shipCentre = 275;
     int waterLevel = 525;
     int width = 4; //number of cargo
     int cargoWidth = 80+5; //cargo=80px, padding = 5px
@@ -84,11 +84,11 @@ public class myWorld extends World
         addObject(harbor3,750,500);
         addObject(harbor4,700,500);
         addObject(scoreCounter,750,500);
-        addObject(deck,shipCentre,waterLevel);
+        setCargo();
+        addObject(deck,shipCentre,waterLevel-85);
         addObject(clock,750,580);
         
         setTransport(720, 420);
-        setCargo();
     }
     
     public Actor getHook()
@@ -103,12 +103,19 @@ public class myWorld extends World
     
     public void act(){
             counter++;
-            if(counter ==120 && !gameOver){ //om de 7(1~sec) ticks code uitvoeren
+            if(counter ==180 && !gameOver){ //om de 7(1~sec) ticks code uitvoeren
                 delayTiltTimer++; //
                 
                 tilt = getTilt();
                 
                 deck.adjustShip();
+                int i=0;
+                while(i < grid.length){
+                    if(grid[i]!=null){
+                        grid[i].adjustBooty();
+                    }
+                    i++;
+                }
                 
                 System.out.println("rotation "+deck.getRotation());
                 showText("CargoWeight :"+tilt,shipCentre,waterLevel+50);
@@ -168,33 +175,30 @@ public class myWorld extends World
         int height = maxHeight-1;
         int i = 0;
         int hi = 0;                                     //how high the cargo is stacked
-        int x = shipCentre-(cargoWidth*(width/2)-40);
+        int x = shipCentre+15-(cargoWidth*(width/2)-40);
 
         
         while(i<width*height){
             int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
             if(randomCargoType==1){
-                Cargo cargo = new red();
-                addObject(cargo,x,StackHeight);
-                grid[i]=cargo;
+                grid[i] = new red();
+                addObject(grid[i],x,StackHeight);
                 //System.out.println(cargo.getColor());
                 //System.out.println(cargo.getWeight());
             }
             if(randomCargoType==2){
-                Cargo cargo = new blue();
-                addObject(cargo,x,StackHeight);
-                grid[i]=cargo;
+                grid[i] = new blue();
+                addObject(grid[i],x,StackHeight);
             }
             if(randomCargoType==3){
-                Cargo cargo = new green();
-                addObject(cargo,x,StackHeight);
-                grid[i]=cargo;
+                grid[i] = new green();
+                addObject(grid[i],x,StackHeight);
             }
             
             x = x+cargoWidth;
             i++;
             if(i%width==0){
-                x = shipCentre-(cargoWidth*(width/2)-40);
+                x = shipCentre+15-(cargoWidth*(width/2)-40);
                 StackHeight-=cargoHeight;
             }
         }
@@ -214,13 +218,6 @@ public class myWorld extends World
             i++;
        }
        windSpeed = halfLeft-halfRight;
-       if(halfLeft>halfRight){
-           tilt = 1;
-       }else if (halfLeft<halfRight){
-           tilt = -1;
-       }else{
-           tilt=0;
-       }
         
        System.out.println("Balans = "+windSpeed);
        //System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
