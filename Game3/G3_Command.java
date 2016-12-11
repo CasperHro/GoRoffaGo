@@ -19,13 +19,7 @@ public class G3_Command extends Actor
         // Add your action code here.
         if (Greenfoot.mouseClicked(this))
         {
-            for(G3_Truck t : getWorld().getObjects(G3_Truck.class))
-            {
-                if (t.getActive())
-                {
-                    t.addCommand(command);
-                }
-            }
+            getWorldOfType(Game3World.class).appendProgramStep(command);
         }
     }    
 }

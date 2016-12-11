@@ -17,7 +17,7 @@ public class G3_GameInfo extends Actor
                   "When a container ends on the right position and in the right direction a \n"+
                   "point is scored. But be fast because the time is ticking...\n\n"+
                   "Use the mouse to select a truck and to add or remove the program movements.\n\n"+
-                  "When you crash 5 truck, you're game over!\n\n\n"+
+                  "When you crash 5 trucks, you're game over!\n\n\n"+
                   "Click or press Enter to start...";
     private String textStart = "Get ready...\n\nHere we go!!!";
     

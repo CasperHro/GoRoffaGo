@@ -10,8 +10,8 @@ import java.awt.Point;
  */
 public class Game3World extends World
 {
-    public static String[] colors = {"red","green","yellow","blue"}; 
-    public static int gridSize = 40;
+    public static final String[] colors = {"red","green","yellow","blue"}; 
+    public static final int gridSize = 40;
     
     /**
      * Game vars
@@ -22,10 +22,11 @@ public class Game3World extends World
     private int maxCrashes = 5; // Maximum crashes before game over
     private int maxTrucks = 5; // Maximum number of programmable trucks
     private int timeOut = 300; // Timeout for the pragramming stage
+    private int delay = 0; // Delay before action (decrease counter
     private boolean firstStep = true; // Does the first step routine
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
-    private Date startTime;
-    private String lastKey = "";
+    private Date startTime; // Used for the countdown timer
+    private String lastKey = ""; // For preventing multiple actions on the same keydo
     //private GreenfootSound backgroundMusic = new GreenfootSound("theme.mp3");
 
     /*
@@ -46,6 +47,15 @@ public class Game3World extends World
         super(800, 600, 1); 
         // This is a setting for the speed of the game. Tested to be playable.
         Greenfoot.setSpeed(45);
+        setPaintOrder(
+                      G3_GameInfo.class,
+                      G3_Waitbox.class,
+                      GameOver.class,
+                      G3_Explosion.class,
+                      G3_Truck.class,
+                      G3_Destination.class,
+                      G3_Obstacle.class
+                      );
         
         //backgroundMusic.setVolume(70);
         
@@ -94,10 +104,8 @@ public class Game3World extends World
         // First clear all current trucks
         programming = null;
         programStep = 0;
-        for(Actor a : getObjects(G3_FieldObject.class))
-        {
-            removeObject(a);
-        }
+        removeObjects(getObjects(G3_FieldObject.class));
+        removeObjects(getObjects(G3_Explosion.class));
         
         // Then init all game vars
         level = nextLevel;
@@ -226,8 +234,10 @@ public class Game3World extends World
                     allDone = allDone && !t.getExecuting();
                 }
                 
+                // When done next command can be executed
                 if (allDone)
                 {
+                    // First check if at least one truck has more steps
                     boolean hasMore = false;
                     for(G3_Truck t : getObjects(G3_Truck.class))
                     {
@@ -236,53 +246,73 @@ public class Game3World extends World
                     
                     if (hasMore)
                     {
-                        Greenfoot.delay(20);
-                        programStep++;
-                        showText("Execute step: " + programStep, 700, 60);
-                        
-                        for(G3_Truck t : getObjects(G3_Truck.class))
+                        if (isDelayed(20))
                         {
-                            t.executeStep();
+                            programStep++;
+                            showText("Execute step: " + programStep, 700, 60);
+                            
+                            for(G3_Truck t : getObjects(G3_Truck.class))
+                            {
+                                t.executeStep();
+                            }
                         }
                     }
                     else
                     {
-                        setStage(GameStage.EVALUATING);
+                        showText("No more steps", 700, 60);
+                        if (isDelayed(10))
+                        {
+                            // When all trucks are done go to the next stage
+                            setStage(GameStage.EVALUATING);
+                        }
                     }
                 }
             }
             else if (gameStage == GameStage.EVALUATING)
             {
-                // TODO: Count the points and show the results
-                int scored = 0;
-                
-                for(G3_Destination d : getObjects(G3_Destination.class))
+                if (delay == 0)
                 {
-                    for(G3_Truck t : getObjects(G3_Truck.class))
+                    // Flash the rightly parked trucks
+                    for(G3_Destination d : getObjects(G3_Destination.class))
                     {
-                        if (t.getColor() == d.getColor() && t.getX() == d.getX() && t.getX() == d.getX())
+                        G3_Truck t = d.getParkedTruck();
+                        if (t != null)
                         {
                             t.setActive(true);
-                            scored++;
                         }
                     }
                 }
                 
-                String msg = "";
-                if (scored == 0)
+                if (isDelayed(40))
                 {
-                    msg = "You scored no points this round. Too bad.\nTry harder next level.";
+                    // Count the points and show the results
+                    int scored = 0;
+                    for(G3_Destination d : getObjects(G3_Destination.class))
+                    {
+                        G3_Truck t = d.getParkedTruck();
+                        if (t != null)
+                        {
+                            //t.setActive(true);
+                            scored++;
+                        }
+                    }
+
+                    String msg = "";
+                    if (scored == 0)
+                    {
+                        msg = "You scored no points this round. Too bad.\nTry harder next level.";
+                    }
+                    else if (scored > 3)
+                    {
+                        msg = String.format("Wow you scored %d points, good job!!!\nOn to the next level.", scored);
+                    }
+                    else
+                    {
+                        msg = String.format("You scored %d points, nice!\nOn to the next level.", scored);
+                    }
+                    addScore(scored);
+                    startStage(GameStage.PROGRAMMING, msg);
                 }
-                else if (scored > 3)
-                {
-                    msg = String.format("Wow you scored %d points, good job!!!\nOn to the next level.", scored);
-                }
-                else
-                {
-                    msg = String.format("You scored %d points, nice!\nOn to the next level.", scored);
-                }
-                addScore(scored);
-                startStage(GameStage.PROGRAMMING, msg);
             }
             
             // Check crashcounter and game over maxCrashes is reached
@@ -301,7 +331,7 @@ public class Game3World extends World
         // Don't create when counter reaches 0
         if (count > 0)
         {
-            // Now, create a truck with a random color
+            // Now, create a truck with a random color and a destination
             String color = colors[Greenfoot.getRandomNumber(colors.length)];
             G3_Truck truck = new G3_Truck(color, count);
             G3_Destination dest = new G3_Destination(color);
@@ -313,6 +343,8 @@ public class Game3World extends World
             
             dest.setRotation(orientation);
             addObject(dest, getRealX(coord.x), getRealY(coord.y));
+            // Do repaint so the containter is painted right away. This is needed
+            // for the check of the valid location for the next object.
             repaint();
             
             // And for the truck
@@ -332,7 +364,7 @@ public class Game3World extends World
     {
         if (count > 0)
         {
-            // TODO: Create static containers on the dock. 
+            // Create static containers on the dock. 
             // Not too close to the borders of the playfield.
             int orientation = Greenfoot.getRandomNumber(2) * 90;
             Point coord = getValidLocation(orientation, 3, 12, 3, 11);
@@ -445,16 +477,26 @@ public class Game3World extends World
     
     public void selectTruckForProgramming(G3_Truck truck)
     {
+        // Unset last active truck
         if (programming != null)
         {
             programming.setActive(false);
         }
+        // Remove all visual program steps
+        removeObjects(getObjects(G3_ProgramStep.class));
         
         programming = truck;
         programming.setActive(true);
         showText("Program truck: " + programming.getID(), 700, 60);
         
-        // TODO: Display last x program steps
+        // Display program steps
+        int i = 0;
+        for(String cmd : programming.getProgram())
+        {
+            addObject(new G3_ProgramStep(cmd, i), 700, 300);
+            i++;
+        }
+        arrangeProgramSteps();
     }
     
     public void startStage(GameStage stage, String message)
@@ -462,10 +504,11 @@ public class Game3World extends World
         // In program mode the active truck blink, deactivate all trucks
         if (gameStage == GameStage.PROGRAMMING)
         {
-            for(G3_Truck t : getObjects(G3_Truck.class))
-            {
-                t.setActive(false);
+            if (programming != null)
+            {   
+                programming.setActive(false);
             }
+            removeObjects(getObjects(G3_ProgramStep.class));
         }
         
         // Set the gamestage to waiting and show the messagebox
@@ -500,16 +543,76 @@ public class Game3World extends World
         else
         {
             // Clear all programming tools
-            for (G3_BtnAllDone o : getObjects(G3_BtnAllDone.class))
-            {
-                removeObject(o);
-            }
-            for (G3_Command o : getObjects(G3_Command.class))
-            {
-                removeObject(o);
-            }
-        
+            removeObjects(getObjects(G3_BtnAllDone.class));
+            removeObjects(getObjects(G3_Command.class));
+            
             gameStage = stage;
+        }
+    }
+    
+    /**
+     * Adds the command to the truck program and draws it on screen
+     */
+    public void appendProgramStep(String command)
+    {          
+        if (programming != null)
+        {
+            addObject(new G3_ProgramStep(command, programming.addCommand(command)), 700, 300);
+            arrangeProgramSteps();
+        }
+    }
+    
+    
+    public void removeProgramStep(G3_ProgramStep programStep)
+    {
+        if (programming != null)
+        {
+            programming.removeCommandAt(programStep.getStep());
+            removeObject(programStep);
+            arrangeProgramSteps();
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void arrangeProgramSteps()
+    {
+        // Arrange the steps
+        // We separate 3 parts, last 5 steps are shown full, then 5 steps are
+        // shown compact. More steps are shown overlaying eachother.
+        List<G3_ProgramStep> pSteps = getObjects(G3_ProgramStep.class);
+        int cnt = pSteps.size();
+        int offset = Math.min(5, cnt);
+
+        for(G3_ProgramStep s : pSteps)
+        {
+            if (s.getStep() < cnt - 10)
+            {
+                s.setYLocation(130);
+            }
+            else if (s.getStep() < cnt - 4)
+            {
+                s.setYLocation(180 - ((cnt - 5 - s.getStep()) * 10));
+            }
+            else
+            {
+                 s.setYLocation(330 + ((offset - (2* (cnt - s.getStep()))) * 30));
+            }
+        }
+    }
+    
+    private boolean isDelayed(int value)
+    {
+        if (delay == 0)
+        {
+            delay = value;
+            return false;
+        }
+        else
+        {
+            delay--;
+            return (delay == 0);
         }
     }
 }
