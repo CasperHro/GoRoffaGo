@@ -10,7 +10,7 @@ public class Cargo extends Actor
 {
     
     protected int weight;
-    protected String color;
+    public String color;
     
     public Cargo()
     {

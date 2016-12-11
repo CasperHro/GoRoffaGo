@@ -25,7 +25,7 @@ public class Hook extends Actor
     public void hookMovement() {
         // Check for Cargo actor intersection.
         if (cargo == null) {
-            cargo = (Cargo)getOneObjectAtOffset(0, 20, Cargo.class);        
+            cargo = (Cargo)getOneObjectAtOffset(0, 20, Cargo.class);
             if(cargo!=null){
                 myWorld world = getWorldOfType(myWorld.class);
                 int indexCargo = world.liftCargo(cargo);
