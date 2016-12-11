@@ -146,8 +146,6 @@ public class Game1Harbour extends World
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
         backgroundMusic.pause();
-       
-        Greenfoot.stop();
     }
 
     /**
