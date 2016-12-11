@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class G1_GameInfo extends Actor
 {
-    private String text = "Game info\n"+
+    private String text = "Navigator : game info\n\n"+
                   "Your mission is to direct the ships to the right harbour.\n"+
                   "When a ship is docked a point is scored!\n\n"+
                   "Use the arrows to navigate:\n"+
