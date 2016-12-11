@@ -36,7 +36,7 @@ public class Deck extends Actor
         //int swaying = getWorld(myWorld.class).getTilt();
         myWorld world = getWorldOfType(myWorld.class);
         int swaying = world.tilt;
-        System.out.println(" sway "+swaying);
+        //System.out.println(" sway "+swaying);
         if(swaying>20){
             turn(-1);
             world.stepsCount++;
@@ -53,8 +53,6 @@ public class Deck extends Actor
                 world.stepsCount++;
                 turn(-1);
             }
-
-            System.out.println(" tilt 0 "+tilt);
         }
         
         return 0;

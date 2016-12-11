@@ -45,6 +45,7 @@ public class myWorld extends World
     int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     int stepsCount=0;
     int counter =0;
+    int cycle;
     //WeightCounter WeightCounter = new WeightCounter();
     
     
@@ -103,28 +104,28 @@ public class myWorld extends World
     
     public void act(){
             counter++;
-            if(counter ==180 && !gameOver){ //om de 7(1~sec) ticks code uitvoeren
+            if(counter ==90 && !gameOver){ //om de 7(1~sec) ticks code uitvoeren
                 delayTiltTimer++; //
                 
                 tilt = getTilt();
-                
-                deck.adjustShip();
-                int i=0;
-                while(i < grid.length){
-                    if(grid[i]!=null){
-                        grid[i].adjustBooty();
+                if(cycle==1){ //adjust ship once every 2 cycles
+                    deck.adjustShip(); //pas de hoek van het schip aan
+                    int i=0;
+                    while(i < grid.length){ //pas de hoek en plek van de cargo aan
+                        if(grid[i]!=null){
+                            grid[i].adjustBooty();
+                        }
+                        i++;
                     }
-                    i++;
+                    cycle=0;
+                }else{
+                    cycle++;
                 }
-                
-                System.out.println("rotation "+deck.getRotation());
+                //System.out.println("rotation "+deck.getRotation());
                 showText("CargoWeight :"+tilt,shipCentre,waterLevel+50);
                 
                 showText("looted         :"+looted,720,530);
                 //showText("Transport score:"+looted,720,550);
-                
-                
-                
                 
                 
                 counter=0;
@@ -221,7 +222,7 @@ public class myWorld extends World
        }
        windSpeed = halfLeft-halfRight;
         
-       System.out.println("Balans = "+windSpeed);
+       //System.out.println("Balans = "+windSpeed);
        //System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
        return windSpeed;
     }

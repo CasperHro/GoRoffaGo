@@ -41,20 +41,21 @@ public class Cargo extends Actor
         int dist = world.shipCentre-this.getX();
         int direction;
         int direction2= -1;
-        if(dist>0){
+        System.out.println(dist);
+        if(dist>0){//links of rechts
             direction = 1;
         }else {
             direction = -1;
         }
         
-        if(tiltside){
+        if(tiltside){//binen of buiten
             direction2 = 1;
         }
         
         if(dist > -60 && dist < 50){
-            this.setLocation(this.getX(),this.getY()+(2*direction*direction2));
+            this.setLocation(this.getX()+(-2*direction2),this.getY()+(1*direction*direction2));
         }else{
-            this.setLocation(this.getX(),this.getY()+(4*direction*direction2));
+            this.setLocation(this.getX()+(-2*direction2),this.getY()+(3*direction*direction2));
         }
    }
     
