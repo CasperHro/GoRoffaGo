@@ -179,28 +179,30 @@ public class myWorld extends World
 
         
         while(i<width*height){
-            int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-            if(randomCargoType==1){
-                grid[i] = new red();
-                addObject(grid[i],x,StackHeight);
-                //System.out.println(cargo.getColor());
-                //System.out.println(cargo.getWeight());
+            if(getWeightPerX(i%width)<=25){
+                int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+                if(randomCargoType==1){
+                    grid[i] = new red();
+                    addObject(grid[i],x,StackHeight);
+                    //System.out.println(cargo.getColor());
+                    //System.out.println(cargo.getWeight());
+                }
+                if(randomCargoType==2){
+                    grid[i] = new blue();
+                    addObject(grid[i],x,StackHeight);
+                }
+                if(randomCargoType==3){
+                    grid[i] = new green();
+                    addObject(grid[i],x,StackHeight);
+                }
             }
-            if(randomCargoType==2){
-                grid[i] = new blue();
-                addObject(grid[i],x,StackHeight);
-            }
-            if(randomCargoType==3){
-                grid[i] = new green();
-                addObject(grid[i],x,StackHeight);
-            }
-            
             x = x+cargoWidth;
             i++;
             if(i%width==0){
                 x = shipCentre+15-(cargoWidth*(width/2)-40);
                 StackHeight-=cargoHeight;
             }
+            
         }
         
     }
