@@ -26,12 +26,15 @@ public class myWorld extends World
     sky sky2 = new sky();
     Water water = new Water();
     Hook hook = new Hook();
+    Line line = new Line();
+    Bar bar = new Bar();
     Harbor harbor = new Harbor();
     Harbor harbor2 = new Harbor();
     Harbor harbor3 = new Harbor();
     Harbor harbor4 = new Harbor();
     Transport transport = new Transport();
     Deck deck = new Deck();
+    Clock clock = new Clock(false, true, 0, null);
     
     Counter scoreCounter = new Counter();
     public int tilt;
@@ -70,23 +73,33 @@ public class myWorld extends World
      */
     private void prepare()
     {
-        
-
         addObject(sky,400,200);
         addObject(sky2,400,500);
         addObject(water,400,600);
-        addObject(hook,400,70);
+        addObject(hook,400,110);
+        addObject(line,400,-950);
+        addObject(bar,400,20);
         addObject(harbor,750,550);
         addObject(harbor2,700,550);
         addObject(harbor3,750,500);
         addObject(harbor4,700,500);
-        addObject(transport,720,420);
         addObject(scoreCounter,750,500);
         addObject(deck,shipCentre,waterLevel);
-
+        addObject(clock,750,580);
+        
+        setTransport(720, 420);
         setCargo();
     }
     
+    public Actor getHook()
+    {
+        return hook;
+    }
+    
+    public Actor getLine()
+    {
+        return line;
+    }
     
     public void act(){
             counter++;
@@ -130,7 +143,23 @@ public class myWorld extends World
             i++;
         }
         return i;
-    }    
+    }
+    
+    public void setTransport(int paramX, int paramY) {
+        int randomTransportType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+        if(randomTransportType==1){
+            transport = new BlueTransport();
+            addObject(transport, paramX, paramY);
+        }
+        if(randomTransportType==2){
+            transport = new RedTransport();
+            addObject(transport, paramX, paramY);
+        }
+        if(randomTransportType==3){
+            transport = new GreenTransport();
+            addObject(transport, paramX, paramY);
+        }
+    }
         
         
     public void setCargo() {

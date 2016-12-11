@@ -8,10 +8,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Transport extends Actor
 {
-    Actor Cargo = null;
+    Cargo cargo = null;
     public int resetTransport = 0;
     public int transportCount = 0;
-    int pause = 40;
+    int pause = 120;
+    public String color;
     
     public Transport()
     {
@@ -26,9 +27,11 @@ public class Transport extends Actor
      */
     public void act() 
     {
-        Cargo = getOneObjectAtOffset(0, 0, Cargo.class);
-        if (Cargo != null || Greenfoot.isKeyDown("r")) {
-            resetTransport = 1;
+        cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
+        if (cargo != null) {
+            if (cargo.getColor() == getColor()) {
+                resetTransport = 1;
+            }
         }
         
         if (resetTransport == 1) {
@@ -43,10 +46,12 @@ public class Transport extends Actor
                 }
                 else {
                     resetTransport = 0;
-                    pause = 40;
+                    pause = 120;
                     transportCount += 1;
-                    World world;
-                    world = getWorld();
+                    
+                    myWorld world = (myWorld) getWorld();
+                    world.setTransport(getX(), getY());
+                    world.removeObject(this);
                 }
                 
 
@@ -54,5 +59,9 @@ public class Transport extends Actor
 
         }
         
+    }
+    
+    public String getColor() {
+        return color;
     }
 }
