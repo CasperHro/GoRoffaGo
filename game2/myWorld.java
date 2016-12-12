@@ -20,7 +20,8 @@ public class myWorld extends World
     int maxHeight = 4;
     int maxWidth = width;
     Cargo[] grid;
-    
+    EmptyCargo[] emptyGrid = new EmptyCargo[width];
+   
     
     sky sky = new sky();
     sky sky2 = new sky();
@@ -86,6 +87,8 @@ public class myWorld extends World
         addObject(harbor4,700,500);
         addObject(scoreCounter,750,500);
         setCargo();
+        setEmpty();
+        
         addObject(deck,shipCentre,waterLevel-85);
         addObject(clock,750,580);
         
@@ -110,13 +113,13 @@ public class myWorld extends World
                 tilt = getTilt();
                 if(cycle==1){ //adjust ship once every 2 cycles
                     deck.adjustShip(); //pas de hoek van het schip aan
-                    int i=0;
-                    while(i < grid.length){ //pas de hoek en plek van de cargo aan
+                    
+                    for(int i = 0; i < grid.length;i++){//pas de hoek en plek van de cargo aan
                         if(grid[i]!=null){
                             grid[i].adjustBooty();
                         }
-                        i++;
                     }
+                    
                     cycle=0;
                 }else{
                     cycle++;
@@ -197,7 +200,7 @@ public class myWorld extends World
                     addObject(grid[i],x,StackHeight);
                 }
             }
-            x = x+cargoWidth;
+            x += cargoWidth;
             i++;
             if(i%width==0){
                 x = shipCentre+15-(cargoWidth*(width/2)-40);
@@ -206,6 +209,18 @@ public class myWorld extends World
             
         }
         
+    }
+    
+    public void setEmpty(){
+        for(int i = 0; i<width; i++){
+            if(emptyGrid[i]==null){
+                emptyGrid[i] = new EmptyCargo();
+                addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
+            }else{
+                emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
+            }
+            //System.out.println("row "+i+" - "+getCargoPerX(i));
+        }
     }
     
     public int getTilt(){
@@ -239,6 +254,18 @@ public class myWorld extends World
             i++;
         }
         return weight;
+    }
+    
+    public int getCargoPerX(int x){
+        int stack = 0;
+        for(int i = 0;i < maxHeight; i++){
+            int spot = x+(i*width);
+            //System.out.println("spot no "+spot);
+            if(grid[spot]!=null){
+                stack+=1;
+            }
+        }
+        return stack;
     }
     
     public int getSizeGrid(int x, int y){

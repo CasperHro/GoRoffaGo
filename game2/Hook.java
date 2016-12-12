@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Hook extends Actor
 {
     Cargo cargo = null;
+    EmptyCargo emptySpot = null;
     Actor Transport = null;
     int movingSpeed = 4;
 
@@ -20,6 +21,7 @@ public class Hook extends Actor
     {
         hookMovement();
         cargoInTransport();
+        EmptyCargoCheck();
     }
     
     public void hookMovement() {
@@ -31,6 +33,8 @@ public class Hook extends Actor
                 int indexCargo = world.liftCargo(cargo);
                 world.looted += world.getWeight(indexCargo);
                 world.grid[indexCargo] = null;
+                
+                world.setEmpty();
                 System.out.println(indexCargo);
             }
         }
@@ -76,8 +80,7 @@ public class Hook extends Actor
         
         // Reset Cargo pickup when Cargo and Transport intersect.
         if (Transport != null) {
-            World world;
-            world = getWorld();
+            myWorld world = getWorldOfType(myWorld.class);
             if (world.getObjects(Transport.class).get(0).resetTransport == 1) {
                 world.removeObject(cargo);
                 cargo = null;
@@ -85,5 +88,16 @@ public class Hook extends Actor
         }
     
     }
-    
+     public void EmptyCargoCheck(){
+         if(cargo!=null){
+            emptySpot = (EmptyCargo)getOneObjectAtOffset(0, 0, EmptyCargo.class);
+            if(emptySpot!=null){
+                
+                if (Greenfoot.isKeyDown("d")) {
+                    //cargo = null;
+                    System.out.println("beep");
+                }
+            }
+         }    
+    }
 }

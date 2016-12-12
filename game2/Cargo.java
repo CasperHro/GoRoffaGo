@@ -41,7 +41,6 @@ public class Cargo extends Actor
         int dist = world.shipCentre-this.getX();
         int direction;
         int direction2= -1;
-        System.out.println(dist);
         if(dist>0){//links of rechts
             direction = 1;
         }else {
