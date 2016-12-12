@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Hook extends Actor
 {
     Cargo cargo = null;
+    int indexCargo;
     EmptyCargo emptySpot = null;
     Actor Transport = null;
     int movingSpeed = 4;
@@ -27,10 +28,14 @@ public class Hook extends Actor
     public void hookMovement() {
         // Check for Cargo actor intersection.
         if (cargo == null) {
-            cargo = (Cargo)getOneObjectAtOffset(0, 20, Cargo.class);
+            
+            if (Greenfoot.isKeyDown("s")) {
+                cargo = (Cargo)getOneObjectAtOffset(0, 20, Cargo.class);
+            }
+        
             if(cargo!=null){
                 myWorld world = getWorldOfType(myWorld.class);
-                int indexCargo = world.liftCargo(cargo);
+                indexCargo = world.liftCargo(cargo);
                 world.looted += world.getWeight(indexCargo);
                 world.grid[indexCargo] = null;
                 
@@ -94,8 +99,12 @@ public class Hook extends Actor
             if(emptySpot!=null){
                 
                 if (Greenfoot.isKeyDown("d")) {
-                    //cargo = null;
-                    System.out.println("beep");
+                    myWorld world = getWorldOfType(myWorld.class);
+                    world.grid[emptySpot.getId()]=cargo;
+                    
+                    world.setEmpty();
+                    cargo = null;
+                    //System.out.println("beep");
                 }
             }
          }    

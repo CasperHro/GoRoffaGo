@@ -215,9 +215,12 @@ public class myWorld extends World
         for(int i = 0; i<width; i++){
             if(emptyGrid[i]==null){
                 emptyGrid[i] = new EmptyCargo();
+                emptyGrid[i].setId(getCargoPerX(i)*width+i);
                 addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
             }else{
                 emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
+                
+                emptyGrid[i].setId(getCargoPerX(i)*width+i);
             }
             //System.out.println("row "+i+" - "+getCargoPerX(i));
         }

@@ -9,6 +9,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class EmptyCargo extends Actor
 {
     
+    public int gridID;
+    
     public EmptyCargo()
     {
         GreenfootImage image = getImage();  
@@ -24,4 +26,13 @@ public class EmptyCargo extends Actor
     {
         // Add your action code here.
     }    
+    
+    public int getId() {
+        return gridID;
+    }
+    
+    public int setId(int id) {
+        gridID = id;
+        return gridID;
+    }
 }
