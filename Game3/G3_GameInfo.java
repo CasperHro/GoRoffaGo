@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class G3_GameInfo extends Actor
 {
-    private String text = "Game info\n"+
+    private String text = "Transport director : game info\n\n"+
                   "Your mission is to direct the containertrucks to the right positions.\n"+
                   "Program each truck with the right movements and prevent accidents!\n\n"+
                   "When a container ends on the right position and in the right direction a \n"+

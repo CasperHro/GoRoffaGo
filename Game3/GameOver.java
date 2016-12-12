@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.awt.Color;
 
 /**
  * Write a description of class GameOver here.
@@ -8,19 +9,50 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameOver extends Actor
 {
+    private int opacity = 0;
+    private int showStep = 10;
+    
     /**
-     * Act - do whatever the GameOver wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * When placed on the world make a complete overlay
      */
-    public GameOver()
+    public void addedToWorld(World world)
     {
-        //set size of thE picture
-        GreenfootImage image = getImage();
-        image.scale(image.getWidth(), image.getHeight());
-        setImage(image);
+        drawOverlay(world, getImage());
     }
+
+        /**
+     * Draw an overlaying image with the infotext rendered on it
+     */
+    private void drawOverlay(World world, GreenfootImage img)
+    {
+        int width = world.getWidth();
+        int height = world.getHeight();
+        GreenfootImage overlay = new GreenfootImage(width, height);
+        overlay.setColor(new Color(0, 0, 0, 160));
+        overlay.fill();
+        
+        // Draw the image on the background
+        int left = (width - img.getWidth()) / 2;
+        int top = (height - img.getHeight()) / 2;
+        overlay.drawImage(img, left, top);
+        
+        overlay.setTransparency(opacity);
+        setImage(overlay);
+    }
+
     public void act() 
     {
-        // Add your action code here.
+        if (opacity < 255)
+        {
+            opacity = Math.min(255, opacity + showStep);
+            getImage().setTransparency(opacity);
+        }
+
+        // Check user action
+        if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter") || Greenfoot.isKeyDown("Escape"))
+        {
+            // TODO: End game or ,aybe ask to play again
+            Greenfoot.stop();
+        }
     }    
 }

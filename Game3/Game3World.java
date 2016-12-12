@@ -47,8 +47,7 @@ public class Game3World extends World
         super(800, 600, 1); 
         // This is a setting for the speed of the game. Tested to be playable.
         Greenfoot.setSpeed(45);
-        setPaintOrder(
-                      G3_GameInfo.class,
+        setPaintOrder(G3_GameInfo.class,
                       G3_Waitbox.class,
                       GameOver.class,
                       G3_Explosion.class,
@@ -130,9 +129,9 @@ public class Game3World extends World
         createTrucks(Math.min(level, maxTrucks));
         
         // Create the program options
+        addObject(new G3_CmdForward(), 700, 505);
         addObject(new G3_CmdLeft(), 655, 505);
         addObject(new G3_CmdRight(), 745, 505);
-        addObject(new G3_CmdForward(), 700, 505);
         addObject(new G3_CmdFFwd(), 725, 565);
         addObject(new G3_CmdPark(), 675, 565);
         addObject(new G3_BtnAllDone(), 700, 20);
@@ -161,8 +160,6 @@ public class Game3World extends World
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
         //backgroundMusic.pause();
-       
-        Greenfoot.stop();
     }
 
     /**

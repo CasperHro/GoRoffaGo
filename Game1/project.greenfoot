@@ -1,7 +1,5 @@
 #Greenfoot project file
 =\=\=\=\=\=\=
-<<<<<<<=Updated\ upstream
->>>>>>>=Stashed\ changes
 class.Boat1.image=boat4.png
 class.Boat1.superclass=greenfoot.Actor
 class.G1_Boat.image=BoatContainer.png

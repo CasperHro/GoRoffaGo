@@ -1,9 +1,12 @@
 #BlueJ class context
 comment0.target=GameOver
 comment0.text=\n\ Write\ a\ description\ of\ class\ GameOver\ here.\n\ \n\ @author\ (YuliaKr)\ \n\ @version\ (version\ 1.0,\ 23.11.16)\n
-comment1.params=
-comment1.target=GameOver()
-comment1.text=\n\ Act\ -\ do\ whatever\ the\ GameOver\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
-comment2.params=
-comment2.target=void\ act()
-numComments=3
+comment1.params=world
+comment1.target=void\ addedToWorld(greenfoot.World)
+comment1.text=\n\ When\ placed\ on\ the\ world\ make\ a\ complete\ overlay\n
+comment2.params=world\ img
+comment2.target=void\ drawOverlay(greenfoot.World,\ greenfoot.GreenfootImage)
+comment2.text=\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\n
+comment3.params=
+comment3.target=void\ act()
+numComments=4
