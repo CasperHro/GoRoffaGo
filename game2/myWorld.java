@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Write a description of class myWorld here.
@@ -156,21 +156,28 @@ public class myWorld extends World
         return i;
     }
     
-    public void setTransport(int paramX, int paramY) {
-        int randomTransportType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-        if(randomTransportType==1){
-            transport = new BlueTransport();
-            addObject(transport, paramX, paramY);
-        }
-        if(randomTransportType==2){
-            transport = new RedTransport();
-            addObject(transport, paramX, paramY);
-        }
-        if(randomTransportType==3){
-            transport = new GreenTransport();
-            addObject(transport, paramX, paramY);
-        }
+public void setTransport(int paramX, int paramY) {
+    List<String> availableColors = getAvailableColors();
+    
+    System.out.println(availableColors);
+    
+    int idx = new Random().nextInt(availableColors.size());
+    String randomTransportType = (availableColors.get(idx));
+
+    if (randomTransportType == "blue") {
+        transport = new BlueTransport();
+        addObject(transport, paramX, paramY);
     }
+    
+    if (randomTransportType == "red"){
+        transport = new RedTransport();
+        addObject(transport, paramX, paramY);
+    }
+    if (randomTransportType == "green"){
+        transport = new GreenTransport();
+        addObject(transport, paramX, paramY);
+    }
+}
         
         
     public void setCargo() {
@@ -340,6 +347,22 @@ public class myWorld extends World
             System.out.println(grid[0]);
             System.out.println(grid.length);
 
+    }
+    
+    public List getAvailableColors(){
+        List<String> colors = new ArrayList<String>();
+        String color = "";
+        
+        for (Cargo c : grid) {
+            if (c != null) {
+                color = c.getColor();
+                if(!colors.contains(color)){
+                    colors.add(color);
+                }            
+            }
+        }
+        
+        return colors;
     }
     
 }
