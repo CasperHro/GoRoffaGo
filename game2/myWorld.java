@@ -14,7 +14,9 @@ public class myWorld extends World
     int shipCentre = 260;
     int deckLevel = 473;
     int width = 4; //number of cargo
-    int cargoWidth = 50; //cargo=80px, padding = 5px
+    int cargoWidth = 50; //cargo=50 x 50px
+    int cargoHeight = 50;
+    int space = 4; // horizontal spacing between cargo
     
     int maxHeight = 4;
     int maxWidth = width;
@@ -22,18 +24,21 @@ public class myWorld extends World
     
     Hook p1_hook;
     Deck p1_deck;
-    Transport p1_transport;
     Cargo[] p1_grid;
-    EmptyCargo[] p1_emptyGrid = new EmptyCargo[width];
+    EmptyCargo[] p1_emptyGrid;
+    Transport p1_transport;
+    int p1_TransportIndex = -1;
 
     Hook p2_hook;
     Deck p2_deck;
-    Transport p2_transport;
     Cargo[] p2_grid;
-    EmptyCargo[] p2_emptyGrid = new EmptyCargo[width];
+    EmptyCargo[] p2_emptyGrid;
+    Transport p2_transport;
+    int p2_TransportIndex = -1;
 
     Clock clock;
     Counter scoreCounter;
+    List<String> transportOrder = new ArrayList<String>();
 
     public int tilt;
     public int looted = 0;
@@ -61,10 +66,11 @@ public class myWorld extends World
         setPaintOrder(//G2_GameInfo.class,
                   //G2_Waitbox.class,
                   //GameOver.class,
+                  Water.class,// Foreground water
                   Deck.class,
                   Hook.class,
-                  Transport.class,
                   Cargo.class,
+                  Transport.class,
                   Cables.class,
                   BoatBack.class
                   );
@@ -81,7 +87,7 @@ public class myWorld extends World
     {
         p1_hook = new Hook();
         p1_deck = new Deck();
-    
+
         p2_hook = new ComputerHook();
         p2_deck = new Deck();
 
@@ -90,13 +96,13 @@ public class myWorld extends World
 
         addObject(p1_deck, shipCentre, deckLevel - 52);
         addObject(p1_hook, 35, 300);
-        
+
         addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
         addObject(p2_hook, getWidth() - 35, 300);
-        
+
         addObject(clock, 750, 40);
         addObject(scoreCounter, 750, 20);
-        
+
         Water water = new Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
     }
@@ -123,15 +129,17 @@ public class myWorld extends World
         // First clear the current playfield and reset the ships
         removeObjects(getObjects(Transport.class));
         removeObjects(getObjects(Cargo.class));
-        
-        
         createGrid(maxHeight, maxWidth);
-        
+
+        // Now create the new cargo for this level
         setCargo();
         setEmpty();
         
         // TODO: Call create for first transport
-        setTransport(720, 420);
+        p1_TransportIndex = -1;
+        p2_TransportIndex = -1;
+        set_p1_Transport();
+        set_p2_Transport();
         
         printGrid();
         System.out.println("start");
@@ -173,7 +181,7 @@ public class myWorld extends World
                 cycle++;
             }
             //System.out.println("rotation "+deck.getRotation());
-            showText("CargoWeight :" + tilt, shipCentre, deckLevel + 50);
+            showText("CargoWeight :" + tilt, shipCentre, deckLevel - 52);
             
             showText("looted         :" + looted,720,530);
             //showText("Transport score:"+looted,720,550);
@@ -209,46 +217,66 @@ public class myWorld extends World
         System.out.println(i);
     }
     
-    public void setTransport(int paramX, int paramY) {
-        List<String> availableColors = getAvailableColors();
-        
-        System.out.println(availableColors);
-        
-        int idx = new Random().nextInt(availableColors.size());
-        String randomTransportType = (availableColors.get(idx));
-
-        p1_transport = new Transport();
-        p1_transport.setColor(randomTransportType);
-        addObject(p1_transport, paramX, paramY);
+    public void set_p1_Transport()
+    {
+        p1_TransportIndex++;
+        p1_transport = new Transport(transportOrder.get(p1_TransportIndex));
+        addObject(p1_transport, 50, 441);
     }
-        
-        
+
+    public void set_p2_Transport()
+    {
+        p2_TransportIndex++;
+        p2_transport = new Transport(transportOrder.get(p2_TransportIndex));
+        addObject(p2_transport, 750, 441);
+    }
+    
+    public void removeTransport(Transport truck)
+    {
+        if (truck == p1_transport)
+        {
+            set_p1_Transport();
+        }
+        if (truck == p2_transport)
+        {
+            set_p2_Transport();
+        }
+        removeObject(truck);
+    }
+    
     public void setCargo() {
-        int cargoHeight = 50;
-        int space = 4;
         int StackHeight = deckLevel-(cargoHeight/2);
         int height = maxHeight-1;
         int i = 0;
         int hi = 0;                                     //how high the cargo is stacked
         int x = shipCentre-(width/2*(cargoWidth+space))+((cargoWidth+space)/2);
-
+        List<String> containers = new ArrayList<String>();
         
         while(i<width*height){
             if(getWeightPerX(i%width)<=25){
                 int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
+                Cargo p1_cargo = null;
+                Cargo p2_cargo = null;
                 if(randomCargoType==1){
-                    p1_grid[i] = new red();
-                    addObject(p1_grid[i],x,StackHeight);
-                    //System.out.println(cargo.getColor());
-                    //System.out.println(cargo.getWeight());
+                    p1_cargo = new red();
+                    p2_cargo = new red();
                 }
                 if(randomCargoType==2){
-                    p1_grid[i] = new blue();
-                    addObject(p1_grid[i],x,StackHeight);
+                    p1_cargo = new green();
+                    p2_cargo = new green();
                 }
                 if(randomCargoType==3){
-                    p1_grid[i] = new green();
-                    addObject(p1_grid[i],x,StackHeight);
+                    p1_cargo = new blue();
+                    p2_cargo = new blue();
+                }
+                
+                if (p1_cargo != null && p2_cargo != null)
+                {
+                    containers.add(p1_cargo.getColor());
+                    p1_grid[i] = p1_cargo;
+                    p2_grid[i - (i % 4) + (width-1) - (i % 4)] = p2_cargo;
+                    addObject(p1_cargo,x,StackHeight);
+                    addObject(p2_cargo, getWidth() - x, StackHeight);
                 }
             }
             x += cargoWidth+4;// spacing 6 pixles
@@ -257,23 +285,56 @@ public class myWorld extends World
                 x = shipCentre-(width/2*(cargoWidth+space))+((cargoWidth+space)/2);
                 StackHeight-=cargoHeight;
             }
-            
         }
         
+        shuffleTransportOrder(containers);
     }
     
-    public void setEmpty(){
-        for(int i = 0; i<width; i++){
-            if(p1_emptyGrid[i]==null){
-                p1_emptyGrid[i] = new EmptyCargo();
-                p1_emptyGrid[i].setId(getCargoPerX(i)*width+i);
-                addObject(p1_emptyGrid[i],p1_grid[i].getX(),p1_grid[i].getY()+(getCargoPerX(i)*-45));
+    public void setEmpty()
+    {
+        setEmpty(p1_emptyGrid, p1_grid);
+        setEmpty(p2_emptyGrid, p2_grid);
+    }
+    
+    public void setEmpty(EmptyCargo[] emptyGrid, Cargo[] grid)
+    {
+        for(int i = 0; i<emptyGrid.length; i++){
+            if(emptyGrid[i]==null){ //  create EmptyCargo placeholders
+                emptyGrid[i] = new EmptyCargo();
+                emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
+                addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
             }else{
-                p1_emptyGrid[i].setLocation(p1_grid[i].getX(),p1_grid[i].getY()+(getCargoPerX(i)*-45));
+                emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
                 
-                p1_emptyGrid[i].setId(getCargoPerX(i)*width+i);
+                emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
+            
+               if(emptyGrid[i]!=null){  //update EmptyCargo placeholders
+                    int heightperX = getCargoPerX(grid, i);
+                    if(heightperX<maxHeight){
+                        emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(heightperX*-45));
+                        emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
+                    } else {
+                        emptyGrid[i].setLocation(0,0);
+                        emptyGrid[i].setId(0);
+                    }
+                }else{
+                    int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
+                    int StackHeight = deckLevel-(cargoHeight/2);
+                    emptyGrid[i].setLocation(x,StackHeight);
+                }            
             }
-            //System.out.println("row "+i+" - "+getCargoPerX(i));
+            //System.out.println("row "+i+" - "+getCargoPerX(grid, i));
+        }
+    }
+    
+    private void shuffleTransportOrder(List<String> containers)
+    {
+        transportOrder.clear();
+        while(containers.size() > 0)
+        {
+            int rnd = Greenfoot.getRandomNumber(containers.size());
+            transportOrder.add(containers.get(rnd));
+            containers.remove(rnd);
         }
     }
     
@@ -310,12 +371,12 @@ public class myWorld extends World
         return weight;
     }
     
-    public int getCargoPerX(int x){
+    public int getCargoPerX(Cargo[] grid, int x){
         int stack = 0;
         for(int i = 0;i < maxHeight; i++){
             int spot = x+(i*width);
             //System.out.println("spot no "+spot);
-            if(p1_grid[spot]!=null){
+            if(grid[spot]!=null){
                 stack+=1;
             }
         }
@@ -346,6 +407,9 @@ public class myWorld extends World
     public void createGrid(int x,int y){
         int gridSize = getSizeGrid(x,y);
         p1_grid = new Cargo[gridSize];
+        p2_grid = new Cargo[gridSize];
+        p1_emptyGrid = new EmptyCargo[x];
+        p2_emptyGrid = new EmptyCargo[x];
     }
         
     public int getSpot(int x, int y){
@@ -391,22 +455,6 @@ public class myWorld extends World
             System.out.println(p1_grid[0]);
             System.out.println(p1_grid.length);
 
-    }
-    
-    public List getAvailableColors(){
-        List<String> colors = new ArrayList<String>();
-        String color = "";
-        
-        for (Cargo c : p1_grid) {
-            if (c != null) {
-                color = c.getColor();
-                if(!colors.contains(color)){
-                    colors.add(color);
-                }            
-            }
-        }
-        
-        return colors;
     }
     
     public boolean putCargoAtSpot(Cargo cargo, EmptyCargo emptySpot)

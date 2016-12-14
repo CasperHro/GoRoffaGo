@@ -51,13 +51,13 @@ public class Hook extends Actor
             offset += cargo.getImage().getHeight();
         }
         
+        List<Transport> t = getWorld().getObjectsAt(x, y + offset, Transport.class);
         List<Cargo> l = getWorld().getObjectsAt(x - (getImage().getWidth() / 2), y + offset, Cargo.class);
         List<Cargo> r = getWorld().getObjectsAt(x + (getImage().getWidth() / 2), y + offset, Cargo.class);
         l.remove(cargo);
         r.remove(cargo);
         // Up is always good, downwards we check what's beneath
-        if (getY() > y || (l.isEmpty() && r.isEmpty() &&
-             getWorld().getObjectsAt(x, y + offset, Transport.class).isEmpty()))
+        if (getY() > y || (l.isEmpty() && r.isEmpty() && (t.isEmpty() || t.get(0).getY() -43 > y)))
         {
             super.setLocation(x, y);
             runner.setLocation(getX(), runnerOffset);

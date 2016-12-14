@@ -15,28 +15,25 @@ public class Transport extends Actor
     int pause = 120;
     public String color;
     
-    public Transport()
-    {
-    }
-
-    public void setColor(String value)
+    public Transport(String value)
     {
         color = value;
-        GreenfootImage img = getImage();
-        
+    }
+
+    protected void addedToWorld(World world)
+    {
         switch(color)
         {
             case "red":
-                img.setColor(new Color(255, 0, 0));
+                setImage("g2_truckRed.png");
                 break;
             case "green":
-                img.setColor(new Color(0, 255, 0));
+                setImage("g2_truckYellow.png");
                 break;
             case "blue":
-                img.setColor(new Color(0, 0, 255));
+                setImage("g2_truckBlue.png");
                 break;
         }
-        img.fillRect(10, 40, 40, 80);
     }
     
     /**
@@ -77,8 +74,7 @@ public class Transport extends Actor
                     transportCount += 1;
 
                     myWorld world = (myWorld) getWorld();
-                    world.setTransport(getX(), getY());
-                    world.removeObject(this);
+                    world.removeTransport(this);
                 }
                 
 
