@@ -220,25 +220,14 @@ public void setTransport(int paramX, int paramY) {
     
     public void setEmpty(){
         for(int i = 0; i<width; i++){
-            if(emptyGrid[i]==null){ //  create EmptyCargo placeholders
+            if(emptyGrid[i]==null){
                 emptyGrid[i] = new EmptyCargo();
                 emptyGrid[i].setId(getCargoPerX(i)*width+i);
                 addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
             }else{
-                if(grid[i]!=null){  //update EmptyCargo placeholders
-                    int heightperX = getCargoPerX(i);
-                    if(heightperX<maxHeight){
-                        emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(heightperX*-45));
-                        emptyGrid[i].setId(getCargoPerX(i)*width+i);
-                    } else {
-                        emptyGrid[i].setLocation(0,0);
-                        emptyGrid[i].setId(0);
-                    }
-                }else{
-                    int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
-                    int StackHeight = waterLevel-50;
-                    emptyGrid[i].setLocation(x,StackHeight);
-                }
+                emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(i)*-45));
+                
+                emptyGrid[i].setId(getCargoPerX(i)*width+i);
             }
             //System.out.println("row "+i+" - "+getCargoPerX(i));
         }

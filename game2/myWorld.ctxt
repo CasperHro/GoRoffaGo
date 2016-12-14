@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=myWorld
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ myWorld\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ myWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=myWorld()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ myWorld.\r\n\ \r\n
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ myWorld.\n\ \n
 comment10.params=
 comment10.target=int\ getTilt()
 comment11.params=x
@@ -26,7 +26,7 @@ comment19.params=x\ y\ value
 comment19.target=boolean\ setCoord(int,\ int,\ Cargo)
 comment2.params=
 comment2.target=void\ prepare()
-comment2.text=\r\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\r\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\r\n
+comment2.text=\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\n
 comment20.params=spot\ value
 comment20.target=void\ setGrid(int,\ Cargo)
 comment21.params=x\ y
