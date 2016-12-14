@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.awt.Color;
 
 /**
  * Write a description of class Transport here.
@@ -14,11 +15,25 @@ public class Transport extends Actor
     int pause = 120;
     public String color;
     
-    public Transport()
+    public Transport(String value)
     {
-        GreenfootImage image = getImage();  
-        image.scale(120, 60);
-        setImage(image);
+        color = value;
+    }
+
+    protected void addedToWorld(World world)
+    {
+        switch(color)
+        {
+            case "red":
+                setImage("g2_truckRed.png");
+                break;
+            case "green":
+                setImage("g2_truckYellow.png");
+                break;
+            case "blue":
+                setImage("g2_truckBlue.png");
+                break;
+        }
     }
     
     /**
@@ -27,10 +42,19 @@ public class Transport extends Actor
      */
     public void act() 
     {
-        cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
-        if (cargo != null) {
-            if (cargo.getColor() == getColor()) {
-                resetTransport = 1;
+        if (cargo == null) {
+            cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
+            if (cargo != null) {
+                if (cargo.getColor() == getColor()) {
+                    // Add score ???
+                    Counter c = getWorld().getObjects(Counter.class).get(0);
+                    if (c != null)
+                    {
+                        c.addTransportScore(1);
+                    }
+    
+                    resetTransport = 1;
+                }
             }
         }
         
@@ -48,10 +72,9 @@ public class Transport extends Actor
                     resetTransport = 0;
                     pause = 120;
                     transportCount += 1;
-                    
+
                     myWorld world = (myWorld) getWorld();
-                    world.setTransport(getX(), getY());
-                    world.removeObject(this);
+                    world.removeTransport(this);
                 }
                 
 

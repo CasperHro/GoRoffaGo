@@ -11,11 +11,37 @@ public class Deck extends Actor
     int centerX;
     int tilt;
     
+    BoatBack back = new BoatBack();
+    
     public Deck()
     {
-        GreenfootImage image = getImage();  
-        image.scale(550, 500);
-        setImage(image);
+    }
+    
+    /**
+     * When added to a world also add the back of the ship
+     */
+    protected void addedToWorld(World world)
+    {
+        world.addObject(back, getX(), getY());
+    }
+    
+    /**
+     * Set the same location for tha back of the ship
+     */
+    public void setLocation(int x, int y)
+    {
+        super.setLocation(x, y);
+        back.setLocation(getX(), getY());
+    }
+    
+    /**
+     * Override for setRotation to also set the rotation for the back of the 
+     * ship.
+     */
+    public void setRotation(int rotation)
+    {
+        super.setRotation(rotation);
+        back.setRotation(getRotation());
     }
     
     /**
@@ -24,9 +50,7 @@ public class Deck extends Actor
      */
     public void act() 
     {
-       
-        
-            //turn(1);
+        //turn(1);
         //int swaying = ((myWorld)getworld()).tilt;
         //turn(1);
     }    

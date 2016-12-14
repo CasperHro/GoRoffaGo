@@ -22,8 +22,4 @@ public class red extends Cargo
     {
         // Add your action code here.
     }       
-    
-    public int getWeight() {
-        return weight;
-    }
 }

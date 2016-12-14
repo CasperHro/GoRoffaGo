@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Bar here.
+ * Write a description of class HookRunner here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Bar extends Hook
+public class HookRunner extends Actor
 {
     /**
-     * Act - do whatever the Bar wants to do. This method is called whenever
+     * Act - do whatever the HookRunner wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
