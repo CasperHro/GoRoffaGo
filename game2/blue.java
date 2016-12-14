@@ -21,9 +21,5 @@ public class blue extends Cargo
     public void act() 
     {
         // Add your action code here.
-    }    
-    
-    public int getWeight() {
-        return weight;
     }
 }

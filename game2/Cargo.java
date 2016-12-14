@@ -14,9 +14,6 @@ public class Cargo extends Actor
     
     public Cargo()
     {
-        GreenfootImage image = getImage();  
-        image.scale(80, 40);
-        setImage(image);
     }
     
     /**

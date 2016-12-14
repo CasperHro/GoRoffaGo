@@ -10,9 +10,6 @@ public class Water extends Actor
 {
     public Water()
     {
-        GreenfootImage image = getImage();  
-        image.scale(1000, 150);
-        setImage(image);
     }
     
     /**
