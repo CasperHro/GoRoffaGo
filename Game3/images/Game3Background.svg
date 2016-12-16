@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <rect y="40" width="600" height="560" style="fill: rgb(216, 216, 216);"/>
+  <rect x="600" y="40" width="200" height="560" style="fill: rgb(29, 3, 224);"/>
+  <rect width="800" height="40" style="fill: rgb(58, 52, 52);"/>
+  <path d="M 0 80 L 600 80" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 360 L 600 360" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 320 L 600 320" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 280 L 600 280" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 240 L 600 240" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 200 L 600 200" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 160 L 600 160" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 120 L 600 120" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 560 L 600 560" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 520 L 600 520" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 480 L 600 480" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 440 L 600 440" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 0 400 L 600 400" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 40 600 L 40 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 200 600 L 200 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 160 600 L 160 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 120 600 L 120 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 80 600 L 80 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 240 600 L 240 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 400 600 L 400 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 360 600 L 360 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 320 600 L 320 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 280 600 L 280 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 440 600 L 440 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 600 600 L 600 40" style="fill: none; stroke: rgba(0, 0, 0, 0.458824);"/>
+  <path d="M 560 600 L 560 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 520 600 L 520 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+  <path d="M 480 600 L 480 40" style="fill: none; stroke: rgb(144, 144, 144);"/>
+</svg>
