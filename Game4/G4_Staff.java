@@ -15,7 +15,7 @@ public class G4_Staff extends Actor
     private int missed = 0;
     private String role = "criminal";
     private boolean criminal = false;
-    
+    private int hided = 0;
     private static int TIMEOUT = 40;
     private int moveCounter = 0;
    
@@ -48,7 +48,6 @@ public class G4_Staff extends Actor
         else 
         {
             setImage(new GreenfootImage("crimineel.png"));
-            Greenfoot.playSound("alarm.mp3");
             criminal = true;
         }
     } 
@@ -70,7 +69,7 @@ public class G4_Staff extends Actor
             else
             {
                 officer.turn(Greenfoot.getRandomNumber(30));
-                officer.move(45);
+                officer.move(-10);
                 return;
             }
         }
@@ -80,20 +79,38 @@ public class G4_Staff extends Actor
         {
             if (criminal == false)
             {
-                this.turn(Greenfoot.getRandomNumber(70));
-                move(5);
-                return;
+                move(-10);
+                turn(90);
             }
             
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and apper agin next to one of other or the same
-                missed++;
                 ((Game4Hunter)getWorld()).addMissed(1);
                 getWorld().removeObject(this);
                 return;
             }
         }
+        
+        
+        G4_Container container = (G4_Container) getOneIntersectingObject(G4_Container.class);
+        if (container != null)
+        {
+            if (criminal == false)
+            {
+                move(-10);
+                turn(90);
+            }
+            
+            else if (criminal == true)
+            {
+                // make sure that criminal can hide in the container and apper agin next to one of other or the same
+                ((Game4Hunter)getWorld()).addMissed(1);
+                getWorld().removeObject(this);
+                return;
+            }
+        }
+        
         if (Greenfoot.getRandomNumber(100) < 10)
         {
             turn(Greenfoot.getRandomNumber(90) - 45);
@@ -123,6 +140,6 @@ public class G4_Staff extends Actor
         }
   
     }
-   
+    
 }
 

@@ -17,6 +17,12 @@ public class Game4Hunter extends World
      * 
      */
     
+    public static final String[] roles = {"criminal","pop1", "criminal","pop2","pop3"};
+    public static final String[] obstacles = {"obs1", "obs2", "obs3"};
+    public static final String[] cargos = {"cont1", "cont2","cont3","cont4"};
+    public static final int[] rndYs = {140, 240, 340, 440};
+    public static final int[] rndXs = {198, 327, 456, 585};
+    
     private int newManInterval = 90;
     private int newManSteps = 0;
     private int manCounter = 0;
@@ -25,7 +31,9 @@ public class Game4Hunter extends World
     private int maxMissed = 5;
     private boolean firstStep = true;
     private boolean running = false;
-    private String role = "criminal"; 
+    
+    
+
     
     private GreenfootSound backgroundMusic = new GreenfootSound("club_dance.mp3");
     
@@ -33,7 +41,7 @@ public class Game4Hunter extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
-        
+       
         Greenfoot.setSpeed(40);
         
         backgroundMusic.setVolume(70);
@@ -45,30 +53,14 @@ public class Game4Hunter extends World
     
     private void prepare()
     {
-        //add obstacles to theWorld
-        G4_Obstacle g4_obstacle1 = new G4_Obstacle();
-        addObject(g4_obstacle1, 196, 430);
-        g4_obstacle1.setRole("pop1");
-        
-        G4_Obstacle g4_obstacle2 = new G4_Obstacle();
-        addObject(g4_obstacle2, 246, 132);
-        g4_obstacle1.setRole("pop2");
-        
-        G4_Obstacle g4_obstacle3 = new G4_Obstacle();
-        addObject(g4_obstacle3, 645, 181);
-        g4_obstacle1.setRole("pop3");
-        
-        G4_Obstacle g4_obstacle4 = new G4_Obstacle();
-        addObject(g4_obstacle4, 530, 404);
-        g4_obstacle4.setRotation(90);
-        
-  
+       
         G4_Officer g4_officer = new G4_Officer();
         addObject(g4_officer, 100, 550);
         
         G4_Entry g4_entry = new G4_Entry();
         addObject(g4_entry, 20, 270);
         g4_entry.setRotation(90);
+       
     }
     
     private void firstStep()
@@ -96,6 +88,9 @@ public class Game4Hunter extends World
         
         addMissed(0);
         
+        setObstacle();
+        setContainer();
+        
         newManSteps = newManInterval - 5;
 
     }
@@ -117,6 +112,8 @@ public class Game4Hunter extends World
             }
         }
         
+        checkClouds();
+        
         if (missed >= maxMissed)
         {
             gameOver();
@@ -126,21 +123,77 @@ public class Game4Hunter extends World
     
     private void createMan()
     {
-        List<G4_Obstacle> roles = getObjects(G4_Obstacle.class);
         int rndY = Greenfoot.getRandomNumber(40);
-        int rndRole = Greenfoot.getRandomNumber(roles.size());
+        String role = roles[Greenfoot.getRandomNumber(roles.length)];
         
         G4_Staff man = new G4_Staff();
         addObject(man, 5, 270 + rndY);
         man.setRotation(rndY/-2);
-        man.setRole(roles.get(rndRole).getRole());
+        man.setRole(role);
         manCounter++;
         newManSteps = 0;
         
-        if (manCounter % 7 == 0)
+        if (manCounter % 8 == 0)
         {
-            newManInterval -= 2;
+            newManInterval -= 1;
         }
+        
+        if (role == "criminal")
+        {
+            Greenfoot.playSound("alarm.mp3");
+        }
+        
+        if (manCounter % 9 == 0)
+        {
+            createCloud();
+        }
+    }
+    
+    private void setObstacle()
+    {
+        String obstacle = obstacles[Greenfoot.getRandomNumber(obstacles.length)];
+        
+        G4_Obstacle obs1 = new G4_Obstacle();
+        addObject(obs1, 600, 570);
+        obs1.setValue(obstacle);
+        
+        G4_Obstacle obs2 = new G4_Obstacle();
+        addObject(obs2, 100, 30);
+        obs2.setValue(obstacle);
+        
+        G4_Obstacle obs3 = new G4_Obstacle();
+        addObject(obs3, 650, 30);
+        obs3.setValue(obstacle);
+        
+    }
+    
+    private void setContainer()
+    {
+        int rndY = rndYs[Greenfoot.getRandomNumber(rndYs.length)];
+        int rndX = rndXs[Greenfoot.getRandomNumber(rndXs.length)];
+        String cargo = cargos[Greenfoot.getRandomNumber(cargos.length)];
+        
+        G4_Container container = new G4_Container();
+        addObject(container, rndX, rndY);
+        container.setCargo(cargo);
+    }
+    
+    private void createCloud()
+    {
+        int rndY = Greenfoot.getRandomNumber(400);
+        
+        G4_Cloud cloud = new G4_Cloud();
+        addObject(cloud, 5, rndY+100);
+
+    }
+    
+    private void checkClouds()
+    {
+        for(G4_Cloud cloud : getObjects(G4_Cloud.class))
+            if (cloud.isAtEdge())
+            {
+                removeObject(cloud);
+            }
     }
     
     public void gameOver()
@@ -157,6 +210,17 @@ public class Game4Hunter extends World
         
     }
     
+    
+    public void addCriminal()
+    {
+        int rndY = Greenfoot.getRandomNumber(600);
+        int rndX = Greenfoot.getRandomNumber(600);
+        
+        G4_Staff man = new G4_Staff();
+        addObject(man, 200+ rndX, rndY);
+        man.setRotation(rndY/-2);
+        man.setRole("criminal");
+    }
     public void addScore(int increase)
     {
         score += increase;
