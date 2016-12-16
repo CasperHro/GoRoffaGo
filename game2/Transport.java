@@ -12,7 +12,7 @@ public class Transport extends Actor
     Cargo cargo = null;
     public int resetTransport = 0;
     public int transportCount = 0;
-    int pause = 120;
+    int pause = 60;
     public String color;
     
     public Transport(String value)
@@ -59,18 +59,25 @@ public class Transport extends Actor
         }
         
         if (resetTransport == 1) {
+            GreenfootImage image = getImage();
             if(pause > 0) {
-                setLocation(getX()+3, getY());
+                if (image.getWidth() > 9) {
+                    image.scale(image.getWidth() - 1, image.getHeight() - 1);
+                    setImage(image);                
+                }
+
+                
                 pause--;
             }
               
             if(pause == 0) {
-                if (getX() >= 720) {
-                    setLocation(getX()-3, getY());
+                if (image.getWidth() < 54) {
+                    image.scale(image.getWidth() + 1, image.getHeight() + 1);
+                    setImage(image);
                 }
                 else {
                     resetTransport = 0;
-                    pause = 120;
+                    pause = 60;
                     transportCount += 1;
 
                     myWorld world = (myWorld) getWorld();
