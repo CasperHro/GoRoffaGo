@@ -28,14 +28,14 @@ public class Game4Hunter extends World
     private int manCounter = 0;
     private int score = 0;
     private int missed = 0;
-    private int maxMissed = 5;
+    private int maxMissed = 3;
     private boolean firstStep = true;
     private boolean running = false;
     
     
 
     
-    private GreenfootSound backgroundMusic = new GreenfootSound("club_dance.mp3");
+    private GreenfootSound backgroundMusic = new GreenfootSound("tetris_theme.mp3");
     
     public Game4Hunter()
     {    
@@ -128,7 +128,7 @@ public class Game4Hunter extends World
         
         G4_Staff man = new G4_Staff();
         addObject(man, 5, 270 + rndY);
-        man.setRotation(rndY/-2);
+        man.setRotation(rndY/-5);
         man.setRole(role);
         manCounter++;
         newManSteps = 0;
