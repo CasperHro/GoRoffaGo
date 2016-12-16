@@ -52,6 +52,16 @@ public class myWorld extends World
     
     private boolean firstStep = true; // Does the first step routine
     
+    
+     /**
+      * Game vars
+      */
+    private int level = 1; // Game level
+    private int score = 0; // Game score
+    private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
+
+    
+    
     /**
      * Constructor for objects of class myWorld.
      * 
@@ -154,7 +164,7 @@ public class myWorld extends World
         startGame();
     }
     
-    public void act(){
+public void act(){
         // Only start music when running the game
         if (firstStep)
         {
