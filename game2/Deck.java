@@ -60,29 +60,35 @@ public class Deck extends Actor
         //int swaying = getWorld(myWorld.class).getTilt();
         myWorld world = getWorldOfType(myWorld.class);
         int swaying = world.tilt;
+        int stepcount = world.stepsCount;
         if(world.aiOn){
             swaying = world.p2_tilt;
+            stepcount = world.p2_stepsCount;
         }
         
-        //System.out.println(" sway "+swaying);
         if(swaying>20){
             turn(-1);
-            world.stepsCount++;
+            stepcount++;
         } else 
         if (swaying<-20) {
             turn(1);
-            world.stepsCount--;
+            stepcount--;
         }else{
-            if(world.stepsCount>0){
-                world.stepsCount--;
+            if(stepcount>0){
+                stepcount--;
                 turn(1);
             } else
-            if(world.stepsCount<0){
-                world.stepsCount++;
+            if(stepcount<0){
+                stepcount++;
                 turn(-1);
             }
         }
         
+        if(!world.aiOn){
+            world.stepsCount = stepcount;
+        } else {
+            world.p2_stepsCount =  stepcount;            
+        }
         return 0;
     }
 }
