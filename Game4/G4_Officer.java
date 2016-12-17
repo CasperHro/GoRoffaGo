@@ -14,7 +14,7 @@ public class G4_Officer extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private int speed = 3;
+    private int speed = 2;
 
    
     
@@ -24,31 +24,36 @@ public class G4_Officer extends Actor
         G4_Obstacle obstacle = (G4_Obstacle) getOneIntersectingObject(G4_Obstacle.class);
         if (obstacle != null)
         {
-            this.turn(30);
-            this.move(10);
+            this.move(-10);
+            
         }
         
+        G4_Container container = (G4_Container) getOneIntersectingObject(G4_Container.class);
+        if (container != null)
+        {
+            this.move(-10);
+            
+        }
         
         G4_Entry entry = (G4_Entry) getOneIntersectingObject(G4_Entry.class);
         if (entry != null)
         {
-            this.turn(30);
-            this.move(5);
+            this.move(-10);
         }
         
-        if (Greenfoot.isKeyDown("up"))
+        if (Greenfoot.isKeyDown("left"))
         {
-            turn(-20);
+           turn(-20);
+        }
+        if (Greenfoot.isKeyDown("right"))
+        {
+            turn(20);
         }
         if (Greenfoot.isKeyDown("down"))
         {
-          turn(20);
+            move(-speed);
         }
-        if (Greenfoot.isKeyDown("left"))
-        {
-           move(-speed);
-        }
-        if (Greenfoot.isKeyDown("right"))
+        if (Greenfoot.isKeyDown("up"))
         {
             move(speed);
             move(speed+1);

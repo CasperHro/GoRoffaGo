@@ -9,29 +9,30 @@ import java.util.List;
  */
 public class G4_Obstacle extends Actor
 {
-    private String role = "criminal"; 
+    private String value = "obs1";
     /**
      * Act - do whatever the G4_Obstacle wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        // Add your action code here.
+    
     }    
-    
-    /**
-     * Returns the role type
-     */
-    public String getRole()
+    public void setValue(String value) 
     {
-        return role;
-    }
-    
-    /**
-     * Sets the role type
-     */
-    public void setRole(String value)
-    {
-        role = value;
-    }
+        value = value;
+        if (value.equals("obs1"))
+        {
+            setImage(new GreenfootImage("obs1.png"));
+        }
+        else if (value.equals("obs2"))
+        {
+            setImage(new GreenfootImage("obs2.png"));
+        }
+        else 
+        {
+            setImage(new GreenfootImage("obs3.png"));
+        }
+    } 
+
 }
