@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=G3_Destination
+comment0.text=\n\ Write\ a\ description\ of\ class\ G3_Destination\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=containerColor
+comment1.target=G3_Destination(java.lang.String)
+comment1.text=\n\ Contructor,\ requires\ a\ color\n
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\n\ Act\ -\ do\ whatever\ the\ G3_Destination\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment4.params=
+comment4.target=java.lang.String\ getColor()
+comment5.params=
+comment5.target=G3_Truck\ getParkedTruck()
+numComments=6

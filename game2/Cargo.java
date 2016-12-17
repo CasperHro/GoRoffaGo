@@ -8,11 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Cargo extends Actor
 {
+    
+    protected int weight;
+    public String color;
+    
     public Cargo()
     {
-        GreenfootImage image = getImage();  
-        image.scale(80, 35);
-        setImage(image);
     }
     
     /**
@@ -23,4 +24,59 @@ public class Cargo extends Actor
     {
         // Add your action code here.
     }    
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+    
+    public void adjustHeight(boolean tiltside) {
+        myWorld world = getWorldOfType(myWorld.class);
+        int dist = world.shipCentre-this.getX();
+        int direction;
+        int direction2= -1;
+        if(dist>0){//links of rechts
+            direction = 1;
+        }else {
+            direction = -1;
+        }
+        
+        if(tiltside){//binen of buiten
+            direction2 = 1;
+        }
+        
+        if(dist > -60 && dist < 50){
+            this.setLocation(this.getX()+(-2*direction2),this.getY()+(1*direction*direction2));
+        }else{
+            this.setLocation(this.getX()+(-2*direction2),this.getY()+(3*direction*direction2));
+        }
+   }
+    
+    public void adjustBooty() {
+        myWorld world = getWorldOfType(myWorld.class);
+        int swaying = world.tilt;
+        
+        
+        if(swaying>20){
+            turn(-1);
+            this.adjustHeight(true);
+        } else 
+        if (swaying<-20) {
+            turn(1);
+            this.adjustHeight(false);
+        }else{
+            if(world.stepsCount>0){
+                turn(1);
+                this.adjustHeight(false);
+            } else
+            if(world.stepsCount<0){
+                turn(-1);
+                this.adjustHeight(true);
+            }
+        }
+        
+    }
 }

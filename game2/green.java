@@ -8,8 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class green extends Cargo
 {
-    String color = "green";
-    int weight  = 20;
+    
+    public green(){
+        super.weight=5;
+        super.color="green";
+    }
+    
     /**
      * Act - do whatever the green wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -19,7 +23,4 @@ public class green extends Cargo
         // Add your action code here.
     }    
     
-    public int getWeight() {
-        return weight;
-    }
 }

@@ -28,11 +28,14 @@ public class Counter extends Actor
     }
     
     public void act() {
-        World world;
-        transportScoreValue = getWorld().getObjects(Transport.class).get(0).transportCount;
-        updateTransportScoreImage();
     }
     
+    public void addTransportScore(int value)
+    {
+        transportScoreValue += value;
+        updateTransportScoreImage();
+    }
+   
     public int getTransportScoreValue()
     {
         return transportScoreValue;

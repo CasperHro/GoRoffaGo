@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=G3_Waitbox
+comment0.text=\n\ Write\ a\ description\ of\ class\ G3_GameInfo\ here.\n\ \n\ @author\ C.\ Karreman\ \n\ @version\ 1.0\n
+comment1.params=forStage\ message
+comment1.target=G3_Waitbox(GameStage,\ java.lang.String)
+comment1.text=\n\ Contructor\n
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment2.text=\n\ Set\ game\ info\ over\ the\ complete\ world\n
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\n\ Check\ the\ mouse\ click\ to\ hide\n
+comment4.params=world
+comment4.target=void\ drawInfobox(greenfoot.World)
+comment4.text=\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\n
+comment5.params=
+comment5.target=java.lang.String\ getText()
+numComments=6
