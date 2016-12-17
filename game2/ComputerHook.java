@@ -14,12 +14,13 @@ public class ComputerHook extends Hook
     boolean cargoInTransport = false;
     boolean cargoAboveTransport = false;    
     
-    int cargoheight = 35;
+    int cargoheight = 40;
     int transportX;
     int transportY;
     
     int height = 180;
     int speed = 1;
+    int reset = 1;
 
     
     /**
@@ -34,9 +35,16 @@ public class ComputerHook extends Hook
             transportX = transport.getX();
             transportY = transport.getY();
             
-            getCargoOnHook();
-            moveCargo();
-            setCargoOnTransport();
+            if (transport.resetTransport == 1) {
+                cargoOnHook = null;
+            }
+            
+            if (reset == 1) {
+                getCargoOnHook();
+                moveCargo();
+                setCargoOnTransport();    
+            }
+  
             reset();
         }
     }
@@ -87,34 +95,62 @@ public class ComputerHook extends Hook
         return nearestCargo;
     }
     
-    public void getCargoOnHook() {
-        Cargo nearbyCargo = getNearestCargoByColor(transport.getColor());
+    public EmptyCargo getNearestEmptyCargo() {
+        List<EmptyCargo> nearEmptyCargos = getObjectsInRange(1600, EmptyCargo.class);
+
+        EmptyCargo nearestEmptyCargo = null;
+        double nearestDistance = 800;
+        double distance;
         
-        if(nearbyCargo != null) {
-            if (getX() != nearbyCargo.getX()) {
-                    setLocation(getX()-speed, height);
-            }
-            else if(getY() != nearbyCargo.getY()) {
-                setLocation(getX(), getY()+speed);
+        for (int i = 0; i < nearEmptyCargos.size(); i++) {
+            distance = getDistance(nearEmptyCargos.get(i));
+
+            if (distance < nearestDistance) {
+                nearestEmptyCargo = nearEmptyCargos.get(i);
+                nearestDistance = distance;
             }
 
-            Cargo cargoCollide = (Cargo)getOneObjectAtOffset(0, 40, Cargo.class); 
-            if (cargoCollide != null) {
-                if (transport.getColor() == cargoCollide.getColor()) {
-                    correctCargo = true;
-                    cargoOnHook = cargoCollide;     
-                } else {
-                    correctCargo = false;
-                    cargoOnHook = cargoCollide;  
-                }
-            }  
         }
+        
+        return nearestEmptyCargo;
+    }
+    
+    public void getCargoOnHook() {
+        Cargo nearbyCargo = getNearestCargoByColor(transport.getColor());
+        if (reset == 1) {
+            if(nearbyCargo != null) {
+                if (getX() != nearbyCargo.getX()) {
+                    setLocation(getX()-speed, height);
+                }
+                else if(getY() != nearbyCargo.getY()) {
+                    setLocation(getX(), getY()+speed);
+                }
+    
+                Cargo cargoCollide = (Cargo)getOneObjectAtOffset(0, cargoheight, Cargo.class);
+                if (cargoCollide != null) {
+                    if (transport.getColor() == cargoCollide.getColor()) {
+                        correctCargo = true;
+                        cargoOnHook = cargoCollide;     
+                    } else {
+                        correctCargo = false;
+                        cargoOnHook = cargoCollide;  
+                    }
+                }  
+            }    
+        }
+
     }
     
     public void moveCargo() {
         if (cargoOnHook != null) {
             if (correctCargo == false) {
                 // Drop on different location.
+                myWorld world = getWorldOfType(myWorld.class);
+                //EmptyCargo emptyCargoSpot = getNearestEmptyCargo();
+                //world.putCargoAtSpot(cargoOnHook, emptyCargoSpot);
+                world.removeObject(cargoOnHook);
+                cargoOnHook = null;
+                correctCargo = true;
             } else {
                 // Move to Transport;
                 if (cargoAboveTransport == false) {
@@ -137,31 +173,32 @@ public class ComputerHook extends Hook
     public void setCargoOnTransport() {
         if (cargoOnHook != null) {
             if (cargoAboveTransport == true) {
-                if (cargoOnHook.getY() < transportY + cargoheight && getY() < transportY) {
-                        cargoOnHook.setLocation(cargoOnHook.getX(), cargoOnHook.getY() + speed);
-                        setLocation(getX(), getY() + speed);
-                } else {
+                Transport transportIntersect = (Transport)getOneObjectAtOffset(cargoheight, 0, Transport.class); 
+                if (transportIntersect != null)
+                {
                     cargoInTransport = true;
                 }
+                else {
+                    cargoOnHook.setLocation(cargoOnHook.getX(), cargoOnHook.getY() + speed);
+                    setLocation(getX(), getY() + speed);
+                }
             }        
+        }
+        
+        if (cargoOnHook == null) {
+            if (cargoAboveTransport == true) {
+                cargoInTransport = true;
+            }
         }
 
     }
     
     public void reset() {
-        if (cargoOnHook != null) {
-            if (cargoAboveTransport == true) {
-                if (cargoInTransport == true) {
-                        correctCargo = true;
-
-                    if (getY() < height) {
-                        setLocation(getX(), getY()-speed);
-                    } else {
-                        cargoInTransport = false;
-                        cargoAboveTransport = false;
-                    } 
-                }
-            }
+        if (cargoInTransport == true) {
+            correctCargo = true;
+            cargoAboveTransport = false;
+            reset = 1;
+            cargoInTransport = false;
         }
     }
 }

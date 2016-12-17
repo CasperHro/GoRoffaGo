@@ -59,6 +59,8 @@ public class Transport extends Actor
         }
         
         if (resetTransport == 1) {
+            myWorld world = (myWorld) getWorld();
+            world.removeObject(cargo);
             GreenfootImage image = getImage();
             if(pause > 0) {
                 if (image.getWidth() > 9) {
@@ -80,7 +82,6 @@ public class Transport extends Actor
                     pause = 60;
                     transportCount += 1;
 
-                    myWorld world = (myWorld) getWorld();
                     world.removeTransport(this);
                 }
                 
