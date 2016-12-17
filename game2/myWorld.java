@@ -308,24 +308,27 @@ public void act(){
                 emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
                 addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
             }else{
-                emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
+                //emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
                 
-                emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
+               // emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
             
                if(emptyGrid[i]!=null){  //update EmptyCargo placeholders
                     int heightperX = getCargoPerX(grid, i);
-                    if(heightperX<maxHeight){
+                    System.out.println(heightperX);
+                    if(heightperX==0){//set to first row
+                        int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
+                        int StackHeight = deckLevel-(cargoHeight/2);
+                        emptyGrid[i].setLocation(x,StackHeight);
+                        emptyGrid[i].setId(heightperX*width+i);
+                    }  
+                    else if(heightperX<maxHeight){//max Height not reached?
                         emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(heightperX*-45));
                         emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
-                    } else {
+                    } else {//at the max height
                         emptyGrid[i].setLocation(0,0);
                         emptyGrid[i].setId(0);
-                    }
-                }else{
-                    int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
-                    int StackHeight = deckLevel-(cargoHeight/2);
-                    emptyGrid[i].setLocation(x,StackHeight);
-                }            
+                    }     
+                }
             }
             //System.out.println("row "+i+" - "+getCargoPerX(grid, i));
         }
