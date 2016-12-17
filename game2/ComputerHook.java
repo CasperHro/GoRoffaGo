@@ -18,10 +18,11 @@ public class ComputerHook extends Hook
     int cargoheight = 40;
     int transportX;
     int transportY;
-    
-    int height = 250;
-    int speed = 1;
     int reset = 1;
+    
+    // Up these vars per level.
+    int height = 120;
+    int speed = 1;
 
     
     /**
