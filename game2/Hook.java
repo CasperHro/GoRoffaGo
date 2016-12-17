@@ -10,9 +10,9 @@ import java.util.*;
 public class Hook extends Actor
 {
     Cargo cargo = null;
+    Transport transport = null;
     int indexCargo;
     EmptyCargo emptySpot = null;
-    Actor transport = null;
     int movingSpeed = 4;
 
     private static final int runnerOffset = 140;
@@ -116,14 +116,12 @@ public class Hook extends Actor
     public void cargoInTransport() {
         // Check for Transport actor intersection.
         if (transport == null) {
-            transport = getOneObjectAtOffset(0, 0, Transport.class);
+            transport = (Transport)getOneObjectAtOffset(0, 40, Transport.class);
         }
         
         // Reset Cargo pickup when Cargo and transport intersect.
         if (transport != null) {
-            myWorld world = getWorldOfType(myWorld.class);
-            System.out.println(world.getObjects(Transport.class).get(0).resetTransport);
-            if (world.getObjects(Transport.class).get(0).resetTransport == 1) {
+            if (transport.resetTransport == 1) {
                 cargo = null;
             }
         }
@@ -132,8 +130,7 @@ public class Hook extends Actor
      public void EmptyCargoCheck(){
         myWorld world = getWorldOfType(myWorld.class);
         if (cargo != null && Greenfoot.isKeyDown("d") &&
-            getWorldOfType(myWorld.class).putCargoAtSpot(cargo, (EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), EmptyCargo.class)))
-        {
+            getWorldOfType(myWorld.class).putCargoAtSpot(cargo, (EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), EmptyCargo.class))) {
                 cargo = null;
         }    
     }

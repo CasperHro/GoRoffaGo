@@ -95,4 +95,8 @@ public class Transport extends Actor
     public String getColor() {
         return color;
     }
+    
+    public int getResetTransport() {
+        return resetTransport;
+    }
 }

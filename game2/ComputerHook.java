@@ -12,7 +12,9 @@ public class ComputerHook extends Hook
     Cargo cargoOnHook = null;
     boolean correctCargo = true;
     boolean cargoInTransport = false;
-    boolean cargoAboveTransport = false;    
+    boolean cargoAboveTransport = false;
+    
+    int maxRange = 450;
     
     int cargoheight = 40;
     int transportX;
@@ -54,11 +56,11 @@ public class ComputerHook extends Hook
     }
     
     public Transport getTransport() {
-        List<Transport> nearTransports = getObjectsInRange(1600, Transport.class);
+        List<Transport> nearTransports = getObjectsInRange(maxRange, Transport.class);
        
         String color = "";
         Transport nearestTransport = null;
-        double nearestDistance = 800;
+        double nearestDistance = maxRange;
         double distance;
         
         for (int i = 0; i < nearTransports.size(); i++) {
@@ -74,10 +76,10 @@ public class ComputerHook extends Hook
     }
     
     public Cargo getNearestCargoByColor(String color) {
-        List<Cargo> nearCargos = getObjectsInRange(1600, Cargo.class);
+        List<Cargo> nearCargos = getObjectsInRange(maxRange, Cargo.class);
 
         Cargo nearestCargo = null;
-        double nearestDistance = 800;
+        double nearestDistance = maxRange;
         double distance;
         
         for (int i = 0; i < nearCargos.size(); i++) {
@@ -96,10 +98,10 @@ public class ComputerHook extends Hook
     }
     
     public EmptyCargo getNearestEmptyCargo() {
-        List<EmptyCargo> nearEmptyCargos = getObjectsInRange(1600, EmptyCargo.class);
+        List<EmptyCargo> nearEmptyCargos = getObjectsInRange(maxRange, EmptyCargo.class);
 
         EmptyCargo nearestEmptyCargo = null;
-        double nearestDistance = 800;
+        double nearestDistance = maxRange;
         double distance;
         
         for (int i = 0; i < nearEmptyCargos.size(); i++) {
@@ -126,7 +128,7 @@ public class ComputerHook extends Hook
                     setLocation(getX(), getY()+speed);
                 }
     
-                Cargo cargoCollide = (Cargo)getOneObjectAtOffset(0, cargoheight, Cargo.class);
+                Cargo cargoCollide = (Cargo)getOneObjectAtOffset(0, 12, Cargo.class);
                 if (cargoCollide != null) {
                     if (transport.getColor() == cargoCollide.getColor()) {
                         correctCargo = true;
@@ -136,7 +138,11 @@ public class ComputerHook extends Hook
                         cargoOnHook = cargoCollide;  
                     }
                 }  
-            }    
+            } else {
+                // ALL CARGO GONE.
+myWorld world = getWorldOfType(myWorld.class);
+                world.gameOver = true;
+            }
         }
 
     }
@@ -146,8 +152,10 @@ public class ComputerHook extends Hook
             if (correctCargo == false) {
                 // Drop on different location.
                 myWorld world = getWorldOfType(myWorld.class);
+                // @TODO: SET CARGO ON EMPTY SPOT.
                 //EmptyCargo emptyCargoSpot = getNearestEmptyCargo();
                 //world.putCargoAtSpot(cargoOnHook, emptyCargoSpot);
+                
                 world.removeObject(cargoOnHook);
                 cargoOnHook = null;
                 correctCargo = true;
