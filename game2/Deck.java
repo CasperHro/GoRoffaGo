@@ -60,6 +60,10 @@ public class Deck extends Actor
         //int swaying = getWorld(myWorld.class).getTilt();
         myWorld world = getWorldOfType(myWorld.class);
         int swaying = world.tilt;
+        if(world.aiOn){
+            swaying = world.p2_tilt;
+        }
+        
         //System.out.println(" sway "+swaying);
         if(swaying>20){
             turn(-1);

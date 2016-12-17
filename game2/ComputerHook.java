@@ -130,6 +130,10 @@ public class ComputerHook extends Hook
     
                 Cargo cargoCollide = (Cargo)getOneObjectAtOffset(0, 12, Cargo.class);
                 if (cargoCollide != null) {
+                    myWorld world = getWorldOfType(myWorld.class);
+                    world.aiOn = true;
+                    world.liftCargo(cargoCollide);
+                    world.aiOn = false;
                     if (transport.getColor() == cargoCollide.getColor()) {
                         correctCargo = true;
                         cargoOnHook = cargoCollide;     

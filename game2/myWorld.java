@@ -21,6 +21,7 @@ public class myWorld extends World
     int maxHeight = 4;
     int maxWidth = width;
     
+    boolean aiOn = false;
     
     Hook p1_hook;
     Deck p1_deck;
@@ -36,12 +37,16 @@ public class myWorld extends World
     Transport p2_transport;
     int p2_TransportIndex = -1;
 
+
     Clock clock;
     Counter scoreCounter;
     List<String> transportOrder = new ArrayList<String>();
 
     public int tilt;
     public int looted = 0;
+
+    public int p2_tilt;
+    public int p2_looted = 0;
     
     boolean gameOver = false;
     int delayTiltTimer; //Timestamp van de laatste Tilt Actie
@@ -146,10 +151,7 @@ public class myWorld extends World
         
         printGrid();
         System.out.println("start");
-        System.out.println("Weight row 0 = "+getWeightPerX(0));
-        System.out.println("Weight row 1 = "+getWeightPerX(1));
-        System.out.println("Weight row 2 = "+getWeightPerX(2));
-        System.out.println("Weight row 3 = "+getWeightPerX(3));
+        
     }
 
     public void firstRun()
@@ -172,6 +174,9 @@ public void act(){
             tilt = getTilt();
             if(cycle == 1) { //adjust ship once every 2 cycles
                 p1_deck.adjustShip(); //pas de hoek van het schip aan
+                aiOn=true;
+                p2_deck.adjustShip(); //pas de hoek van het schip aan
+                aiOn=false;
                 
                 for(int i = 0; i < p1_grid.length; i++) {//pas de hoek en plek van de cargo aan
                     if(p1_grid[i] != null) {
@@ -183,12 +188,18 @@ public void act(){
             }else{
                 cycle++;
             }
+            
+            
+            aiOn = true;
+            System.out.println("P1 - "+getTilt());
+            aiOn = false;
+            System.out.println("P2 - "+getTilt());
+            
+            
+            
             //System.out.println("rotation "+deck.getRotation());
             showText("CargoWeight :" + tilt, shipCentre, deckLevel - 52);
-            
             showText("looted         :" + looted,720,530);
-            //showText("Transport score:"+looted,720,550);
-            
             
             counter=0;
         }else if (gameOver){
@@ -207,18 +218,31 @@ public void act(){
         
     public void liftCargo(Cargo cargo){
         int i =0;
-        for(Cargo c : p1_grid){
-            if(c==cargo){
-                break;
+        
+        if(!aiOn){
+            for(Cargo c : p1_grid){
+                if(c==cargo){
+                    break;
+                }
+                i++;
             }
-            i++;
+            looted += getWeight(i);
+            p1_grid[i] = null;
+        }else{
+            for(Cargo c : p2_grid){
+                if(c==cargo){
+                    break;
+                }
+                i++;
+            }
+            /*
+            if(p2_grid[i]!=null){
+                p2_looted += getWeight(i);
+                p2_grid[i] = null;
+            }*/
         }
         
-        looted += getWeight(i);
-        p1_grid[i] = null;
-        
         setEmpty();
-        System.out.println(i);
     }
     
     public void set_p1_Transport()
@@ -314,7 +338,6 @@ public void act(){
             
                if(emptyGrid[i]!=null){  //update EmptyCargo placeholders
                     int heightperX = getCargoPerX(grid, i);
-                    System.out.println(heightperX);
                     if(heightperX==0){//set to first row
                         int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
                         int StackHeight = deckLevel-(cargoHeight/2);
@@ -367,11 +390,17 @@ public void act(){
     public int getWeightPerX(int x){
         int weight = 0;
         int i = 0;
+        Cargo[] tempgrid;
+        if(!aiOn){
+            tempgrid = p1_grid;
+        }else{
+            tempgrid = p2_grid;
+        }
         while(i < maxHeight){
             int spot = x+(i*width);
             //System.out.println("spot no "+spot);
-            if(p1_grid[spot]!=null){
-                weight+=p1_grid[spot].getWeight();
+            if(tempgrid[spot]!=null){
+                weight+=tempgrid[spot].getWeight();
             }
             i++;
         }
@@ -442,7 +471,11 @@ public void act(){
     }     
     
     public void setGrid(int spot,Cargo value){
-        p1_grid[spot] = value;
+        if(!aiOn){
+            p1_grid[spot] = value;
+        }else{
+            p2_grid[spot] = value;
+        }
     }
     
     public Cargo getValue(int x,int y){
@@ -451,7 +484,11 @@ public void act(){
     }
     
     public int getWeight(int spot){
-        return p1_grid[spot].getWeight();
+        if(!aiOn){
+            return p1_grid[spot].getWeight();
+        }else{
+            return p2_grid[spot].getWeight();
+        }
     }
     
     public void printGrid(){
