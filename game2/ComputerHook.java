@@ -21,7 +21,7 @@ public class ComputerHook extends Hook
     int reset = 1;
     
     // Up these vars per level.
-    int height = 120;
+    int height = 180;
     int speed = 1;
 
     
