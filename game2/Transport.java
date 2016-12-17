@@ -14,6 +14,8 @@ public class Transport extends Actor
     public int transportCount = 0;
     int pause = 60;
     public String color;
+    int scale = 0;
+    int counter = 2;
     
     public Transport(String value)
     {
@@ -64,8 +66,11 @@ public class Transport extends Actor
             GreenfootImage image = getImage();
             if(pause > 0) {
                 if (image.getWidth() > 9) {
-                    image.scale(image.getWidth() - 1, image.getHeight() - 1);
-                    setImage(image);                
+                    if (scale == 1) {
+                        image.scale(image.getWidth() - 1, image.getHeight() - 1);
+                        setLocation(getX(), getY()+1);
+                        setImage(image);
+                    }
                 }
 
                 
@@ -73,9 +78,12 @@ public class Transport extends Actor
             }
               
             if(pause == 0) {
-                if (image.getWidth() < 54) {
-                    image.scale(image.getWidth() + 1, image.getHeight() + 1);
-                    setImage(image);
+                if (image.getWidth() < 55) {
+                    if (scale == 1) {
+                        setLocation(getX(), getY()-1);
+                        image.scale(image.getWidth() + 1, image.getHeight() + 1);
+                        setImage(image);
+                    }
                 }
                 else {
                     resetTransport = 0;
@@ -86,6 +94,14 @@ public class Transport extends Actor
                 }
                 
 
+            }
+            
+            if (counter > 0) {
+                scale = 0;
+                counter--;
+            } else {
+                scale = 1;
+                counter = 2;
             }
 
         }

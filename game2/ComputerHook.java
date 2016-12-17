@@ -13,14 +13,13 @@ public class ComputerHook extends Hook
     boolean correctCargo = true;
     boolean cargoInTransport = false;
     boolean cargoAboveTransport = false;
-    
     int maxRange = 450;
     
     int cargoheight = 40;
     int transportX;
     int transportY;
     
-    int height = 180;
+    int height = 250;
     int speed = 1;
     int reset = 1;
 
@@ -30,7 +29,7 @@ public class ComputerHook extends Hook
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
-    {        
+    {
         transport = getTransport();
         
         if (transport != null) {
@@ -140,7 +139,7 @@ public class ComputerHook extends Hook
                 }  
             } else {
                 // ALL CARGO GONE.
-myWorld world = getWorldOfType(myWorld.class);
+                myWorld world = getWorldOfType(myWorld.class);
                 world.gameOver = true;
             }
         }

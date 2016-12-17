@@ -53,14 +53,7 @@ public class myWorld extends World
     private boolean firstStep = true; // Does the first step routine
     
     
-     /**
-      * Game vars
-      */
-    private int level = 1; // Game level
-    private int score = 0; // Game score
-    private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
-
-    
+    int level = 1; // Game level
     
     /**
      * Constructor for objects of class myWorld.
@@ -200,6 +193,7 @@ public void act(){
             counter=0;
         }else if (gameOver){
             showText("Game over "+"looted  :" + looted, shipCentre, deckLevel - 250);
+            level = level + 1;
         }else if (stepsCount > 10 || stepsCount < -10){
             gameOver = true;
         }
