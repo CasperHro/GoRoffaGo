@@ -51,6 +51,7 @@ public class myWorld extends World
     boolean gameOver = false;
     int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     int stepsCount=0;
+    int p2_stepsCount=0;
     int counter =0;
     int cycle;
     //WeightCounter WeightCounter = new WeightCounter();
@@ -172,6 +173,11 @@ public void act(){
             delayTiltTimer++; //
             
             tilt = getTilt();
+            System.out.println("P1 - "+getTilt());
+            aiOn = true;
+            p2_tilt = getTilt();
+            System.out.println("P2 - "+getTilt());
+            aiOn = false;
             if(cycle == 1) { //adjust ship once every 2 cycles
                 p1_deck.adjustShip(); //pas de hoek van het schip aan
                 aiOn=true;
@@ -182,18 +188,17 @@ public void act(){
                     if(p1_grid[i] != null) {
                         p1_grid[i].adjustBooty();
                     }
+                    if(p2_grid[i] != null) {
+                        aiOn=true;
+                        p2_grid[i].adjustBooty();
+                        aiOn=false;
+                    }
                 }
                 
                 cycle=0;
             }else{
                 cycle++;
             }
-            
-            
-            aiOn = true;
-            System.out.println("P1 - "+getTilt());
-            aiOn = false;
-            System.out.println("P2 - "+getTilt());
             
             
             
@@ -222,24 +227,22 @@ public void act(){
         if(!aiOn){
             for(Cargo c : p1_grid){
                 if(c==cargo){
+                    looted += getWeight(i);
+                    p1_grid[i] = null;
                     break;
                 }
                 i++;
             }
-            looted += getWeight(i);
-            p1_grid[i] = null;
         }else{
             for(Cargo c : p2_grid){
                 if(c==cargo){
+                    System.out.println("match!");
+                    p2_looted += getWeight(i);
+                    p2_grid[i] = null;
                     break;
                 }
                 i++;
             }
-            /*
-            if(p2_grid[i]!=null){
-                p2_looted += getWeight(i);
-                p2_grid[i] = null;
-            }*/
         }
         
         setEmpty();

@@ -58,8 +58,11 @@ public class Cargo extends Actor
     public void adjustBooty() {
         myWorld world = getWorldOfType(myWorld.class);
         int swaying = world.tilt;
-        
-        
+        int stepscount = world.stepsCount;
+        if(world.aiOn){
+            swaying = world.p2_tilt;
+            stepscount = world.p2_stepsCount;
+        }
         if(swaying>20){
             turn(-1);
             this.adjustHeight(true);
@@ -68,11 +71,11 @@ public class Cargo extends Actor
             turn(1);
             this.adjustHeight(false);
         }else{
-            if(world.stepsCount>0){
+            if(stepscount>0){
                 turn(1);
                 this.adjustHeight(false);
             } else
-            if(world.stepsCount<0){
+            if(stepscount<0){
                 turn(-1);
                 this.adjustHeight(true);
             }
