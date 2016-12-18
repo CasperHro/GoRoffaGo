@@ -60,6 +60,8 @@ public class Game4Hunter extends World
         G4_Entry g4_entry = new G4_Entry();
         addObject(g4_entry, 20, 270);
         g4_entry.setRotation(90);
+        
+        setPaintOrder(G4_GameOver.class,G4_Cloud.class, G4_Staff.class, G4_Officer.class);
        
     }
     
@@ -225,11 +227,11 @@ public class Game4Hunter extends World
     
     public void addCriminal(int hidden)
     {
-        int rndY = Greenfoot.getRandomNumber(500);
-        int rndX = Greenfoot.getRandomNumber(600);
+        int rndY = Greenfoot.getRandomNumber(400);
+        int rndX = Greenfoot.getRandomNumber(650);
         
         G4_Staff man = new G4_Staff();
-        addObject(man, 200+ rndX, rndY - 100);
+        addObject(man, rndX + 100, rndY + 100);
         man.setRotation(rndY/-2);
         man.setRole("criminal");
     }

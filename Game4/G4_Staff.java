@@ -112,7 +112,7 @@ public class G4_Staff extends Actor
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and appear again next to one of other or the same
-                Greenfoot.playSound("click_and_slide.mp3");
+                Greenfoot.playSound("glovebox_open.mp3");
                 ((Game4Hunter)getWorld()).addHidden(1);
                 getWorld().removeObject(this);
                 return;
