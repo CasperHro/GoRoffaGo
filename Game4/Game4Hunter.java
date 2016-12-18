@@ -31,9 +31,9 @@ public class Game4Hunter extends World
     private int maxMissed = 3;
     private boolean firstStep = true;
     private boolean running = false;
-    
-    
-
+    private int hidden = 0;
+    private int timerHidden = 0;
+    private int HIDDEN_TIMEOUT = Greenfoot.getRandomNumber(60);
     
     private GreenfootSound backgroundMusic = new GreenfootSound("tetris_theme.mp3");
     
@@ -80,12 +80,12 @@ public class Game4Hunter extends World
         newManInterval = 90;
         manCounter = 0;
         missed = 0;
-        
+        hidden = 0;
         score = 0;
         running = true;
         
         addScore(0);
-        
+        addHidden(0);
         addMissed(0);
         
         setObstacle();
@@ -118,7 +118,19 @@ public class Game4Hunter extends World
         {
             gameOver();
         }
-       
+        
+        if (hidden >= 1) 
+        {
+            timerHidden++;
+            if (timerHidden >= HIDDEN_TIMEOUT + 10)
+            {
+                timerHidden = 0;
+                addCriminal(hidden);
+                hidden = 0;
+                return;
+            }
+        }
+ 
     }
     
     private void createMan()
@@ -211,16 +223,20 @@ public class Game4Hunter extends World
     }
     
     
-    public void addCriminal()
+    public void addCriminal(int hidden)
     {
-        int rndY = Greenfoot.getRandomNumber(600);
+        int rndY = Greenfoot.getRandomNumber(500);
         int rndX = Greenfoot.getRandomNumber(600);
         
         G4_Staff man = new G4_Staff();
-        addObject(man, 200+ rndX, rndY);
+        addObject(man, 200+ rndX, rndY - 100);
         man.setRotation(rndY/-2);
         man.setRole("criminal");
     }
+    
+
+    
+    
     public void addScore(int increase)
     {
         score += increase;
@@ -231,5 +247,10 @@ public class Game4Hunter extends World
     {
         missed += increase;
         showText("Missed: " +missed, 740,580);
+    }
+    
+    public void addHidden(int increase)
+    {
+        hidden += increase;
     }
 }
