@@ -17,7 +17,7 @@ public class Game4Hunter extends World
      * 
      */
     
-    public static final String[] roles = {"criminal","pop1", "criminal","pop2","pop3"};
+    public static final String[] roles = {"criminal", "criminal", "criminal", "pop1","pop2", "pop3"};
     public static final String[] obstacles = {"obs1", "obs2", "obs3"};
     public static final String[] cargos = {"cont1", "cont2","cont3","cont4"};
     public static final int[] rndYs = {140, 240, 340, 440};
@@ -133,7 +133,7 @@ public class Game4Hunter extends World
         manCounter++;
         newManSteps = 0;
         
-        if (manCounter % 8 == 0)
+        if (manCounter % 10 == 0)
         {
             newManInterval -= 1;
         }

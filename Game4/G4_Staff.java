@@ -11,14 +11,14 @@ public class G4_Staff extends Actor
 {
     //Vars for the staff
    
-    private int speed = 6;
+    private int speed = 7;
     private int missed = 0;
     private String role = "criminal";
     private boolean criminal = false;
     private int hided = 0;
     private static int TIMEOUT = 40;
     private int moveCounter = 0;
-   
+    private G4_OfficerScored scored;
     
     public String getRole()
     
@@ -62,6 +62,11 @@ public class G4_Staff extends Actor
             if (criminal)
             {
                 Greenfoot.playSound("whistle.mp3");
+                officer.move(0);
+                this.move(0);
+                scored = new G4_OfficerScored();
+                getWorld().addObject(scored, officer.getX(), officer.getY());
+                scored.setRotation(getRotation());
                 ((Game4Hunter)getWorld()).addScore(1);
                 getWorld().removeObject(this);
                 return;
@@ -86,6 +91,7 @@ public class G4_Staff extends Actor
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and apper agin next to one of other or the same
+                Greenfoot.playSound("click_and_slide.mp3");
                 ((Game4Hunter)getWorld()).addMissed(1);
                 getWorld().removeObject(this);
                 return;
@@ -104,11 +110,18 @@ public class G4_Staff extends Actor
             
             else if (criminal == true)
             {
-                // make sure that criminal can hide in the container and apper agin next to one of other or the same
+                // make sure that criminal can hide in the container and appear again next to one of other or the same
+                Greenfoot.playSound("click_and_slide.mp3");
                 ((Game4Hunter)getWorld()).addMissed(1);
                 getWorld().removeObject(this);
                 return;
             }
+        }
+        
+        G4_Staff staff = (G4_Staff) getOneIntersectingObject(G4_Staff.class);
+        if (staff != null)
+        {
+            move(-10);
         }
         
         if (Greenfoot.getRandomNumber(100) < 10)
@@ -130,6 +143,7 @@ public class G4_Staff extends Actor
         if (moveCounter >= TIMEOUT && criminal)
         {
             missed++;
+            Greenfoot.playSound("click_and_slide.mp3");
             ((Game4Hunter)getWorld()).addMissed(1);
             getWorld().removeObject(this);
         }

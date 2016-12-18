@@ -4,27 +4,26 @@ import java.lang.Math.*;
 import java.util.*; 
 
 /**
- * Write a description of class G4_Gameinfo here.
+ * Write a description of class GameInfo here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class G4_Gameinfo extends Actor
+public class GameInfo extends Actor
 {
     /**
      * Act - do whatever the G4_Gameinfo wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private String text = "Navigator : game info\n\n"+
-                  "Your mission is to catch all criminals which come inside the port.\n"+
-                  "When a criminal is catched a point is scored!\n\n"+
-                  "Be alert! They can reach warehouses and they are missed.\n\n"+
-                  "They can also hide inside the containers and appear anywhere again!\n\n"+
-                  "Use the arrows to navigate:\n"+
-                  "up/down - go ahead/ go back\n"+
-                  "left/right - rotate left/right\n\n"+
-                  "When you miss 3 criminanls, you're game over!\n\n\n"+
+    private String text = "Game info\n"+
+                  "Your mission is to .\n"+
+                  "...\n\n"+
+                  "...\n"+
+                  "...\n"+
+                  "l...\n\n"+
+                  "...\n\n"+
+                  "...\n\n\n"+
                   "Click or press Enter to start...";
     private String textStart = "Get ready...\n\nHere we go!!!";
     
@@ -59,9 +58,10 @@ public class G4_Gameinfo extends Actor
             getImage().setTransparency(opacity);
             if (opacity <= 0)
             {
-                Game4Hunter world = getWorldOfType(Game4Hunter.class);
-                world.startGame();
+                myWorld world = getWorldOfType(myWorld.class);
+                
                 world.removeObject(this);
+                world.startGame();
             }
         }
         

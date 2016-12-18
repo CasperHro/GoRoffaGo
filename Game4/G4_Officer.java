@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
+import java.lang.Math;
 
 /**
  * Write a description of class G4_Officer here.
@@ -7,20 +8,19 @@ import java.util.List;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class G4_Officer extends Actor
+public class G4_Officer extends Actor 
 {
     /**
      * Act - do whatever the G4_Officer wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private int speed = 2;
-
-   
+    private int speed = 3;
     
     public void act() 
     
     {
+        
         G4_Obstacle obstacle = (G4_Obstacle) getOneIntersectingObject(G4_Obstacle.class);
         if (obstacle != null)
         {
@@ -40,6 +40,10 @@ public class G4_Officer extends Actor
         {
             this.move(-10);
         }
+        
+        
+        
+        
         
         if (Greenfoot.isKeyDown("left"))
         {

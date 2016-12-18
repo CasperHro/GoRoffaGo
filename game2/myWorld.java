@@ -57,7 +57,7 @@ public class myWorld extends World
     //WeightCounter WeightCounter = new WeightCounter();
     
     private boolean firstStep = true; // Does the first step routine
-    
+    private boolean running = true;
     
     int level = 1; // Game level
     
@@ -92,26 +92,18 @@ public class myWorld extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
-    private void prepare()
+    public void prepare()
     {
+
         p1_hook = new Hook();
         p1_deck = new Deck();
 
         p2_hook = new ComputerHook();
         p2_deck = new Deck();
-
+        
         clock = new Clock(false, true, 0, null);
         scoreCounter = new Counter();
-
-        addObject(p1_deck, shipCentre, deckLevel - 52);
-        addObject(p1_hook, 35, 300);
-
-        addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
-        addObject(p2_hook, getWidth() - 35, 300);
-
-        addObject(clock, 750, 40);
-        addObject(scoreCounter, 750, 20);
-
+       
         Water water = new Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
     }
@@ -128,13 +120,22 @@ public class myWorld extends World
         //backgroundMusic.playLoop();
         
         // And show game info overlay
-        //G2_GameInfo g2_info = new G2_GameInfo();
-        //addObject(g2_info, getWidth() / 2, getHeight() / 2); // Centered on screen
-        startGame();
+        GameInfo g2_info = new GameInfo();
+        addObject(g2_info, getWidth() / 2, getHeight() / 2); // Centered on screen
+        //startGame();
     }
 
     public void startGame()
     {
+        addObject(p1_deck, shipCentre, deckLevel - 52);
+        addObject(p1_hook, 35, 300);
+
+        addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
+        addObject(p2_hook, getWidth() - 35, 300);
+        
+        addObject(clock, 750, 40);
+        addObject(scoreCounter, 750, 20);
+        
         // First clear the current playfield and reset the ships
         removeObjects(getObjects(Transport.class));
         removeObjects(getObjects(Cargo.class));
@@ -152,6 +153,7 @@ public class myWorld extends World
         
         printGrid();
         System.out.println("start");
+        
         
     }
 
@@ -203,13 +205,22 @@ public void act(){
             
             
             //System.out.println("rotation "+deck.getRotation());
-            showText("CargoWeight :" + tilt, shipCentre, deckLevel - 52);
-            showText("looted         :" + looted,720,530);
+            showText("Cargo Weight: " + tilt, shipCentre, deckLevel+22);
+            showText("Looted: " + looted,730,530);
             
             counter=0;
+            
         }else if (gameOver){
-            showText("Game over "+"looted  :" + looted, shipCentre, deckLevel - 250);
+            removeObjects(getObjects(EmptyCargo.class));
+            removeObjects(getObjects(Cargo.class));
+            removeObjects(getObjects(Deck.class));
+            removeObjects(getObjects(BoatBack.class));
+            GameOver gameover = new GameOver();
+            addObject(gameover, getWidth()/2, getHeight()/2);
+             
+            showText("Looted: " + looted, getWidth()/2, getHeight()/2+ 110);
             level = level + 1;
+            Greenfoot.stop();
         }else if (stepsCount > 10 || stepsCount < -10){
             gameOver = true;
         }
