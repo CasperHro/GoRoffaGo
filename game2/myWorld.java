@@ -17,50 +17,41 @@ public class myWorld extends World
     int cargoWidth = 50; //cargo=50 x 50px
     int cargoHeight = 50;
     int space = 4; // horizontal spacing between cargo
-    boolean playing = false;
-    
     int maxHeight = 4;
     int maxWidth = width;
     
     boolean aiOn = false;
     
-    Hook p1_hook;
-    Deck p1_deck;
-    Cargo[] p1_grid;
-    EmptyCargo[] p1_emptyGrid;
-    Transport p1_transport;
-    int p1_TransportIndex = -1;
+    // Player 1
+    private Hook p1_hook;
+    private Deck p1_deck;
+    private Cargo[] p1_grid;
+    private EmptyCargo[] p1_emptyGrid;
+    private Transport p1_transport;
+    private int p1_TransportIndex = -1;
+    private int p1_looted = 0;
 
-    Hook p2_hook;
-    Deck p2_deck;
-    Cargo[] p2_grid;
-    EmptyCargo[] p2_emptyGrid;
-    Transport p2_transport;
-    int p2_TransportIndex = -1;
-
+    // Player 2
+    private Hook p2_hook;
+    private Deck p2_deck;
+    private Cargo[] p2_grid;
+    private EmptyCargo[] p2_emptyGrid;
+    private Transport p2_transport;
+    private int p2_TransportIndex = -1;
+    private int p2_looted = 0;
 
     Clock clock;
     Counter scoreCounter;
     List<String> transportOrder = new ArrayList<String>();
-
-    public int tilt;
-    public int looted = 0;
-
-    public int p2_tilt;
-    public int p2_looted = 0;
-    
-    boolean gameOver = false;
-    int delayTiltTimer; //Timestamp van de laatste Tilt Actie
-    int stepsCount=0;
-    int p2_stepsCount=0;
-    int counter =0;
-    int cycle;
-    //WeightCounter WeightCounter = new WeightCounter();
     
     private boolean firstStep = true; // Does the first step routine
-    private boolean running = true;
+    private boolean running = false;
+    private boolean gameOver = false;
+    private int delayTiltTimer; //Timestamp van de laatste Tilt Actie
+    private int counter = 0;
+    private int cycle;
     
-    int level = 1; // Game level
+    int level = 0; // Game level
     
     /**
      * Constructor for objects of class myWorld.
@@ -73,9 +64,9 @@ public class myWorld extends World
         super(800, 600, 1, false);
         
         // TODO: Set the paintorder for the overlaying classes
-        setPaintOrder(//G2_GameInfo.class,
+        setPaintOrder(GameInfo.class,
                   //G2_Waitbox.class,
-                  //GameOver.class,
+                  GameOver.class,
                   Water.class,// Foreground water
                   Deck.class,
                   Hook.class,
@@ -99,12 +90,18 @@ public class myWorld extends World
         p1_hook = new Hook();
         p1_deck = new Deck();
 
+        addObject(p1_deck, shipCentre, deckLevel - 52);
+        addObject(p1_hook, 35, 300);
+
         p2_hook = new ComputerHook();
         p2_deck = new Deck();
         
-        clock = new Clock(false, true, 0, null);
+        addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
+        addObject(p2_hook, getWidth() - 35, 300);
+        
         scoreCounter = new Counter();
-       
+        addObject(scoreCounter, 750, 20);
+
         Water water = new Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
     }
@@ -128,41 +125,52 @@ public class myWorld extends World
 
     public void startGame()
     {
-        addObject(p1_deck, shipCentre, deckLevel - 52);
-        addObject(p1_hook, 35, 300);
-
-        addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
-        addObject(p2_hook, getWidth() - 35, 300);
-        
-        addObject(clock, 750, 40);
-        addObject(scoreCounter, 750, 20);
-        
         // First clear the current playfield and reset the ships
         removeObjects(getObjects(Transport.class));
         removeObjects(getObjects(Cargo.class));
+        removeObjects(getObjects(EmptyCargo.class));
         createGrid(maxHeight, maxWidth);
 
+        // Reset tilt
+        p1_deck.resetShip();
+        p2_deck.resetShip();
+
+        // Hook initial location
+        p1_hook.setLocation(35, 300);
+        p2_hook.setLocation(getWidth() - 35, 300);
+
+        
         // Now create the new cargo for this level
+        level = level + 1;
         setCargo();
         setEmpty();
         
-        // TODO: Call create for first transport
+        // Call create for first transport
         p1_TransportIndex = -1;
         p2_TransportIndex = -1;
         set_p1_Transport();
         set_p2_Transport();
         
-        printGrid();
-        System.out.println("start");
-        
-        playing = true;
-    }
+        // Clock
+        clock = new Clock(false, true, 0, null);
+        addObject(clock, 750, 40);
 
-    public void firstRun()
-    {
-        startGame();
+        gameOver = false;
+        running = true;
+        p1_hook.setRunning(running);
+        p2_hook.setRunning(running);
     }
     
+    public void endGame()
+    {
+        // Stop game and show results, then prepare for next level
+        running = false;
+        p1_hook.setRunning(running);
+        p2_hook.setRunning(running);
+        clock.stopClock();
+        
+    }
+
     public void act()
     {
         // Only start music when running the game
@@ -171,32 +179,24 @@ public class myWorld extends World
             firstStep();
         }
         
-        if (playing && !gameOver)
+        if (running && !gameOver)
         {
             counter++;
             if(counter == 90) { //om de 7(1~sec) ticks code uitvoeren
                 delayTiltTimer++; //
                 
-                tilt = getTilt();
-                //System.out.println("P1 - "+getTilt());
-                aiOn = true;
-                p2_tilt = getTilt();
-                //System.out.println("P2 - "+getTilt());
-                aiOn = false;
                 if(cycle == 1) { //adjust ship once every 2 cycles
-                    p1_deck.adjustShip(); //pas de hoek van het schip aan
-                    aiOn=true;
-                    p2_deck.adjustShip(); //pas de hoek van het schip aan
-                    aiOn=false;
+                    int p1_tilt = getTilt(p1_grid);
+                    int p1_step = p1_deck.adjustShip(p1_tilt); //pas de hoek van het schip aan
+                    int p2_tilt = getTilt(p2_grid);
+                    int p2_step = p2_deck.adjustShip(p2_tilt); //pas de hoek van het schip aan
                     
                     for(int i = 0; i < p1_grid.length; i++) {//pas de hoek en plek van de cargo aan
-                        if(p1_grid[i] != null) {
-                            p1_grid[i].adjustBooty();
+                        if(p1_grid[i] != null && p1_grid[i] instanceof Cargo) {
+                            p1_grid[i].adjustBooty(p1_tilt, p1_step);
                         }
-                        if(p2_grid[i] != null) {
-                            aiOn=true;
-                            p2_grid[i].adjustBooty();
-                            aiOn=false;
+                        if(p2_grid[i] != null && p2_grid[i] instanceof Cargo) {
+                            p2_grid[i].adjustBooty(p2_tilt, p2_step);
                         }
                     }
                     
@@ -205,35 +205,26 @@ public class myWorld extends World
                     cycle++;
                 }
                 
-                
-                
                 //System.out.println("rotation "+deck.getRotation());
-                showText("Cargo Weight: " + tilt, shipCentre, deckLevel+22);
-                showText("Looted: " + looted,730,530);
+                //showText("Cargo Weight: " + p1_tilt, shipCentre, deckLevel+22);
+                //showText("Looted: " + looted,730,530);
+                if (p1_deck.getStepCount() > 10 || p1_deck.getStepCount() < -10){
+                    // player looses
+                    gameOver = true;
+                }else if (p2_deck.getStepCount() > 10 || p2_deck.getStepCount() < -10){
+                    // computer looses
+                    gameOver = true;
+                }
                 
                 counter=0;
             }  
-        }else if (gameOver){
-            removeObjects(getObjects(EmptyCargo.class));
-            removeObjects(getObjects(Cargo.class));
-            removeObjects(getObjects(Deck.class));
-            removeObjects(getObjects(BoatBack.class));
+        }else if (running && gameOver){
+            endGame();
             GameOver gameover = new GameOver();
             addObject(gameover, getWidth()/2, getHeight()/2);
-             
-            showText("Looted: " + looted, getWidth()/2, getHeight()/2+ 110);
-            level = level + 1;
-            playing = false;
-        }else if (stepsCount > 10 || stepsCount < -10){
-            gameOver = true;
         }
     }
     
-        
-        
-        
-        
-        //@@ preparation
         
     public void liftCargo(Cargo cargo){
         int i =0;
@@ -241,7 +232,7 @@ public class myWorld extends World
         if(!aiOn){
             for(Cargo c : p1_grid){
                 if(c==cargo){
-                    looted += getWeight(i);
+                    p1_looted += c.getWeight();
                     p1_grid[i] = null;
                     break;
                 }
@@ -250,8 +241,7 @@ public class myWorld extends World
         }else{
             for(Cargo c : p2_grid){
                 if(c==cargo){
-                    System.out.println("match!");
-                    p2_looted += getWeight(i);
+                    p2_looted += c.getWeight();
                     p2_grid[i] = null;
                     break;
                 }
@@ -298,7 +288,7 @@ public class myWorld extends World
         List<String> containers = new ArrayList<String>();
         
         while(i<width*height){
-            if(getWeightPerX(i%width)<=25){
+            if(getWeightPerX(p1_grid, i%width)<=25){
                 int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
                 Cargo p1_cargo = null;
                 Cargo p2_cargo = null;
@@ -384,8 +374,8 @@ public class myWorld extends World
             containers.remove(rnd);
         }
     }
-    
-    public int getTilt(){
+ 
+    public int getTilt(Cargo[] grid){
         int half = width/2-width%2;
         int i=0;
         int halfLeft=0;
@@ -393,8 +383,8 @@ public class myWorld extends World
         int windSpeed;
         
        while(i<half){
-            halfLeft+=getWeightPerX(i)*(half-i);
-            halfRight+=getWeightPerX(width-i-1)*(half-i);
+            halfLeft+=getWeightPerX(grid, i)*(half-i);
+            halfRight+=getWeightPerX(grid, width-i-1)*(half-i);
             i++;
        }
        windSpeed = halfLeft-halfRight;
@@ -404,21 +394,15 @@ public class myWorld extends World
        return windSpeed;
     }
     
-    public int getWeightPerX(int x){
+    public int getWeightPerX(Cargo[] grid, int x){
         int weight = 0;
         int i = 0;
-        Cargo[] tempgrid;
-        if(!aiOn){
-            tempgrid = p1_grid;
-        }else{
-            tempgrid = p2_grid;
-        }
-        if (tempgrid != null){
+        if (grid != null){
             while(i < maxHeight){
                 int spot = x+(i*width);
                 //System.out.println("spot no "+spot);
-                if(tempgrid[spot]!=null){
-                    weight+=tempgrid[spot].getWeight();
+                if(grid[spot]!=null){
+                    weight+=grid[spot].getWeight();
                 }
                 i++;
             }
@@ -444,19 +428,6 @@ public class myWorld extends World
         maxWidth = x;
         return spots;
     }
-        
-    
-    
-    
-    
-    public void removeCargo(char Cargo){
-        //removeObject(Cargo);
-        //setGrid(i,0);
-    }
-    
-    
-    
-    
     
     //@@@ Grid functies
     public void createGrid(int x,int y){
@@ -466,7 +437,13 @@ public class myWorld extends World
         p1_emptyGrid = new EmptyCargo[x];
         p2_emptyGrid = new EmptyCargo[x];
     }
-        
+    
+/*        
+   public void removeCargo(char Cargo){
+        //removeObject(Cargo);
+        //setGrid(i,0);
+    }
+
     public int getSpot(int x, int y){
         int spot = (x*maxHeight)+y;
         return p1_grid[spot].getWeight();
@@ -489,7 +466,7 @@ public class myWorld extends World
         return true;
     }     
     
-    public void setGrid(int spot,Cargo value){
+    public void setGrid(int spot, Cargo value){
         if(!aiOn){
             p1_grid[spot] = value;
         }else{
@@ -501,32 +478,21 @@ public class myWorld extends World
         int spot = (x*maxHeight)+y;
         return p1_grid[spot];
     }
-    
-    public int getWeight(int spot){
-        if(!aiOn){
-            return p1_grid[spot].getWeight();
-        }else{
-            return p2_grid[spot].getWeight();
-        }
-    }
-    
-    public void printGrid(){
-        /*for(int i : grid){
-            System.out.println(grid[i]);
-            
-           }*/
-            System.out.println(p1_grid[0]);
-            System.out.println(p1_grid.length);
-
-    }
-    
+*/     
     public boolean putCargoAtSpot(Cargo cargo, EmptyCargo emptySpot)
     {
-        // TODO: Check both players
         if (emptySpot != null)
         {
-            p1_grid[emptySpot.getId()] = cargo;
-            setEmpty();
+            if (emptySpot.getX() < getWidth() / 2)
+            {
+                p1_grid[emptySpot.getId()] = cargo;
+                setEmpty(p1_emptyGrid, p1_grid);
+            }
+            else
+            {
+                p2_grid[emptySpot.getId()] = cargo;
+                setEmpty(p2_emptyGrid, p2_grid);
+            }
             return true;
         }
         return false;

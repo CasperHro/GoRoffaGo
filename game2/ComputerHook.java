@@ -31,23 +31,26 @@ public class ComputerHook extends Hook
      */
     public void act() 
     {
-        transport = getTransport();
-        
-        if (transport != null) {
-            transportX = transport.getX();
-            transportY = transport.getY();
+        if (super.running)
+        {
+            transport = getTransport();
             
-            if (transport.resetTransport == 1) {
-                cargoOnHook = null;
+            if (transport != null) {
+                transportX = transport.getX();
+                transportY = transport.getY();
+                
+                if (transport.resetTransport == 1) {
+                    cargoOnHook = null;
+                }
+                
+                if (reset == 1) {
+                    getCargoOnHook();
+                    moveCargo();
+                    setCargoOnTransport();    
+                }
+      
+                reset();
             }
-            
-            if (reset == 1) {
-                getCargoOnHook();
-                moveCargo();
-                setCargoOnTransport();    
-            }
-  
-            reset();
         }
     }
     
@@ -145,7 +148,7 @@ public class ComputerHook extends Hook
             } else {
                 // ALL CARGO GONE.
                 myWorld world = getWorldOfType(myWorld.class);
-                world.gameOver = true;
+                world.endGame();
             }
         }
 

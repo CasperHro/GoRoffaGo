@@ -8,8 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Deck extends Actor
 {
-    int centerX;
-    int tilt;
+    private int centerX;
+    private int tilt;
+    private int stepcount = 0;
     
     BoatBack back = new BoatBack();
     
@@ -50,27 +51,20 @@ public class Deck extends Actor
      */
     public void act() 
     {
-        //turn(1);
-        //int swaying = ((myWorld)getworld()).tilt;
-        //turn(1);
-    }    
+        // Ship is just there
+    }
     
-    public int adjustShip() {
-       // int swaying = ((myWorld)getworld()).getTilt();
-        //int swaying = getWorld(myWorld.class).getTilt();
-        myWorld world = getWorldOfType(myWorld.class);
-        int swaying = world.tilt;
-        int stepcount = world.stepsCount;
-        if(world.aiOn){
-            swaying = world.p2_tilt;
-            stepcount = world.p2_stepsCount;
-        }
-        
+    public void resetShip()
+    {
+        setRotation(0);
+        stepcount = 0;
+    }
+    
+    public int adjustShip(int swaying) {
         if(swaying>20){
             turn(-1);
             stepcount++;
-        } else 
-        if (swaying<-20) {
+        } else if (swaying<-20) {
             turn(1);
             stepcount--;
         }else{
@@ -83,12 +77,11 @@ public class Deck extends Actor
                 turn(-1);
             }
         }
-        
-        if(!world.aiOn){
-            world.stepsCount = stepcount;
-        } else {
-            world.p2_stepsCount =  stepcount;            
-        }
-        return 0;
+        return stepcount;
+    }
+   
+    public int getStepCount()
+    {
+        return stepcount;
     }
 }

@@ -9,15 +9,16 @@ import java.util.*;
  */
 public class Hook extends Actor
 {
-    Cargo cargo = null;
-    Transport transport = null;
-    int indexCargo;
-    EmptyCargo emptySpot = null;
-    int movingSpeed = 4;
+    protected Cargo cargo = null;
+    protected Transport transport = null;
+    protected int indexCargo;
+    protected EmptyCargo emptySpot = null;
+    protected int movingSpeed = 4;
+    protected boolean running = false;
 
     private static final int runnerOffset = 140;
-    Cables cable = new Cables();
-    HookRunner runner = new HookRunner();
+    private Cables cable = new Cables();
+    private HookRunner runner = new HookRunner();
     
     /**
      * When added to a world also add the back of the ship
@@ -69,17 +70,23 @@ public class Hook extends Actor
         }
     }
     
-   
+    public void setRunning(boolean value)
+    {
+        running = value;
+    }
+    
     /**
      * Act - do whatever the hook wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        hookMovement();
-        cargoInTransport();
-        EmptyCargoCheck();
- 
+        if (running)
+        {
+            hookMovement();
+            cargoInTransport();
+            EmptyCargoCheck();
+        } 
     }
     
     public void hookMovement() {

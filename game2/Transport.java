@@ -48,6 +48,8 @@ public class Transport extends Actor
             cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
             if (cargo != null) {
                 if (cargo.getColor() == getColor()) {
+                    // release from hook
+                    
                     // Add score ???
                     Counter c = getWorld().getObjects(Counter.class).get(0);
                     if (c != null)

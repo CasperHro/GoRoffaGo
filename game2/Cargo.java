@@ -55,21 +55,14 @@ public class Cargo extends Actor
         }
    }
     
-    public void adjustBooty() {
-        myWorld world = getWorldOfType(myWorld.class);
-        int swaying = world.tilt;
-        int stepscount = world.stepsCount;
-        if(world.aiOn){
-            swaying = world.p2_tilt;
-            stepscount = world.p2_stepsCount;
-        }
+    public void adjustBooty(int swaying, int stepscount) {
         if(swaying>20){
             turn(-1);
-            this.adjustHeight(true);
+            adjustHeight(true);
         } else 
         if (swaying<-20) {
             turn(1);
-            this.adjustHeight(false);
+            adjustHeight(false);
         }else{
             if(stepscount>0){
                 turn(1);
@@ -77,9 +70,8 @@ public class Cargo extends Actor
             } else
             if(stepscount<0){
                 turn(-1);
-                this.adjustHeight(true);
+                adjustHeight(true);
             }
         }
-        
     }
 }
