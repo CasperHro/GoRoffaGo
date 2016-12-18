@@ -17,13 +17,13 @@ public class GameInfo extends Actor
      */
     
     private String text = "Game info\n"+
-                  "Your mission is to .\n"+
-                  "...\n\n"+
-                  "...\n"+
-                  "...\n"+
-                  "l...\n\n"+
-                  "...\n\n"+
-                  "...\n\n\n"+
+                  "Your mission is to unload the ships.\n"+
+                  "Pick the right container from the ship and place it on the\n"+
+                  "transport, but keep the ship in balance!!\n\n"+
+                  "Use the arrow keys to navigate the container hook and\n"+
+                  "press 's' to select a container or 'd' to release a container.\n\n"+
+                  "Be fast or the computer wins...\n\n"+
+                  "\n\n"+
                   "Click or press Enter to start...";
     private String textStart = "Get ready...\n\nHere we go!!!";
     

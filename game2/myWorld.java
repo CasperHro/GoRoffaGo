@@ -17,6 +17,7 @@ public class myWorld extends World
     int cargoWidth = 50; //cargo=50 x 50px
     int cargoHeight = 50;
     int space = 4; // horizontal spacing between cargo
+    boolean playing = false;
     
     int maxHeight = 4;
     int maxWidth = width;
@@ -154,7 +155,7 @@ public class myWorld extends World
         printGrid();
         System.out.println("start");
         
-        
+        playing = true;
     }
 
     public void firstRun()
@@ -162,54 +163,56 @@ public class myWorld extends World
         startGame();
     }
     
-public void act(){
+    public void act()
+    {
         // Only start music when running the game
         if (firstStep)
         {
             firstStep();
         }
         
-        
-        counter++;
-        if(counter == 90 && !gameOver) { //om de 7(1~sec) ticks code uitvoeren
-            delayTiltTimer++; //
-            
-            tilt = getTilt();
-            System.out.println("P1 - "+getTilt());
-            aiOn = true;
-            p2_tilt = getTilt();
-            System.out.println("P2 - "+getTilt());
-            aiOn = false;
-            if(cycle == 1) { //adjust ship once every 2 cycles
-                p1_deck.adjustShip(); //pas de hoek van het schip aan
-                aiOn=true;
-                p2_deck.adjustShip(); //pas de hoek van het schip aan
-                aiOn=false;
+        if (playing && !gameOver)
+        {
+            counter++;
+            if(counter == 90) { //om de 7(1~sec) ticks code uitvoeren
+                delayTiltTimer++; //
                 
-                for(int i = 0; i < p1_grid.length; i++) {//pas de hoek en plek van de cargo aan
-                    if(p1_grid[i] != null) {
-                        p1_grid[i].adjustBooty();
+                tilt = getTilt();
+                //System.out.println("P1 - "+getTilt());
+                aiOn = true;
+                p2_tilt = getTilt();
+                //System.out.println("P2 - "+getTilt());
+                aiOn = false;
+                if(cycle == 1) { //adjust ship once every 2 cycles
+                    p1_deck.adjustShip(); //pas de hoek van het schip aan
+                    aiOn=true;
+                    p2_deck.adjustShip(); //pas de hoek van het schip aan
+                    aiOn=false;
+                    
+                    for(int i = 0; i < p1_grid.length; i++) {//pas de hoek en plek van de cargo aan
+                        if(p1_grid[i] != null) {
+                            p1_grid[i].adjustBooty();
+                        }
+                        if(p2_grid[i] != null) {
+                            aiOn=true;
+                            p2_grid[i].adjustBooty();
+                            aiOn=false;
+                        }
                     }
-                    if(p2_grid[i] != null) {
-                        aiOn=true;
-                        p2_grid[i].adjustBooty();
-                        aiOn=false;
-                    }
+                    
+                    cycle=0;
+                }else{
+                    cycle++;
                 }
                 
-                cycle=0;
-            }else{
-                cycle++;
-            }
-            
-            
-            
-            //System.out.println("rotation "+deck.getRotation());
-            showText("Cargo Weight: " + tilt, shipCentre, deckLevel+22);
-            showText("Looted: " + looted,730,530);
-            
-            counter=0;
-            
+                
+                
+                //System.out.println("rotation "+deck.getRotation());
+                showText("Cargo Weight: " + tilt, shipCentre, deckLevel+22);
+                showText("Looted: " + looted,730,530);
+                
+                counter=0;
+            }  
         }else if (gameOver){
             removeObjects(getObjects(EmptyCargo.class));
             removeObjects(getObjects(Cargo.class));
@@ -220,7 +223,7 @@ public void act(){
              
             showText("Looted: " + looted, getWidth()/2, getHeight()/2+ 110);
             level = level + 1;
-            Greenfoot.stop();
+            playing = false;
         }else if (stepsCount > 10 || stepsCount < -10){
             gameOver = true;
         }
@@ -410,13 +413,15 @@ public void act(){
         }else{
             tempgrid = p2_grid;
         }
-        while(i < maxHeight){
-            int spot = x+(i*width);
-            //System.out.println("spot no "+spot);
-            if(tempgrid[spot]!=null){
-                weight+=tempgrid[spot].getWeight();
+        if (tempgrid != null){
+            while(i < maxHeight){
+                int spot = x+(i*width);
+                //System.out.println("spot no "+spot);
+                if(tempgrid[spot]!=null){
+                    weight+=tempgrid[spot].getWeight();
+                }
+                i++;
             }
-            i++;
         }
         return weight;
     }
