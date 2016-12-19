@@ -277,6 +277,7 @@ public class myWorld extends World
             set_p2_Transport();
         }
         removeObject(truck);
+        
     }
     
     public void setCargo() {

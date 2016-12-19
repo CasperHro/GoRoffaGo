@@ -123,16 +123,17 @@ public class Hook extends Actor
         myWorld world = getWorldOfType(myWorld.class);
         if (cargo != null && Greenfoot.isKeyDown("d") &&
             getWorldOfType(myWorld.class).putCargoAtSpot(cargo, (EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), EmptyCargo.class))) {
-                cargo = null;
+            cargo = null;
         }
         
-        if (transport == null) {
+        if (transport == null && cargo != null) {
             transport = (Transport)getOneObjectAtOffset(0, 40, Transport.class);
         }
         
         if (cargo != null && Greenfoot.isKeyDown("d")) {
             if (transport != null && transport.setCargo(cargo)) {
                 cargo = null;
+                transport = null;
             }
         }
     }

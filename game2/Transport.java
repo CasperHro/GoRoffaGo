@@ -13,7 +13,7 @@ public class Transport extends Actor
     public int resetTransport = 0;
     public int transportCount = 0;
     int pause = 60;
-    public String color;
+    protected String color;
     int scale = 0;
     int counter = 2;
     
@@ -80,24 +80,22 @@ public class Transport extends Actor
 
                 
                 pause--;
-            }
-              
-            if(pause == 0) {
-                if (image.getWidth() < 55) {
-                    if (scale == 1) {
-                        setLocation(getX(), getY()-1);
-                        image.scale(image.getWidth() + 1, image.getHeight() + 1);
-                        setImage(image);
-                    }
-                }
-                else {
-                    resetTransport = 0;
-                    pause = 60;
-                    transportCount += 1;
+            } else {
+                //if (image.getWidth() < 55) {
+                //    if (scale == 1) {
+                //        setLocation(getX(), getY()-1);
+                //        image.scale(image.getWidth() + 1, image.getHeight() + 1);
+                //        setImage(image);
+                ///    }
+                //}
+                //else {
+                    //resetTransport = 0;
+                    //pause = 60;
+                    //transportCount += 1;
                     
-                    cargo = null;
+                    //cargo = null;
                     world.removeTransport(this);
-                }
+                //}
                 
 
             }
