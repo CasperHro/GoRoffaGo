@@ -34,6 +34,7 @@ public class Game4Hunter extends World
     private int hidden = 0;
     private int timerHidden = 0;
     private int HIDDEN_TIMEOUT = Greenfoot.getRandomNumber(60);
+    private String lastKey = "";
     
     private GreenfootSound backgroundMusic = new GreenfootSound("tetris_theme.mp3");
     
@@ -94,7 +95,6 @@ public class Game4Hunter extends World
         setContainer();
         
         newManSteps = newManInterval - 5;
-
     }
     
     public void act()
@@ -111,6 +111,29 @@ public class Game4Hunter extends World
             if(newManSteps > newManInterval)
             {
                 createMan();
+            }
+            if (lastKey == "" || !Greenfoot.isKeyDown(lastKey))
+            {
+                if (Greenfoot.isKeyDown("m"))
+                {
+                    lastKey = "m";
+                    if (backgroundMusic.isPlaying())
+                    {
+                        backgroundMusic.stop();
+                    }
+                }
+                else if (Greenfoot.isKeyDown("p"))
+                {
+                    lastKey = "p";
+                    if (!backgroundMusic.isPlaying())
+                    {
+                        backgroundMusic.playLoop();
+                    }
+                }
+                else
+                {
+                    lastKey = "";
+                }
             }
         }
         
@@ -162,6 +185,7 @@ public class Game4Hunter extends World
             createCloud();
         }
     }
+
     
     private void setObstacle()
     {
