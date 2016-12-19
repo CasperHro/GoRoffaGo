@@ -1,21 +1,19 @@
 #BlueJ class context
 comment0.target=Hook
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ hook\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ hook\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
-comment1.text=\r\n\ When\ added\ to\ a\ world\ also\ add\ the\ back\ of\ the\ ship\r\n
+comment1.text=\n\ When\ added\ to\ a\ world\ also\ add\ the\ back\ of\ the\ ship\n
 comment2.params=x\ y
 comment2.target=void\ setLocation(int,\ int)
-comment2.text=\r\n\ Set\ the\ same\ location\ for\ tha\ back\ of\ the\ ship\r\n
+comment2.text=\n\ Set\ the\ same\ location\ for\ tha\ back\ of\ the\ ship\n
 comment3.params=value
 comment3.target=void\ setRunning(boolean)
 comment4.params=
 comment4.target=void\ act()
-comment4.text=\r\n\ Act\ -\ do\ whatever\ the\ hook\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment4.text=\n\ Act\ -\ do\ whatever\ the\ hook\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
 comment5.params=
 comment5.target=void\ hookMovement()
 comment6.params=
-comment6.target=void\ cargoInTransport()
-comment7.params=
-comment7.target=void\ EmptyCargoCheck()
-numComments=8
+comment6.target=void\ EmptyCargoCheck()
+numComments=7

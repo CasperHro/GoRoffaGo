@@ -84,7 +84,6 @@ public class Hook extends Actor
         if (running)
         {
             hookMovement();
-            cargoInTransport();
             EmptyCargoCheck();
         } 
     }
@@ -120,25 +119,21 @@ public class Hook extends Actor
         }
     }
     
-    public void cargoInTransport() {
-        // Check for Transport actor intersection.
-        if (transport == null) {
-            transport = (Transport)getOneObjectAtOffset(0, 40, Transport.class);
-        }
-        
-        // Reset Cargo pickup when Cargo and transport intersect.
-        if (transport != null) {
-            if (transport.resetTransport == 1) {
-                cargo = null;
-            }
-        }
-    
-    }
-     public void EmptyCargoCheck(){
+    public void EmptyCargoCheck(){
         myWorld world = getWorldOfType(myWorld.class);
         if (cargo != null && Greenfoot.isKeyDown("d") &&
             getWorldOfType(myWorld.class).putCargoAtSpot(cargo, (EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), EmptyCargo.class))) {
                 cargo = null;
-        }    
+        }
+        
+        if (transport == null) {
+            transport = (Transport)getOneObjectAtOffset(0, 40, Transport.class);
+        }
+        
+        if (cargo != null && Greenfoot.isKeyDown("d")) {
+            if (transport != null && transport.setCargo(cargo)) {
+                cargo = null;
+            }
+        }
     }
 }

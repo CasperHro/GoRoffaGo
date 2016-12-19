@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=myWorld
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ myWorld\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ myWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=myWorld()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ myWorld.\r\n\ \r\n
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ myWorld.\n\ \n
 comment10.params=truck
 comment10.target=void\ removeTransport(Transport)
 comment11.params=
@@ -26,13 +26,13 @@ comment19.params=x\ y
 comment19.target=void\ createGrid(int,\ int)
 comment2.params=
 comment2.target=void\ prepare()
-comment2.text=\r\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\r\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\r\n
+comment2.text=\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\n
 comment20.params=cargo\ emptySpot
 comment20.target=boolean\ putCargoAtSpot(Cargo,\ EmptyCargo)
-comment20.text=\ \ \ \ \ \ \ \ \r\n\ \ \ public\ void\ removeCargo(char\ Cargo){\r\n\ \ \ \ \ \ \ \ //removeObject(Cargo);\r\n\ \ \ \ \ \ \ \ //setGrid(i,0);\r\n\ \ \ \ }\r\n\r\n\ \ \ \ public\ int\ getSpot(int\ x,\ int\ y){\r\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\r\n\ \ \ \ \ \ \ \ return\ p1_grid[spot].getWeight();\r\n\ \ \ \ }\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ public\ int\ getCoordX(int\ spot){\r\n\ \ \ \ \ \ \ \ int\ x\ \=\ spot%maxWidth;\r\n\ \ \ \ \ \ \ \ return\ x;\r\n\ \ \ \ }\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ public\ int\ getCoordY(int\ spot){\r\n\ \ \ \ \ \ \ \ int\ x\ \=\ spot%maxWidth;\r\n\ \ \ \ \ \ \ \ int\ y\ \=\ (spot-x)/maxWidth;\r\n\ \ \ \ \ \ \ \ return\ y;\r\n\ \ \ \ }\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ public\ boolean\ setCoord(int\ x,int\ y,Cargo\ value){\r\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\r\n\ \ \ \ \ \ \ \ p1_grid[spot]\ \=\ value;\r\n\ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ }\ \ \ \ \ \r\n\ \ \ \ \r\n\ \ \ \ public\ void\ setGrid(int\ spot,\ Cargo\ value){\r\n\ \ \ \ \ \ \ \ if(\!aiOn){\r\n\ \ \ \ \ \ \ \ \ \ \ \ p1_grid[spot]\ \=\ value;\r\n\ \ \ \ \ \ \ \ }else{\r\n\ \ \ \ \ \ \ \ \ \ \ \ p2_grid[spot]\ \=\ value;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ }\r\n\ \ \ \ \r\n\ \ \ \ public\ Cargo\ getValue(int\ x,int\ y){\r\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\r\n\ \ \ \ \ \ \ \ return\ p1_grid[spot];\r\n\ \ \ \ }\r\n
+comment20.text=\ \ \ \ \ \ \ \ \n\ \ \ public\ void\ removeCargo(char\ Cargo){\n\ \ \ \ \ \ \ \ //removeObject(Cargo);\n\ \ \ \ \ \ \ \ //setGrid(i,0);\n\ \ \ \ }\n\n\ \ \ \ public\ int\ getSpot(int\ x,\ int\ y){\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\n\ \ \ \ \ \ \ \ return\ p1_grid[spot].getWeight();\n\ \ \ \ }\n\ \ \ \ \ \ \ \ \n\ \ \ \ public\ int\ getCoordX(int\ spot){\n\ \ \ \ \ \ \ \ int\ x\ \=\ spot%maxWidth;\n\ \ \ \ \ \ \ \ return\ x;\n\ \ \ \ }\n\ \ \ \ \ \ \ \ \n\ \ \ \ public\ int\ getCoordY(int\ spot){\n\ \ \ \ \ \ \ \ int\ x\ \=\ spot%maxWidth;\n\ \ \ \ \ \ \ \ int\ y\ \=\ (spot-x)/maxWidth;\n\ \ \ \ \ \ \ \ return\ y;\n\ \ \ \ }\n\ \ \ \ \ \ \ \ \n\ \ \ \ public\ boolean\ setCoord(int\ x,int\ y,Cargo\ value){\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\n\ \ \ \ \ \ \ \ p1_grid[spot]\ \=\ value;\n\ \ \ \ \ \ \ \ return\ true;\n\ \ \ \ }\ \ \ \ \ \n\ \ \ \ \n\ \ \ \ public\ void\ setGrid(int\ spot,\ Cargo\ value){\n\ \ \ \ \ \ \ \ if(\!aiOn){\n\ \ \ \ \ \ \ \ \ \ \ \ p1_grid[spot]\ \=\ value;\n\ \ \ \ \ \ \ \ }else{\n\ \ \ \ \ \ \ \ \ \ \ \ p2_grid[spot]\ \=\ value;\n\ \ \ \ \ \ \ \ }\n\ \ \ \ }\n\ \ \ \ \n\ \ \ \ public\ Cargo\ getValue(int\ x,int\ y){\n\ \ \ \ \ \ \ \ int\ spot\ \=\ (x*maxHeight)+y;\n\ \ \ \ \ \ \ \ return\ p1_grid[spot];\n\ \ \ \ }\n
 comment3.params=
 comment3.target=void\ firstStep()
-comment3.text=\r\n\ Does\ the\ run\ initialization.\ To\ prevent\ \r\n
+comment3.text=\n\ Does\ the\ run\ initialization.\ To\ prevent\ \n
 comment4.params=
 comment4.target=void\ startGame()
 comment5.params=

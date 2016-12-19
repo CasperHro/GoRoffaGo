@@ -188,9 +188,10 @@ public class ComputerHook extends Hook
     public void setCargoOnTransport() {
         if (cargoOnHook != null) {
             if (cargoAboveTransport == true) {
-                Transport transportIntersect = (Transport)getOneObjectAtOffset(cargoheight, 0, Transport.class); 
-                if (transportIntersect != null)
+                Transport transportIntersect = (Transport)getOneObjectAtOffset(0, cargoheight, Transport.class); 
+                if (transportIntersect != null && transportIntersect.setCargo(cargoOnHook))
                 {
+                    cargoOnHook = null;
                     cargoInTransport = true;
                 }
                 else {
@@ -198,12 +199,6 @@ public class ComputerHook extends Hook
                     setLocation(getX(), getY() + speed);
                 }
             }        
-        }
-        
-        if (cargoOnHook == null) {
-            if (cargoAboveTransport == true) {
-                cargoInTransport = true;
-            }
         }
 
     }

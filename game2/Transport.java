@@ -42,29 +42,32 @@ public class Transport extends Actor
      * Act - do whatever the Transport wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act() 
+    public boolean setCargo(Cargo container)
     {
         if (cargo == null) {
-            cargo = (Cargo)getOneObjectAtOffset(0, 0, Cargo.class);
-            if (cargo != null) {
-                if (cargo.getColor() == getColor()) {
-                    // release from hook
-                    
-                    // Add score ???
-                    Counter c = getWorld().getObjects(Counter.class).get(0);
-                    if (c != null)
-                    {
-                        c.addTransportScore(1);
-                    }
-    
-                    resetTransport = 1;
-                }
+            if (container.getColor() == getColor()) {
+             cargo = container;   
+                // Add score ???
+                //Counter c = getWorld().getObjects(Counter.class).get(0);
+                //if (c != null) {
+                //    c.addTransportScore(1);
+                //}
+
+                
+                resetTransport = 1;
+                return true;
             }
         }
-        
+
+        return false;
+    }
+    
+    public void act() 
+    {
         if (resetTransport == 1) {
             myWorld world = (myWorld) getWorld();
             world.removeObject(cargo);
+            cargo = null;
             GreenfootImage image = getImage();
             if(pause > 0) {
                 if (image.getWidth() > 9) {
@@ -91,7 +94,8 @@ public class Transport extends Actor
                     resetTransport = 0;
                     pause = 60;
                     transportCount += 1;
-
+                    
+                    cargo = null;
                     world.removeTransport(this);
                 }
                 

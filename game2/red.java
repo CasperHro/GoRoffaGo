@@ -10,7 +10,7 @@ public class red extends Cargo
 {
     
     public red(){
-        super.weight=20;
+        super.weight=10;
         super.color="red";
     }
     
