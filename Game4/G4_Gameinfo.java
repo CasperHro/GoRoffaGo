@@ -16,14 +16,15 @@ public class G4_Gameinfo extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private String text = "Game info\n"+
-                  "Your mission is to .\n"+
-                  "...\n\n"+
-                  "...\n"+
-                  "...\n"+
-                  "l...\n\n"+
-                  "...\n\n"+
-                  "...\n\n\n"+
+    private String text = "Navigator : game info\n\n"+
+                  "Your mission is to catch all criminals which come inside the port.\n"+
+                  "When a criminal is catched a point is scored!\n\n"+
+                  "Be alert! They can reach warehouses and they are missed.\n\n"+
+                  "They can also hide inside the containers and appear anywhere again!\n\n"+
+                  "Use the arrows to navigate:\n"+
+                  "up/down - go ahead/ go back\n"+
+                  "left/right - rotate left/right\n\n"+
+                  "When you miss 3 criminanls, you're game over!\n\n\n"+
                   "Click or press Enter to start...";
     private String textStart = "Get ready...\n\nHere we go!!!";
     

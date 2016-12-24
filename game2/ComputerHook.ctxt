@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=ComputerHook
+comment0.text=\n\ Write\ a\ description\ of\ class\ ComputerHook\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\n\ Act\ -\ do\ whatever\ the\ ComputerHook\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment2.params=actor
+comment2.target=double\ getDistance(greenfoot.Actor)
+comment3.params=
+comment3.target=Transport\ getTransport()
+comment4.params=color
+comment4.target=Cargo\ getNearestCargoByColor(java.lang.String)
+comment5.params=
+comment5.target=EmptyCargo\ getNearestEmptyCargo()
+comment6.params=
+comment6.target=void\ getCargoOnHook()
+comment7.params=
+comment7.target=void\ moveCargo()
+comment8.params=
+comment8.target=void\ setCargoOnTransport()
+comment9.params=
+comment9.target=void\ reset()
+numComments=10

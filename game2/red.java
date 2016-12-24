@@ -10,7 +10,7 @@ public class red extends Cargo
 {
     
     public red(){
-        super.weight=20;
+        super.weight=10;
         super.color="red";
     }
     
@@ -22,8 +22,4 @@ public class red extends Cargo
     {
         // Add your action code here.
     }       
-    
-    public int getWeight() {
-        return weight;
-    }
 }

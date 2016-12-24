@@ -14,9 +14,6 @@ public class Cargo extends Actor
     
     public Cargo()
     {
-        GreenfootImage image = getImage();  
-        image.scale(80, 40);
-        setImage(image);
     }
     
     /**
@@ -41,7 +38,6 @@ public class Cargo extends Actor
         int dist = world.shipCentre-this.getX();
         int direction;
         int direction2= -1;
-        System.out.println(dist);
         if(dist>0){//links of rechts
             direction = 1;
         }else {
@@ -59,28 +55,23 @@ public class Cargo extends Actor
         }
    }
     
-    public void adjustBooty() {
-        myWorld world = getWorldOfType(myWorld.class);
-        int swaying = world.tilt;
-        
-        
+    public void adjustBooty(int swaying, int stepscount) {
         if(swaying>20){
             turn(-1);
-            this.adjustHeight(true);
+            adjustHeight(true);
         } else 
         if (swaying<-20) {
             turn(1);
-            this.adjustHeight(false);
+            adjustHeight(false);
         }else{
-            if(world.stepsCount>0){
+            if(stepscount>0){
                 turn(1);
                 this.adjustHeight(false);
             } else
-            if(world.stepsCount<0){
+            if(stepscount<0){
                 turn(-1);
-                this.adjustHeight(true);
+                adjustHeight(true);
             }
         }
-        
     }
 }

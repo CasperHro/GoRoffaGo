@@ -11,14 +11,15 @@ public class G4_Staff extends Actor
 {
     //Vars for the staff
    
-    private int speed = 6;
+    private int speed = 7;
     private int missed = 0;
     private String role = "criminal";
     private boolean criminal = false;
-    
+    private int hided = 0;
     private static int TIMEOUT = 40;
     private int moveCounter = 0;
-   
+    private G4_OfficerScored scored;
+    
     
     public String getRole()
     
@@ -48,7 +49,6 @@ public class G4_Staff extends Actor
         else 
         {
             setImage(new GreenfootImage("crimineel.png"));
-            Greenfoot.playSound("alarm.mp3");
             criminal = true;
         }
     } 
@@ -63,6 +63,11 @@ public class G4_Staff extends Actor
             if (criminal)
             {
                 Greenfoot.playSound("whistle.mp3");
+                officer.move(0);
+                this.move(0);
+                scored = new G4_OfficerScored();
+                getWorld().addObject(scored, officer.getX(), officer.getY());
+                scored.setRotation(getRotation());
                 ((Game4Hunter)getWorld()).addScore(1);
                 getWorld().removeObject(this);
                 return;
@@ -70,7 +75,7 @@ public class G4_Staff extends Actor
             else
             {
                 officer.turn(Greenfoot.getRandomNumber(30));
-                officer.move(45);
+                officer.move(-10);
                 return;
             }
         }
@@ -80,20 +85,46 @@ public class G4_Staff extends Actor
         {
             if (criminal == false)
             {
-                this.turn(Greenfoot.getRandomNumber(70));
-                move(5);
-                return;
+                move(-10);
+                turn(90);
             }
             
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and apper agin next to one of other or the same
-                missed++;
+                Greenfoot.playSound("click_and_slide.mp3");
                 ((Game4Hunter)getWorld()).addMissed(1);
                 getWorld().removeObject(this);
                 return;
             }
         }
+        
+        
+        G4_Container container = (G4_Container) getOneIntersectingObject(G4_Container.class);
+        if (container != null)
+        {
+            if (criminal == false)
+            {
+                move(-10);
+                turn(90);
+            }
+            
+            else if (criminal == true)
+            {
+                // make sure that criminal can hide in the container and appear again next to one of other or the same
+                Greenfoot.playSound("glovebox_open.mp3");
+                ((Game4Hunter)getWorld()).addHidden(1);
+                getWorld().removeObject(this);
+                return;
+            }
+        }
+        
+        G4_Staff staff = (G4_Staff) getOneIntersectingObject(G4_Staff.class);
+        if (staff != null)
+        {
+            move(-10);
+        }
+        
         if (Greenfoot.getRandomNumber(100) < 10)
         {
             turn(Greenfoot.getRandomNumber(90) - 45);
@@ -113,6 +144,7 @@ public class G4_Staff extends Actor
         if (moveCounter >= TIMEOUT && criminal)
         {
             missed++;
+            Greenfoot.playSound("click_and_slide.mp3");
             ((Game4Hunter)getWorld()).addMissed(1);
             getWorld().removeObject(this);
         }
@@ -121,8 +153,8 @@ public class G4_Staff extends Actor
         {
             getWorld().removeObject(this);
         }
-  
+
     }
-   
+    
 }
 

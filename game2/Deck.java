@@ -8,14 +8,41 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Deck extends Actor
 {
-    int centerX;
-    int tilt;
+    private int centerX;
+    private int tilt;
+    private int stepcount = 0;
+    
+    BoatBack back = new BoatBack();
     
     public Deck()
     {
-        GreenfootImage image = getImage();  
-        image.scale(550, 500);
-        setImage(image);
+    }
+    
+    /**
+     * When added to a world also add the back of the ship
+     */
+    protected void addedToWorld(World world)
+    {
+        world.addObject(back, getX(), getY());
+    }
+    
+    /**
+     * Set the same location for tha back of the ship
+     */
+    public void setLocation(int x, int y)
+    {
+        super.setLocation(x, y);
+        back.setLocation(getX(), getY());
+    }
+    
+    /**
+     * Override for setRotation to also set the rotation for the back of the 
+     * ship.
+     */
+    public void setRotation(int rotation)
+    {
+        super.setRotation(rotation);
+        back.setRotation(getRotation());
     }
     
     /**
@@ -24,37 +51,37 @@ public class Deck extends Actor
      */
     public void act() 
     {
-       
-        
-            //turn(1);
-        //int swaying = ((myWorld)getworld()).tilt;
-        //turn(1);
-    }    
+        // Ship is just there
+    }
     
-    public int adjustShip() {
-       // int swaying = ((myWorld)getworld()).getTilt();
-        //int swaying = getWorld(myWorld.class).getTilt();
-        myWorld world = getWorldOfType(myWorld.class);
-        int swaying = world.tilt;
-        //System.out.println(" sway "+swaying);
+    public void resetShip()
+    {
+        setRotation(0);
+        stepcount = 0;
+    }
+    
+    public int adjustShip(int swaying) {
         if(swaying>20){
             turn(-1);
-            world.stepsCount++;
-        } else 
-        if (swaying<-20) {
+            stepcount++;
+        } else if (swaying<-20) {
             turn(1);
-            world.stepsCount--;
+            stepcount--;
         }else{
-            if(world.stepsCount>0){
-                world.stepsCount--;
+            if(stepcount>0){
+                stepcount--;
                 turn(1);
             } else
-            if(world.stepsCount<0){
-                world.stepsCount++;
+            if(stepcount<0){
+                stepcount++;
                 turn(-1);
             }
         }
-        
-        return 0;
+        return stepcount;
+    }
+   
+    public int getStepCount()
+    {
+        return stepcount;
     }
 }
