@@ -208,20 +208,25 @@ public class myWorld extends World
                 //System.out.println("rotation "+deck.getRotation());
                 //showText("Cargo Weight: " + p1_tilt, shipCentre, deckLevel+22);
                 //showText("Looted: " + looted,730,530);
-                if (p1_deck.getStepCount() > 10 || p1_deck.getStepCount() < -10){
+                if (p1_deck.getStepCount() > 10 || p1_deck.getStepCount() < -10 || checkCargoLeft(p2_grid)==0){
                     // player looses
                     gameOver = true;
-                }else if (p2_deck.getStepCount() > 10 || p2_deck.getStepCount() < -10){
+                    endGame();
+                    GameOver gameover = new GameOver();
+                    addObject(gameover, getWidth()/2, getHeight()/2);
+                }else if (p2_deck.getStepCount() > 10 || p2_deck.getStepCount() < -10 || checkCargoLeft(p1_grid)==0){
                     // computer looses
                     gameOver = true;
+                    endGame();
+                    GameOver gameover = new GameOver();
+                    addObject(gameover, getWidth()/2, getHeight()/2);
                 }
-                
                 counter=0;
             }  
         }else if (running && gameOver){
             endGame();
-            GameOver gameover = new GameOver();
-            addObject(gameover, getWidth()/2, getHeight()/2);
+                    GameOver gameover = new GameOver();
+                    addObject(gameover, getWidth()/2, getHeight()/2);
         }
     }
     
@@ -286,6 +291,7 @@ public class myWorld extends World
         int i = 0;
         int hi = 0;                                     //how high the cargo is stacked
         int x = shipCentre-(width/2*(cargoWidth+space))+((cargoWidth+space)/2);
+        
         List<String> containers = new ArrayList<String>();
         
         while(i<width*height){
@@ -393,6 +399,17 @@ public class myWorld extends World
        //System.out.println("Balans = "+windSpeed);
        //System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
        return windSpeed;
+    }
+    
+    public int checkCargoLeft(Cargo[] grid){
+        int count = 0;
+        for(int i=0;i<grid.length-1; i++){
+            if(grid[i]!=null){
+                count+=1;
+            }
+        }
+        System.out.println("cargo left: "+count);
+        return count;
     }
     
     public int getWeightPerX(Cargo[] grid, int x){

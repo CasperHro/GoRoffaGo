@@ -1,20 +1,20 @@
 #BlueJ class context
 comment0.target=Deck
-comment0.text=\n\ Write\ a\ description\ of\ class\ Deck\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Deck\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Deck()
 comment2.params=world
 comment2.target=void\ addedToWorld(greenfoot.World)
-comment2.text=\n\ When\ added\ to\ a\ world\ also\ add\ the\ back\ of\ the\ ship\n
+comment2.text=\r\n\ When\ added\ to\ a\ world\ also\ add\ the\ back\ of\ the\ ship\r\n
 comment3.params=x\ y
 comment3.target=void\ setLocation(int,\ int)
-comment3.text=\n\ Set\ the\ same\ location\ for\ tha\ back\ of\ the\ ship\n
+comment3.text=\r\n\ Set\ the\ same\ location\ for\ tha\ back\ of\ the\ ship\r\n
 comment4.params=rotation
 comment4.target=void\ setRotation(int)
-comment4.text=\n\ Override\ for\ setRotation\ to\ also\ set\ the\ rotation\ for\ the\ back\ of\ the\ \n\ ship.\n
+comment4.text=\r\n\ Override\ for\ setRotation\ to\ also\ set\ the\ rotation\ for\ the\ back\ of\ the\ \r\n\ ship.\r\n
 comment5.params=
 comment5.target=void\ act()
-comment5.text=\n\ Act\ -\ do\ whatever\ the\ Deck\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment5.text=\r\n\ Act\ -\ do\ whatever\ the\ Deck\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
 comment6.params=
 comment6.target=void\ resetShip()
 comment7.params=swaying
