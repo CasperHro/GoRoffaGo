@@ -23,10 +23,12 @@ public class Game4Hunter extends World
     public static final int[] rndYs = {140, 240, 340, 440};
     public static final int[] rndXs = {198, 327, 456, 585};
     
+    private boolean[] CargoPlaced = new boolean[16];
+    
     private int newManInterval = 90;
     private int newManSteps = 0;
     private int manCounter = 0;
-    private int score = 0;
+    int score = 0;
     private int missed = 0;
     private int maxMissed = 3;
     private boolean firstStep = true;
@@ -92,7 +94,6 @@ public class Game4Hunter extends World
         addMissed(0);
         
         setObstacle();
-        setContainer();
         
         newManSteps = newManInterval - 5;
     }
@@ -152,6 +153,7 @@ public class Game4Hunter extends World
                 timerHidden = 0;
                 addCriminal(hidden);
                 hidden = 0;
+                
                 return;
             }
         }
@@ -204,10 +206,24 @@ public class Game4Hunter extends World
         
     }
     
-    private void setContainer()
+    
+    public void setContainer()
     {
-        int rndY = rndYs[Greenfoot.getRandomNumber(rndYs.length)];
-        int rndX = rndXs[Greenfoot.getRandomNumber(rndXs.length)];
+        boolean foundEmpty = false;
+        int rndY=0;
+        int rndX=0;
+        while(!foundEmpty){
+            int indexX = Greenfoot.getRandomNumber(rndXs.length);
+            int indexY = Greenfoot.getRandomNumber(rndYs.length);
+            rndY = rndYs[indexY];
+            rndX = rndXs[indexX];
+            System.out.println(rndY+", "+rndX);
+            if(CargoPlaced[indexY*4+indexX]!=true){
+                CargoPlaced[indexY*4+indexX]=true;
+                foundEmpty=true;
+            }
+        }
+        
         String cargo = cargos[Greenfoot.getRandomNumber(cargos.length)];
         
         G4_Container container = new G4_Container();
@@ -262,6 +278,10 @@ public class Game4Hunter extends World
     {
         score += increase;
         showText("Score: " +score, 740,20);
+        
+        if(score%5==0){
+            setContainer();
+        }
     }
     
     public void addMissed(int increase)

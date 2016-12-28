@@ -70,6 +70,7 @@ public class G4_Staff extends Actor
                 scored.setRotation(getRotation());
                 ((Game4Hunter)getWorld()).addScore(1);
                 getWorld().removeObject(this);
+                
                 return;
             }
             else
