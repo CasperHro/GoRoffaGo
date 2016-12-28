@@ -18,7 +18,7 @@ public class G4_Staff extends Actor
     private int hided = 0;
     private static int TIMEOUT = 40;
     private int moveCounter = 0;
-    private G4_OfficerScored scored;
+    
     
     
     public String getRole()
@@ -65,12 +65,9 @@ public class G4_Staff extends Actor
                 Greenfoot.playSound("whistle.mp3");
                 officer.move(0);
                 this.move(0);
-                scored = new G4_OfficerScored();
-                getWorld().addObject(scored, officer.getX(), officer.getY());
-                scored.setRotation(getRotation());
+                officer.scoredOfficer();
                 ((Game4Hunter)getWorld()).addScore(1);
                 getWorld().removeObject(this);
-                
                 return;
             }
             else

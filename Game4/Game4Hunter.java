@@ -25,7 +25,7 @@ public class Game4Hunter extends World
     
     private boolean[] CargoPlaced = new boolean[16];
     
-    private int newManInterval = 90;
+    private int newManInterval = 80;
     private int newManSteps = 0;
     private int manCounter = 0;
     int score = 0;
@@ -37,8 +37,10 @@ public class Game4Hunter extends World
     private int timerHidden = 0;
     private int HIDDEN_TIMEOUT = Greenfoot.getRandomNumber(60);
     private String lastKey = "";
+    private int newContainerInterval = 3;
     
     private GreenfootSound backgroundMusic = new GreenfootSound("tetris_theme.mp3");
+    
     
     public Game4Hunter()
     {    
@@ -47,7 +49,7 @@ public class Game4Hunter extends World
        
         Greenfoot.setSpeed(40);
         
-        backgroundMusic.setVolume(70);
+        backgroundMusic.setVolume(60);
         
         prepare();
         
@@ -64,7 +66,7 @@ public class Game4Hunter extends World
         addObject(g4_entry, 20, 270);
         g4_entry.setRotation(90);
         
-        setPaintOrder(G4_GameOver.class,G4_Cloud.class, G4_Staff.class, G4_Officer.class);
+        setPaintOrder(G4_GameOver.class, G4_Complete.class, G4_Cloud.class, G4_Staff.class, G4_Officer.class);
        
     }
     
@@ -82,7 +84,7 @@ public class Game4Hunter extends World
     
     public void startGame()
     {
-        newManInterval = 90;
+        newManInterval = 70;
         manCounter = 0;
         missed = 0;
         hidden = 0;
@@ -258,9 +260,21 @@ public class Game4Hunter extends World
         addObject(gameOver, getWidth()/2, getHeight()/2);
         
         backgroundMusic.pause();
-        
+        Greenfoot.playSound("down_scale.mp3");
         Greenfoot.stop();
         
+    }
+    
+    public void missionComplete()
+    {
+        running = false;
+        
+        Actor missionComplete = new G4_Complete();
+        addObject(missionComplete, getWidth()/2, getHeight()/2);
+        
+        backgroundMusic.pause();
+        Greenfoot.playSound("up_scale.mp3");
+        Greenfoot.stop();
     }
     
     public void addCriminal(int hidden)
@@ -279,7 +293,11 @@ public class Game4Hunter extends World
         score += increase;
         showText("Score: " +score, 740,20);
         
-        if(score%5==0){
+        if (score >= newContainerInterval*10 - 1){
+            missionComplete();
+        }
+        
+        if (score % newContainerInterval == 0){
             setContainer();
         }
     }

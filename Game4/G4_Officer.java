@@ -15,8 +15,10 @@ public class G4_Officer extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private int speed = 3;
-    
+    private int speed = 4;
+    private G4_OfficerScored scored;
+ 
+
     public void act() 
     
     {
@@ -42,9 +44,6 @@ public class G4_Officer extends Actor
         }
         
         
-        
-        
-        
         if (Greenfoot.isKeyDown("left"))
         {
            turn(-20);
@@ -61,7 +60,15 @@ public class G4_Officer extends Actor
         {
             move(speed);
             move(speed+1);
+ 
         }
     }    
-    
+    public void scoredOfficer()
+    {
+        scored = new G4_OfficerScored();
+        getWorld().addObject(scored, getX(), getY());
+        scored.setRotation(getRotation());
+
+    }
+
 }
