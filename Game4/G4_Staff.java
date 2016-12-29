@@ -20,7 +20,6 @@ public class G4_Staff extends Actor
     private int moveCounter = 0;
     
     
-    
     public String getRole()
     
     {
@@ -90,6 +89,7 @@ public class G4_Staff extends Actor
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and apper agin next to one of other or the same
+               
                 Greenfoot.playSound("two_explosions.mp3");
                 obstacle.explosion();
                 ((Game4Hunter)getWorld()).addMissed(1);
@@ -152,7 +152,7 @@ public class G4_Staff extends Actor
         {
             getWorld().removeObject(this);
         }
-
+        
     }
     
 }
