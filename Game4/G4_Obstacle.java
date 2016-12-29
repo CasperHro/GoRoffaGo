@@ -10,6 +10,8 @@ import java.util.List;
 public class G4_Obstacle extends Actor
 {
     private String value = "obs1";
+    private G4_Explosion explosion;
+    
     /**
      * Act - do whatever the G4_Obstacle wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -34,5 +36,13 @@ public class G4_Obstacle extends Actor
             setImage(new GreenfootImage("obs3.png"));
         }
     } 
+    public void explosion()
+    {
+        explosion = new G4_Explosion();
+        getWorld().addObject(explosion, getX(), getY());
+        explosion.setRotation(getRotation());
+        getWorld().removeObject(this);
+        return;
 
+    }
 }

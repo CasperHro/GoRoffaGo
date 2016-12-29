@@ -39,7 +39,7 @@ public class Game4Hunter extends World
     private String lastKey = "";
     private int newContainerInterval = 3;
     
-    private GreenfootSound backgroundMusic = new GreenfootSound("tetris_theme.mp3");
+    private GreenfootSound backgroundMusic = new GreenfootSound("club_dance.mp3");
     
     
     public Game4Hunter()
@@ -293,7 +293,7 @@ public class Game4Hunter extends World
         score += increase;
         showText("Score: " +score, 740,20);
         
-        if (score >= newContainerInterval*10 - 1){
+        if (score >= newContainerInterval*14 + 1){
             missionComplete();
         }
         

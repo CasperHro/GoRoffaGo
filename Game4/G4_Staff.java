@@ -90,7 +90,8 @@ public class G4_Staff extends Actor
             else if (criminal == true)
             {
                 // make sure that criminal can hide in the container and apper agin next to one of other or the same
-                Greenfoot.playSound("click_and_slide.mp3");
+                Greenfoot.playSound("two_explosions.mp3");
+                obstacle.explosion();
                 ((Game4Hunter)getWorld()).addMissed(1);
                 getWorld().removeObject(this);
                 return;
@@ -104,7 +105,7 @@ public class G4_Staff extends Actor
             if (criminal == false)
             {
                 move(-10);
-                turn(90);
+                turn(Greenfoot.getRandomNumber(30));
             }
             
             else if (criminal == true)
