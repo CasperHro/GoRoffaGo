@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=G3Tutorial
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ G3Tutorial\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=commandImage\ message
+comment1.target=G3Tutorial(java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Contructor\r\n
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment2.text=\r\n\ Set\ game\ info\ over\ the\ complete\ world\r\n
+comment3.params=world
+comment3.target=void\ drawInfobox(greenfoot.World)
+comment3.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
+comment4.params=
+comment4.target=void\ act()
+comment4.text=\r\n\ Act\ -\ do\ whatever\ the\ G3Tutorial\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+numComments=5

@@ -51,7 +51,7 @@ public class GameOver extends Actor
         // Check user action
         if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter") || Greenfoot.isKeyDown("Escape"))
         {
-            // TODO: End game or ,aybe ask to play again
+            // TODO: End game or ,maybe ask to play again
             Greenfoot.stop();
         }
     }    

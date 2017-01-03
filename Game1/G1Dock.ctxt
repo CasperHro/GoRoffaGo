@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=G1Dock
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ G1Dock\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ The\ dock\ checks\ for\ a\ ship\ nearby\ and\ when\ the\ speed\ is\ low\ enough\r\n\ it\ attached\ the\ ship\ to\ the\ dock.\r\n
+comment2.params=boat
+comment2.target=void\ dockBoat(G1Boat)
+comment2.text=\r\n\ dockBoat\ lockes\ the\ boat\ to\ the\ dock\ and\ initializes\ the\ wait\ timer\r\n\ to\ remove\ the\ boat\ after\ a\ while.\ A\ point\ is\ scored\!\!\!\r\n
+comment3.params=
+comment3.target=void\ clearDock()
+comment3.text=\r\n\ Removes\ the\ boat\ from\ the\ dock\ and\ from\ the\ world\r\n
+comment4.params=
+comment4.target=java.lang.String\ getCargo()
+comment4.text=\r\n\ Returns\ the\ cargo\ type\r\n
+comment5.params=value
+comment5.target=void\ setCargo(java.lang.String)
+comment5.text=\r\n\ Sets\ the\ cargo\ type\r\n
+numComments=6
