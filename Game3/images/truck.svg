@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <rect x="138.709" y="200" width="20.154" height="51.203" style="fill: rgb(47, 39, 39);"/>
+  <rect x="232.818" y="200" width="20.154" height="51.203" style="fill: rgb(47, 39, 39);"/>
+  <path d="M 123.538 203.2 L 118.091 220.086 L 118.091 232.069 L 122.993 247.866 L 274.185 247.866 L 274.317 232.692 L 274.318 217.362 L 274.223 203.2 L 123.538 203.2 Z" style="stroke: black; fill: rgb(230, 114, 6);"/>
+  <path d="M 124.111 203.446 L 118.402 218.679 L 118.402 232.721 L 123.729 247.853" style="fill: none; stroke: black; stroke-width: 8;"/>
+</svg>

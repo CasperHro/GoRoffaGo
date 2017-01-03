@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="bx-google-fonts">@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,500,700,900,100italic,300italic,400,400italic,500italic,700italic,900italic);</style>
+  </defs>
+  <path d="M 203.972 161.485 L 220.041 184.363 L 209.906 184.363 C 209.129 193.449 203.591 201.667 195 206.27 C 189.536 209.198 183.698 210.327 178.099 209.982 L 178.099 198.794 C 187.464 199.725 196.578 193.559 197.849 184.363 L 187.903 184.363 Z" style="fill: rgb(77, 187, 50); stroke-width: 2; stroke: rgb(255, 247, 0);" transform="matrix(0, -1, 1, 0, 13.163992, 384.976001)"/>
+  <path d="M 400.556 206.992 L 416.625 184.114 L 406.49 184.114 C 405.713 175.028 400.175 166.81 391.584 162.207 C 386.12 159.279 380.282 158.15 374.683 158.495 L 374.683 169.683 C 384.048 168.752 393.162 174.918 394.433 184.114 L 384.487 184.114 Z" style="stroke-width: 2; stroke: rgb(255, 247, 0); fill: rgb(245, 64, 23);" transform="matrix(0, -1, 1, 0, 213.082985, 578.224992)"/>
+  <path d="M 295.994 176.593 L 295.994 206.551 L 286.716 206.551 L 286.716 176.593 L 275.355 176.593 L 291.411 153.867 L 307.467 176.593 Z" style="stroke-width: 2; fill: rgb(38, 131, 218); stroke: rgb(255, 247, 0);"/>
+  <path d="M 340.165 178.857 L 351.639 195.098 L 340.165 195.098 L 340.165 206.366 L 330.887 206.366 L 330.887 195.098 L 319.527 195.098 L 330.887 179.019 L 330.887 176.408 L 319.526 176.408 L 335.582 153.682 L 351.638 176.408 L 340.165 176.408 Z" style="stroke-width: 2; fill: rgb(38, 131, 218); stroke: rgb(255, 247, 0);"/>
+  <g transform="matrix(1, 0, 0, 1, -155.568619, -4.639224)">
+    <rect transform="matrix(1, 0, 0, 0.999999, 101.75, 56.311656)" x="288.25" y="119.692" width="31.237" height="8.351" style="stroke-width: 2; stroke: rgb(255, 247, 0); fill: rgb(189, 109, 183);"/>
+    <rect transform="matrix(1, 0, 0, 0.999999, 101.75, 70.693568)" x="288.25" y="119.692" width="31.237" height="8.351" style="stroke-width: 2; stroke: rgb(255, 247, 0); fill: rgb(189, 109, 183);"/>
+  </g>
+  <text x="268.468" y="244.973" transform="matrix(1.42625, 0, 0, 1.47076, -149.067856, -105.788223)" style="fill: rgb(241, 241, 241); font-size: 36px; font-weight: bold; stroke: rgb(255, 247, 0); white-space: pre;">P</text>
+</svg>

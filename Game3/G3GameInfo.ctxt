@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=G3GameInfo
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ G3GameInfo\ here.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
+comment1.params=world
+comment1.target=void\ addedToWorld(greenfoot.World)
+comment1.text=\r\n\ Set\ game\ info\ over\ the\ complete\ world\r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Check\ the\ mouse\ click\ to\ hide\r\n
+comment3.params=world
+comment3.target=void\ drawInfobox(greenfoot.World)
+comment3.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
+comment4.params=world
+comment4.target=void\ drawStarting(greenfoot.World)
+comment4.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
+numComments=5
