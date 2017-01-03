@@ -35,7 +35,7 @@ public class G3World extends World
     /*
      * The running stages
      */
-    private GameStage gameStage = GameStage.WAITING;
+    private G3GameStage gameStage = G3GameStage.WAITING;
     private G3Truck programming;
     private int programStep;
     
@@ -162,7 +162,7 @@ public class G3World extends World
         addCrash(0);
         
         // The vars reset
-        gameStage = GameStage.PROGRAMMING;
+        gameStage = G3GameStage.PROGRAMMING;
         selectNextTruck();
         startTime = new Date();
         running = true;
@@ -200,7 +200,7 @@ public class G3World extends World
             checkKeys();
 
             // Check the gamestage and act on what to do in this stage
-            if (gameStage == GameStage.PROGRAMMING)
+            if (gameStage == G3GameStage.PROGRAMMING)
             {
                 // Check if the time is up or the done is hit
                 int timer = timeOut - Math.toIntExact((new Date().getTime() - startTime.getTime()) / 1000);
@@ -209,14 +209,14 @@ public class G3World extends World
                 // when time is up we must go to the next stage
                 if (timer <= 0)
                 {
-                    startStage(GameStage.RUNNINGCODE, "Time is up, let's see where the trucks go!!");
+                    startStage(G3GameStage.RUNNINGCODE, "Time is up, let's see where the trucks go!!");
                 }
             }
-            else if (gameStage == GameStage.RUNNINGCODE)
+            else if (gameStage == G3GameStage.RUNNINGCODE)
             {
                 runCode();
             }
-            else if (gameStage == GameStage.EVALUATING)
+            else if (gameStage == G3GameStage.EVALUATING)
             {
                 evaluate();
             }
@@ -289,20 +289,38 @@ public class G3World extends World
             if (isDelayed(10))
             {
                 // When all trucks are done go to the next stage
-                setStage(GameStage.EVALUATING);
+                setStage(G3GameStage.EVALUATING);
             }
         }
     }
 
     private void doNextStep()
     {
+        if (programStep == 0)
+        {
+            createTruckCommands();
+        }
+        
         programStep++;
         showText("Execute step: " + programStep, 700, 60);
         
         for(G3Truck t : getObjects(G3Truck.class))
         {
+            // Important, first show command because it will be removed on executing
+            showCurrentCommand(t.getID(), t.getCurrentCommand());
             t.executeStep();
         }
+    }
+    
+    private void showCurrentCommand(int truckID, String command)
+    {
+        for(G3TruckCommand c : getObjects(G3TruckCommand.class))
+        {
+            if (c.getID() == truckID)
+            {
+                c.showCommand(command);
+            }
+        }        
     }
 
     private void evaluate()
@@ -335,7 +353,7 @@ public class G3World extends World
             }
 
             addScore(scored);
-            startStage(GameStage.PROGRAMMING, getEndMessage(scored));
+            startStage(G3GameStage.PROGRAMMING, getEndMessage(scored));
         }
     }
     
@@ -358,7 +376,7 @@ public class G3World extends World
     private void createTutorial1()
     {
         // Tutorial 1, move forward
-        addTruckAndDestination(8, 9, 8, 4, -90);
+        addTruckAndDestination(1, 8, 9, 8, 4, -90);
         
         G3Tutorial g3tuto = new G3Tutorial("G3forward.png", "Use the move forward command to move the truck \nto it's destination");
         addObject(g3tuto, 300, getHeight() -60);
@@ -367,7 +385,7 @@ public class G3World extends World
     private void createTutorial2()
     {
         // Tutorial 2, rotate
-        addTruckAndDestination(9, 6, 7, 6, -90);
+        addTruckAndDestination(1, 9, 6, 7, 6, -90);
         
         G3Tutorial g3tuto = new G3Tutorial("G3left.png", "Use the rotate left command to move the truck \nto it's destination");
         addObject(g3tuto, 300, getHeight() -60);
@@ -376,17 +394,17 @@ public class G3World extends World
     private void createTutorial3()
     {
         // Tutorial 2, pause
-        addTruckAndDestination(8, 9, 8, 4, -90);
-        addTruckAndDestination(10, 7, 5, 7, 180);
+        addTruckAndDestination(1, 8, 9, 8, 4, -90);
+        addTruckAndDestination(2, 10, 7, 5, 7, 180);
         
         G3Tutorial g3tuto = new G3Tutorial("G3pause.png", "Use the pause command to wait for the \nother truck before moving");
         addObject(g3tuto, 300, getHeight() -60);
     }
     
-    private void addTruckAndDestination(int truckX, int truckY, int destX, int destY, int orientation)
+    private void addTruckAndDestination(int id, int truckX, int truckY, int destX, int destY, int orientation)
     {
         String color = colors[Greenfoot.getRandomNumber(colors.length)];
-        G3Truck truck = new G3Truck(color, 1);
+        G3Truck truck = new G3Truck(color, id);
         G3Destination dest = new G3Destination(color);
         
         dest.setRotation(orientation);
@@ -447,6 +465,19 @@ public class G3World extends World
             repaint();
             
             createObstacles(count - 1);
+        }
+    }
+    
+    /**
+     * Create a command for each truck
+     */
+    private void createTruckCommands()
+    {
+        for(G3Truck t : getObjects(G3Truck.class))
+        {
+            int tid = t.getID();
+            G3TruckCommand c = new G3TruckCommand(tid);
+            addObject(c, 700, 80 + (tid * 50));
         }
     }
     
@@ -519,7 +550,7 @@ public class G3World extends World
      */
     private void selectNextTruck()
     {
-        if (gameStage == GameStage.PROGRAMMING)
+        if (gameStage == G3GameStage.PROGRAMMING)
         {
             int nextID = 1;
             List<G3Truck> trucks = getObjects(G3Truck.class);
@@ -547,7 +578,7 @@ public class G3World extends World
     
     public void selectTruckForProgramming(G3Truck truck)
     {
-        if (gameStage == GameStage.PROGRAMMING)
+        if (gameStage == G3GameStage.PROGRAMMING)
         {
             // Unset last active truck
             if (programming != null)
@@ -572,10 +603,10 @@ public class G3World extends World
         }
     }
     
-    public void startStage(GameStage stage, String message)
+    public void startStage(G3GameStage stage, String message)
     {
         // In program mode the active truck blinks, deactivate all trucks
-        if (gameStage == GameStage.PROGRAMMING)
+        if (gameStage == G3GameStage.PROGRAMMING)
         {
             if (programming != null)
             {   
@@ -583,9 +614,12 @@ public class G3World extends World
             }
             removeObjects(getObjects(G3ProgramStep.class));
         }
-        
+        if (gameStage == G3GameStage.RUNNINGCODE)
+        {
+            removeObjects(getObjects(G3TruckCommand.class));
+        }
         // Set the gamestage to waiting and show the messagebox
-        gameStage = GameStage.WAITING;
+        gameStage = G3GameStage.WAITING;
         
         // And show game info overlay
         G3Waitbox g3wait = new G3Waitbox(stage, message);
@@ -607,9 +641,9 @@ public class G3World extends World
     /**
      * Set the stage from other actors
      */
-    public void setStage(GameStage stage)
+    public void setStage(G3GameStage stage)
     {
-        if (stage == GameStage.PROGRAMMING)
+        if (stage == G3GameStage.PROGRAMMING)
         {
             startGame(level + 1);
         }
@@ -619,6 +653,7 @@ public class G3World extends World
             removeObjects(getObjects(G3Tutorial.class));
             removeObjects(getObjects(G3BtnAllDone.class));
             removeObjects(getObjects(G3Command.class));
+            removeObjects(getObjects(G3TruckCommand.class));
             
             gameStage = stage;
         }

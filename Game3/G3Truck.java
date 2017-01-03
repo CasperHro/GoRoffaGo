@@ -111,7 +111,6 @@ public class G3Truck extends G3FieldObject
         if (!crashed && executing > 0)
         {
             doStep();
-            
             checkCrash();
         }
     }
@@ -328,5 +327,14 @@ public class G3Truck extends G3FieldObject
     public String getColor()
     {
         return container;
+    }
+    
+    public String getCurrentCommand()
+    {
+        if (!crashed && !program.isEmpty())
+        {
+            return program.get(0);
+        }
+        return "";
     }
 }

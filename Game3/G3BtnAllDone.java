@@ -34,7 +34,7 @@ public class G3BtnAllDone extends Actor
         // Add your action code here.
         if (Greenfoot.mouseClicked(this))
         {
-            getWorldOfType(G3World.class).startStage(GameStage.RUNNINGCODE, "So you're done programming, let's see where the trucks go!");
+            getWorldOfType(G3World.class).startStage(G3GameStage.RUNNINGCODE, "So you're done programming, let's see where the trucks go!");
         }
     }
 }

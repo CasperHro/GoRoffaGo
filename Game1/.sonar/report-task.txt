@@ -1,5 +1,5 @@
 projectKey=Game1
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/Game1
-ceTaskId=AVlgN-8ikcsJMa495AqK
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVlgN-8ikcsJMa495AqK
+ceTaskId=AVliNDmwkcsJMa495AqY
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVliNDmwkcsJMa495AqY

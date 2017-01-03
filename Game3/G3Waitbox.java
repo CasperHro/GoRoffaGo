@@ -12,7 +12,7 @@ import java.util.*;
 public class G3Waitbox extends Actor
 {
     private String text;
-    private GameStage nextStage;
+    private G3GameStage nextStage;
     private String gameOn = "\n\nPress Enter or click to continue...";
     private int opacity = 0;
     private boolean isShowing = true;
@@ -22,7 +22,7 @@ public class G3Waitbox extends Actor
     /**
      * Contructor
      */
-    public G3Waitbox(GameStage forStage, String message)
+    public G3Waitbox(G3GameStage forStage, String message)
     {
         text = message;
         nextStage = forStage;

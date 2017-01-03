@@ -29,13 +29,13 @@ public class G3Tutorial extends Actor
     public void addedToWorld(World world)
     {
         // Only here we know the world dimensions so start making a filling overlay
-        drawInfobox(world);
+        drawInfobox();
     }
 
     /**
      * Draw an overlaying image with the infotext rendered on it
      */
-    private void drawInfobox(World world)
+    private void drawInfobox()
     {
         GreenfootImage overlay = new GreenfootImage(520, 80);
         overlay.setColor(new Color(0, 220, 40, 200));
