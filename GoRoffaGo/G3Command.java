@@ -20,7 +20,7 @@ public class G3Command extends Actor
         // Add your action code here.
         if (Greenfoot.mouseClicked(this))
         {
-            getWorldOfType(G3World.class).appendProgramStep(command);
+            getWorldOfType(G3Dock.class).appendProgramStep(command);
         }
     }    
 }

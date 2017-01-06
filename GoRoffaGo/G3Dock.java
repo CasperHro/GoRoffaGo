@@ -8,7 +8,7 @@ import java.awt.Point;
  * @author C. Karreman
  * @version 1.0
  */
-public class G3World extends Game
+public class G3Dock extends Game
 {
     private static final String TEXT = "Transport director : game info\n\n"+
                   "Your mission is to direct the containertrucks to the right positions.\n"+
@@ -51,7 +51,7 @@ public class G3World extends Game
     /**
      * Constructor for objects of class G3World.
      */
-    public G3World()
+    public G3Dock()
     {    
         // This is a setting for the speed of the game. Tested to be playable.
         Greenfoot.setSpeed(45);
@@ -307,8 +307,8 @@ public class G3World extends Game
         
         for(G3Truck t : getObjects(G3Truck.class))
         {
-            // Important, first show command because it will be removed on executing
-            showCurrentCommand(t.getID(), t.getCurrentCommand());
+            // First show command because it will be removed on execution
+            showTruckCommand(t.getID(), t.getCurrentCommand());
             t.executeStep();
         }
     }
@@ -316,7 +316,7 @@ public class G3World extends Game
     /**
      * Visualizes the next command from the truck by ID
      */
-    private void showCurrentCommand(int truckID, String command)
+    private void showTruckCommand(int truckID, String command)
     {
         for(G3TruckCommand c : getObjects(G3TruckCommand.class))
         {
@@ -785,14 +785,14 @@ public class G3World extends Game
      */
     public boolean checkOutOfBounds(Actor a)
     {
-        double oX = a.getImage().getWidth() / 2.0 -2,
-               oY = a.getImage().getHeight() / 2.0 -2,
-               r = Math.toRadians(a.getRotation()),
-               over = GRIDSIZE / 12.0,
-               x1 = a.getX() - Math.abs(oX * Math.cos(r)) - Math.abs(oY * Math.sin(r)),
-               x2 = a.getX() + Math.abs(oX * Math.cos(r)) + Math.abs(oY * Math.sin(r)),
-               y1 = a.getY() - Math.abs(oY * Math.cos(r)) - Math.abs(oX * Math.sin(r)),
-               y2 = a.getY() + Math.abs(oY * Math.cos(r)) + Math.abs(oX * Math.sin(r));
+        double oX = a.getImage().getWidth() / 2.0 -2;
+        double oY = a.getImage().getHeight() / 2.0 -2;
+        double r = Math.toRadians(a.getRotation());
+        double over = GRIDSIZE / 12.0;
+        double x1 = a.getX() - Math.abs(oX * Math.cos(r)) - Math.abs(oY * Math.sin(r));
+        double x2 = a.getX() + Math.abs(oX * Math.cos(r)) + Math.abs(oY * Math.sin(r));
+        double y1 = a.getY() - Math.abs(oY * Math.cos(r)) - Math.abs(oX * Math.sin(r));
+        double y2 = a.getY() + Math.abs(oY * Math.cos(r)) + Math.abs(oX * Math.sin(r));
                
         return x1 < -over || 
                x2 > GRIDWIDTH * GRIDSIZE + over ||

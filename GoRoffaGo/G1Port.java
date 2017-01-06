@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.*;
 
 /**
- * G1Harbour is the game1 world. When started boats will be created in the waters.
+ * G1Port is the game1 world. When started boats will be created in the waters.
  * The main goal is to dock the different boats in the right harbour so they can unload
  * the cargo. When a ship is docked a point is scored. When a ship crashes it will
  * dissapear. Multiple crashes and the game is over!
@@ -11,8 +11,19 @@ import java.util.*;
  * @author C. Karreman
  * @version 1.0
  */
-public class G1Harbour extends World
+public class G1Port extends Game
 {
+    private static final String TEXT = "Navigator : game info\n\n"+
+                  "Your mission is to direct the ships to the right harbour.\n"+
+                  "When a ship is docked a point is scored!\n\n"+
+                  "Use the arrows to navigate:\n"+
+                  "up/down - speed up or slow down\n"+
+                  "left/right - rotate left/right\n\n"+
+                  "Use 'S' to select a boat.\n\n"+
+                  "When you crash 5 boats, you're game over!\n\n\n"+
+                  "Click or press Enter to start...";
+    private static final String TEXTSTART = "Get ready...\n\nHere we go!!!";
+    
     /**
      * Private variables, use only in this world.
      */
@@ -25,25 +36,21 @@ public class G1Harbour extends World
     private boolean firstStep = true; // Does the first step routine
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
     private GreenfootImage waters; // Image to load available sailing area
-    private String lastKey = ""; // To prevent multiple strokes
 
-    private GreenfootSound backgroundMusic = new GreenfootSound("theme.mp3");
-    
     
     /**
-     * Constructor for objects of class Game1Harbour.
+     * Constructor for objects of class G1Port.
      * The constructor is called only ones when the class is initialized.
      */
-    public G1Harbour()
+    public G1Port()
     {
-        // Create a new world with 800x600 cells with a cell size of 1x1 pixels.
-        super(800, 600, 1);
         // Load the sailing area
         waters = new GreenfootImage("Game1BgBit.png");
         
         // This is a setting for the speed of the game. Tested to be playable.
         Greenfoot.setSpeed(40);
 
+        backgroundMusic = new GreenfootSound("theme.mp3");
         backgroundMusic.setVolume(70);
 
         // Prepare the game
@@ -106,8 +113,8 @@ public class G1Harbour extends World
         backgroundMusic.playLoop();
         
         // And show game info overlay
-        G1GameInfo g1info = new G1GameInfo();
-        addObject(g1info, getWidth() / 2, getHeight() / 2); // Centered on screen
+        GameInfo ginfo = new GameInfo(TEXT, TEXTSTART);
+        addObject(ginfo, getWidth() / 2, getHeight() / 2); // Centered on screen
     }
     
     /**
@@ -142,16 +149,23 @@ public class G1Harbour extends World
         // Reset running flag and stop game loop
         running = false;
         
-        Actor gameOver = new GameOver();
+        for(G1Boat b : getObjects(G1Boat.class))
+        {
+            b.dock(false);
+        }
+        
+        Actor gameOver = new GameOver("gameover001.png");
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
-        backgroundMusic.pause();
+        backgroundMusic.stop();
+        Greenfoot.playSound("meeuw.mp3");
     }
 
     /**
      * Act is the game step. In this world boats are created with a time interval. A boat
      * mut be selected to take over the controls. Use "S" to select a boat or click on one.
      */
+    //@Override
     public void act()
     {
         // Only start music when running the game
@@ -187,38 +201,16 @@ public class G1Harbour extends World
      * Check for user input from the keyboard. This procedure also prevents acting
      * multiple times on the same keystroke.
      */
-    private void checkKeys()
+    //@Override
+    protected void checkKeys()
     {
-        // While switching the controls to an other boat the isKeyDown() gets true
-        // multiple times. Every act run registers the keydown but we only want to
-        // react ones. The getKey() should solve this issue but because of the boats
-        // that use isKeyDown() the getKey() stays empty. So wee have to use
-        // isKeyDown().
-        // To prevent the S-key from multiple hits when holding down remember and
-        // check the last proceded keystroke.
-        if (lastKey == "" || !Greenfoot.isKeyDown(lastKey))
+        // The s-key selects the next boat for controls.
+        if ((lastKey == "" || !Greenfoot.isKeyDown(lastKey)) && Greenfoot.isKeyDown("s"))
         {
-            // The s-key selects the next boat for controls.
-            if (Greenfoot.isKeyDown("s"))
-            {
-                lastKey = "s";
-                selectNextBoat();
-            }
-            else if (Greenfoot.isKeyDown("m"))
-            {
-                lastKey = "m";
-                backgroundMusic.stop();
-            }
-            else if (Greenfoot.isKeyDown("p"))
-            {
-                lastKey = "p";
-                backgroundMusic.playLoop();
-            }
-            else
-            {
-                lastKey = "";
-            }
+            lastKey = "s";
+            selectNextBoat();
         }
+        super.checkKeys();
     }
         
     /**

@@ -64,7 +64,7 @@ public class G1Dock extends Actor
             waitCounter = 0;
             
             // And count the score
-            ((G1Harbour)getWorld()).addScore(1);
+            getWorldOfType(G1Port.class).addScore(1);
             Greenfoot.playSound("shiphorn.mp3");
         }
         else

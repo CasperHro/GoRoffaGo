@@ -54,7 +54,7 @@ public class G1GameInfo extends Actor
             getImage().setTransparency(opacity);
             if (opacity <= 0)
             {
-                G1Harbour world = getWorldOfType(G1Harbour.class);
+                G1Port world = getWorldOfType(G1Port.class);
                 world.startGame();
                 world.removeObject(this);
             }

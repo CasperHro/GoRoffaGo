@@ -16,9 +16,9 @@ public class GoRoffaGo extends World
     private static final int OVERFLOW = 2600; // Image overflow timer in milliseconds
     private static final int MAXIMAGES = 9; // The number of background images
 
-    private final String[] payoffs = {
-        "The port of Rotterdam is the biggest harbor of Europe \n and is still growing", 
-        "Vessels are piloted into the harbor, play the game to \n fullfill this task. Navigate different types of \n ships to the right location and dock them.", 
+    private static final String[] payoffs = {
+        "The port of Rotterdam is the largest harbour of Europe \n and is still growing", 
+        "Vessels are piloted into the harbour, play the game to \n fullfill this task. Navigate different types of \n ships to the right location and dock them.", 
         "In the city centre there are still some old vessels. \n Compare them to the new ones and see the difference \n in scale between then and now...", 
         "Unloading a containership is a game of tactics. Pick the \n right containers from the ship but keep it in balance!", 
         "The port is the main reason for the development of Rotterdam", 
@@ -239,11 +239,11 @@ public class GoRoffaGo extends World
         
         if (game == 1)
         {
-            Greenfoot.setWorld(new G1Harbour());
+            Greenfoot.setWorld(new G1Port());
         }
         else if (game == 3)
         {
-            Greenfoot.setWorld(new G3World());
+            Greenfoot.setWorld(new G3Dock());
         }
     }
 }

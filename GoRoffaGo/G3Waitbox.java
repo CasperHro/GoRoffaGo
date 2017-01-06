@@ -42,7 +42,7 @@ public class G3Waitbox extends Overlay
             
              if (opacity <= 0)
             {
-                G3World world = getWorldOfType(G3World.class);
+                G3Dock world = getWorldOfType(G3Dock.class);
                 world.setStage(nextStage);
                 world.removeObject(this);
             }

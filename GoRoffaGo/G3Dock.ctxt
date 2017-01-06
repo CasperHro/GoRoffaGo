@@ -1,14 +1,14 @@
 #BlueJ class context
-comment0.target=G3World
+comment0.target=G3Dock
 comment0.text=\r\n\ G3World\ is\ the\ world\ for\ Game\ 3\:\ Programming\ trucks.\r\n\ \r\n\ @author\ C.\ Karreman\r\n\ @version\ 1.0\r\n
 comment1.params=
-comment1.target=G3World()
+comment1.target=G3Dock()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ G3World.\r\n
 comment10.params=
 comment10.target=void\ doNextStep()
 comment10.text=\r\n\ Executes\ the\ next\ command\ in\ the\ truck\ program\r\n
 comment11.params=truckID\ command
-comment11.target=void\ showCurrentCommand(int,\ java.lang.String)
+comment11.target=void\ showTruckCommand(int,\ java.lang.String)
 comment11.text=\r\n\ Visualizes\ the\ next\ command\ from\ the\ truck\ by\ ID\r\n
 comment12.params=
 comment12.target=void\ evaluate()

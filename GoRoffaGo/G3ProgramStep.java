@@ -76,7 +76,7 @@ public class G3ProgramStep extends Actor
                  Greenfoot.getMouseInfo().getX() - getX() + (getImage().getWidth() / 2) > 70)
         {
             // Only hits on the X removes the command
-            getWorldOfType(G3World.class).removeProgramStep(this);
+            getWorldOfType(G3Dock.class).removeProgramStep(this);
         }
     }
     
