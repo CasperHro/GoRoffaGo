@@ -136,7 +136,7 @@ public class G1Boat extends Actor
             
             // Now register the crash of 2 boats in the world
             
-            ((G1Harbour)getWorld()).addCrash(crashCount);
+            getWorldOfType(G1Port.class).addCrash(crashCount);
         }
     }
     

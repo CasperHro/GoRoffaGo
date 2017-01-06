@@ -47,7 +47,7 @@ public class G3Truck extends G3FieldObject
      */
     protected void addedToWorld(World world)
     {
-        gridSize = ((G3World)world).GRIDSIZE;
+        gridSize = ((G3Dock)world).GRIDSIZE;
         
         // Draw the color under the container sprite
         GreenfootImage overlay = new GreenfootImage("G3Container.png");
@@ -88,7 +88,7 @@ public class G3Truck extends G3FieldObject
         // Add your action code here.
         if (Greenfoot.mouseClicked(this))
         {
-            getWorldOfType(G3World.class).selectTruckForProgramming(this);
+            getWorldOfType(G3Dock.class).selectTruckForProgramming(this);
         }
         else if (active)
         {
@@ -160,7 +160,7 @@ public class G3Truck extends G3FieldObject
     private void checkCrash()
     {
         // Check out of playfield
-        if (getWorldOfType(G3World.class).checkOutOfBounds(this))
+        if (getWorldOfType(G3Dock.class).checkOutOfBounds(this))
         {
             setCrashed(null);
             return;
@@ -189,7 +189,7 @@ public class G3Truck extends G3FieldObject
         if (!crashed)
         {
             crashed = true;
-            getWorldOfType(G3World.class).addCrash(1);
+            getWorldOfType(G3Dock.class).addCrash(1);
             Greenfoot.playSound("metalcrash.mp3");
         }
         
