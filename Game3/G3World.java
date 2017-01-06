@@ -3,7 +3,7 @@ import java.util.*;
 import java.awt.Point;
 
 /**
- * Write a description of class Game3Dock here.
+ * G3World is the world for Game 3: Programming trucks.
  * 
  * @author C. Karreman
  * @version 1.0
@@ -41,8 +41,7 @@ public class G3World extends World
     
     
     /**
-     * Constructor for objects of class Game3Dock.
-     * 
+     * Constructor for objects of class G3World.
      */
     public G3World()
     {    
@@ -76,7 +75,8 @@ public class G3World extends World
     }
     
     /**
-     * Does the run initialization. To prevent 
+     * Does the run initialization. To prevent doing things in constructor when 
+     * still in greenfoot edit mode.
      */
     private void firstStep()
     {
@@ -179,7 +179,8 @@ public class G3World extends World
         Actor gameOver = new GameOver();
         addObject(gameOver,getWidth() / 2, getHeight() / 2);
         
-        backgroundMusic.pause();
+        backgroundMusic.stop();
+        Greenfoot.playSound("electronic_descend_with_pulse.mp3");
     }
 
     /**
@@ -229,6 +230,10 @@ public class G3World extends World
         }
     }
 
+    /**
+     * Checks the keydown states for keys and prevents multiple executing 
+     * of the same key when stilldown in the next loop.
+     */
     private void checkKeys()
     {
         // Remember the last keystroke to prevent multiple actions
@@ -263,6 +268,9 @@ public class G3World extends World
         }
     }
 
+    /**
+     * Runs the programs from the trucks
+     */
     private void runCode()
     {
         // All truck must execute their next program step
@@ -294,6 +302,9 @@ public class G3World extends World
         }
     }
 
+    /**
+     * Executes the next command in the truck program
+     */
     private void doNextStep()
     {
         if (programStep == 0)
@@ -312,6 +323,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Visualizes the next command from the truck by ID
+     */
     private void showCurrentCommand(int truckID, String command)
     {
         for(G3TruckCommand c : getObjects(G3TruckCommand.class))
@@ -323,6 +337,10 @@ public class G3World extends World
         }        
     }
 
+    /**
+     * Evaluates the end locations of the trucks. When on the right place and
+     * facing the right direction a point is scored.
+     */
     private void evaluate()
     {
         // Start flashing of rightly parked trucks immediately
@@ -357,6 +375,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Get a message to show to the player
+     */
     private String getEndMessage(int score)
     {
         if (score == 0)
@@ -373,6 +394,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * First tutorial, move straight forward
+     */
     private void createTutorial1()
     {
         // Tutorial 1, move forward
@@ -381,7 +405,10 @@ public class G3World extends World
         G3Tutorial g3tuto = new G3Tutorial("G3forward.png", "Use the move forward command to move the truck \nto it's destination");
         addObject(g3tuto, 300, getHeight() -60);
     }
-    
+
+    /**
+     * Second tutorial, rotate
+     */
     private void createTutorial2()
     {
         // Tutorial 2, rotate
@@ -391,6 +418,9 @@ public class G3World extends World
         addObject(g3tuto, 300, getHeight() -60);
     }
     
+    /**
+     * Third tutorial, wait for a truck to pass with the pause command
+     */
     private void createTutorial3()
     {
         // Tutorial 2, pause
@@ -401,6 +431,9 @@ public class G3World extends World
         addObject(g3tuto, 300, getHeight() -60);
     }
     
+    /**
+     * Place a truck and end location on predefined locations
+     */
     private void addTruckAndDestination(int id, int truckX, int truckY, int destX, int destY, int orientation)
     {
         String color = colors[Greenfoot.getRandomNumber(colors.length)];
@@ -414,7 +447,7 @@ public class G3World extends World
     }
     
     /**
-     * Create the number of trucks in a recursive loop
+     * Create the number of trucks in a recursive loop on random locations
      */
     private void createTrucks(int count)
     {
@@ -450,6 +483,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Create random obstacles in a recursive loop
+     */
     private void createObstacles(int count)
     {
         if (count > 0)
@@ -508,6 +544,9 @@ public class G3World extends World
         return result;
     }
     
+    /**
+     * Checks if a location is not taken by an other G3FieldObject
+     */
     private boolean testLocation(int orientation, Point coord)
     {
         //  Check if an object can be found on the destination coordinates
@@ -534,11 +573,17 @@ public class G3World extends World
         return l.isEmpty();
     }
     
+    /**
+     * Translate the grid location to the real world x coordinate
+     */
     public int getRealX(int x)
     {
         return (x * GRIDSIZE) + (GRIDSIZE / 2);
     }
     
+    /**
+     * Translate the grid location to the real world y coordinate
+     */
     public int getRealY(int y)
     {
         return ((y+1) * GRIDSIZE) + (GRIDSIZE / 2);
@@ -576,6 +621,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Activates the truck for programming. It shows the program on the right.
+     */
     public void selectTruckForProgramming(G3Truck truck)
     {
         if (gameStage == G3GameStage.PROGRAMMING)
@@ -603,6 +651,9 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Activates the next stage, but first shows a message overlay.
+     */
     public void startStage(G3GameStage stage, String message)
     {
         // In program mode the active truck blinks, deactivate all trucks
@@ -626,12 +677,18 @@ public class G3World extends World
         addObject(g3wait, getWidth() / 2, getHeight() / 2); // Centered on screen
     }
     
+    /**
+     * Increases the score with increase
+     */
     public void addScore(int increase)
     {
         score += increase;
         showText("Score: "+score, 180, 20);
     }
 
+    /**
+     * Increase the crash counter
+     */
     public void addCrash(int increase)
     {
         crashes += increase;
@@ -671,7 +728,10 @@ public class G3World extends World
         }
     }
     
-    
+    /**
+     * Remove the programstep from the truck and the showing program on the 
+     * right side of the screen.
+     */
     public void removeProgramStep(G3ProgramStep programStep)
     {
         if (programming != null)
@@ -683,7 +743,8 @@ public class G3World extends World
     }
     
     /**
-     * 
+     * Relocates the visible commands from the program so teh last commands are 
+     * clearly visible. Long programs will stack the commands.
      */
     private void arrangeProgramSteps()
     {
@@ -728,16 +789,21 @@ public class G3World extends World
         }
     }
     
+    /**
+     * Checks if the truck is within the grid boundaries. 
+     * Returns true when truck is out of playfield.
+     */
     public boolean checkOutOfBounds(Actor a)
     {
-        double oX = a.getImage().getWidth() / 2.0 -2;
-        double oY = a.getImage().getHeight() / 2.0 -2;
-        double r = Math.toRadians(a.getRotation());
-        double over = GRIDSIZE / 12.0;
-        double x1 = a.getX() - Math.abs(oX * Math.cos(r)) - Math.abs(oY * Math.sin(r));
-        double x2 = a.getX() + Math.abs(oX * Math.cos(r)) + Math.abs(oY * Math.sin(r));
-        double y1 = a.getY() - Math.abs(oY * Math.cos(r)) - Math.abs(oX * Math.sin(r));
-        double y2 = a.getY() + Math.abs(oY * Math.cos(r)) + Math.abs(oX * Math.sin(r));
+        double oX = a.getImage().getWidth() / 2.0 -2,
+               oY = a.getImage().getHeight() / 2.0 -2,
+               r = Math.toRadians(a.getRotation()),
+               over = GRIDSIZE / 12.0,
+               x1 = a.getX() - Math.abs(oX * Math.cos(r)) - Math.abs(oY * Math.sin(r)),
+               x2 = a.getX() + Math.abs(oX * Math.cos(r)) + Math.abs(oY * Math.sin(r)),
+               y1 = a.getY() - Math.abs(oY * Math.cos(r)) - Math.abs(oX * Math.sin(r)),
+               y2 = a.getY() + Math.abs(oY * Math.cos(r)) + Math.abs(oX * Math.sin(r));
+               
         return x1 < -over || 
                x2 > GRIDWIDTH * GRIDSIZE + over ||
                y1 < GRIDSIZE - over || 

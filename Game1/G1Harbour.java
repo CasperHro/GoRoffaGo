@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.*;
 
 /**
- * Game1Harbour is the game1 world. When started boats will be created in the waters.
+ * G1Harbour is the game1 world. When started boats will be created in the waters.
  * The main goal is to dock the different boats in the right harbour so they can unload
  * the cargo. When a ship is docked a point is scored. When a ship crashes it will
  * dissapear. Multiple crashes and the game is over!
@@ -95,7 +95,7 @@ public class G1Harbour extends World
     }
 
     /**
-     * Does the run initialization. To prevent 
+     * Does the run initialization. To prevent multiple executions reset the firstStep flag.
      */
     private void firstStep()
     {
@@ -183,6 +183,10 @@ public class G1Harbour extends World
         }
     }
 
+    /**
+     * Check for user input from the keyboard. This procedure also prevents acting
+     * multiple times on the same keystroke.
+     */
     private void checkKeys()
     {
         // While switching the controls to an other boat the isKeyDown() gets true
@@ -290,7 +294,7 @@ public class G1Harbour extends World
 
     /**
      * When the S-key is pressed the current boat is left uncontrolled, the next boat in
-     * line is selected to handle by the player.
+     * line is selected to handle by the player controls.
      */
     public void selectNextBoat()
     {
@@ -319,12 +323,18 @@ public class G1Harbour extends World
         }
     }
 
+    /**
+     * Increase the score
+     */
     public void addScore(int increase)
     {
         score += increase;
         showText("Score: "+score, 60, 20);
     }
 
+    /**
+     * Increase the crash counter
+     */
     public void addCrash(int increase)
     {
         crashes += increase;

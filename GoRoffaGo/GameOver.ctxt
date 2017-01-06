@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=GameOver
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ GameOver\ here.\r\n\ \r\n\ @author\ (YuliaKr)\ \r\n\ @version\ (version\ 1.0,\ 23.11.16)\r\n
+comment1.params=sprite
+comment1.target=GameOver(java.lang.String)
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment2.text=\r\n\ When\ placed\ on\ the\ world\ make\ a\ complete\ overlay\r\n
+comment3.params=world\ img
+comment3.target=void\ drawOverlay(greenfoot.World,\ greenfoot.GreenfootImage)
+comment3.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
+comment4.params=
+comment4.target=void\ act()
+numComments=5

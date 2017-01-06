@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class G1Dock here.
+ * G1Dock is where the boats must go to score a point.
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -15,8 +15,8 @@ public class G1Dock extends Actor
     private static int dockTimeout = 120; // Wait loops 
     
     /**
-     * Act - The dock checks for a ship nearby and when the speed is low enough
-     * it attached the ship to the dock.
+     * When a boat is docked a wait loop is started. When the delay is over the 
+     * ship is removed from the world.
      */
     public void act() 
     {

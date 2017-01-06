@@ -2,7 +2,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 
 /**
- * Write a description of class GameOver here.
+ * GameOver is an overlay with a visual when the game is ended. On click
+ * or keystrokes it returns to the main menu of the game.
  * 
  * @author (YuliaKr) 
  * @version (version 1.0, 23.11.16)
@@ -20,7 +21,7 @@ public class GameOver extends Actor
         drawOverlay(world, getImage());
     }
 
-        /**
+    /**
      * Draw an overlaying image with the infotext rendered on it
      */
     private void drawOverlay(World world, GreenfootImage img)
@@ -40,6 +41,9 @@ public class GameOver extends Actor
         setImage(overlay);
     }
 
+    /**
+     * Animate the visibility and check for mouseclick or keys to return to main menu
+     */
     public void act() 
     {
         if (opacity < 255)
@@ -51,7 +55,7 @@ public class GameOver extends Actor
         // Check user action
         if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter") || Greenfoot.isKeyDown("Escape"))
         {
-            // TODO: End game or ,maybe ask to play again
+            // TODO: End game or, maybe ask to play again
             Greenfoot.stop();
         }
     }    

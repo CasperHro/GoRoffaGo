@@ -4,7 +4,7 @@ import java.lang.Math.*;
 import java.util.*;
 
 /**
- * Write a description of class G3GameInfo here.
+ * G3GameInfo shows the game perspectives before starting the game.
  * 
  * @author C. Karreman 
  * @version 1.0

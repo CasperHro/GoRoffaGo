@@ -1,0 +1,5 @@
+projectKey=Game4
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/Game4
+ceTaskId=AVlmy_-DkcsJMa495Aqf
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVlmy_-DkcsJMa495Aqf

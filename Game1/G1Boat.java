@@ -92,6 +92,9 @@ public class G1Boat extends Actor
         }
     }
 
+    /**
+     * Check the key state and act on the cursors
+     */
     private void checkKeys()
     {
         if (Greenfoot.isKeyDown("up"))

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=G3GameInfo
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ G3GameInfo\ here.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
+comment0.text=\r\n\ G3GameInfo\ shows\ the\ game\ perspectives\ before\ starting\ the\ game.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
 comment1.text=\r\n\ Set\ game\ info\ over\ the\ complete\ world\r\n

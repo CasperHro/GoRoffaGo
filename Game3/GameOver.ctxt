@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=GameOver
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ GameOver\ here.\r\n\ \r\n\ @author\ (YuliaKr)\ \r\n\ @version\ (version\ 1.0,\ 23.11.16)\r\n
+comment0.text=\r\n\ GameOver\ is\ an\ overlay\ with\ a\ visual\ when\ the\ game\ is\ ended.\ On\ click\r\n\ or\ keystrokes\ it\ returns\ to\ the\ main\ menu\ of\ the\ game.\r\n\ \r\n\ @author\ (YuliaKr)\ \r\n\ @version\ (version\ 1.0,\ 23.11.16)\r\n
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
 comment1.text=\r\n\ When\ placed\ on\ the\ world\ make\ a\ complete\ overlay\r\n
@@ -9,4 +9,5 @@ comment2.target=void\ drawOverlay(greenfoot.World,\ greenfoot.GreenfootImage)
 comment2.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
 comment3.params=
 comment3.target=void\ act()
+comment3.text=\r\n\ Animate\ the\ visibility\ and\ check\ for\ mouseclick\ or\ keys\ to\ return\ to\ main\ menu\r\n
 numComments=4

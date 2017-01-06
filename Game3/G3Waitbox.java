@@ -4,7 +4,9 @@ import java.lang.Math.*;
 import java.util.*;
 
 /**
- * Write a description of class G3GameInfo here.
+ * G3GameInfo is a overlay to interupt the change of the game stages.
+ * It shows information about the next stage and waits for user input 
+ * to proceed.
  * 
  * @author C. Karreman 
  * @version 1.0
