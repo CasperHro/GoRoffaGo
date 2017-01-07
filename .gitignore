@@ -9,3 +9,8 @@ Game3/.sonar/report-task.txt
 Game3/.sonar/report-task.txt
 Game4/.sonar/report-task.txt
 GoRoffaGo/.sonar/.sonar_lock
+GoRoffaGo/.sonar/report-task.txt
+Game1/.sonar/.sonar_lock
+Game3/.sonar/.sonar_lock
+game2/.sonar/report-task.txt
+*.sonar_lock
