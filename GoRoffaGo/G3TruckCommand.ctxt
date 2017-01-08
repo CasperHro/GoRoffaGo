@@ -1,15 +1,20 @@
 #BlueJ class context
 comment0.target=G3TruckCommand
 comment0.text=\r\n\ G3TruckCommand\ is\ the\ visual\ presentation\ of\ the\ command\ that\ will\ be\ executed\ \r\n\ next\ when\ the\ program\ is\ running.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=index
-comment1.target=G3TruckCommand(int)
+comment1.params=truck
+comment1.target=G3TruckCommand(G3Truck)
 comment1.text=\r\n\ Contructor,\ initialize\ the\ Actor\ image\r\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\r\n\ Act\ -\ do\ whatever\ the\ G3TruckCommand\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.text=\r\n\ Animate\ showing\ of\ a\ new\ command\r\n
 comment3.params=
 comment3.target=int\ getID()
-comment4.params=command
-comment4.target=void\ showCommand(java.lang.String)
-comment4.text=\r\n\ Show\ the\ command\ with\ a\ scaled\ down\ presentation\ of\ the\ program\ card.\r\n
-numComments=5
+comment4.params=
+comment4.target=java.awt.Color\ getColor()
+comment5.params=command
+comment5.target=void\ showCommand(java.lang.String)
+comment5.text=\r\n\ This\ is\ the\ next\ command\ to\ show\r\n
+comment6.params=
+comment6.target=void\ drawNewCommand()
+comment6.text=\r\n\ Show\ the\ command\ with\ a\ scaled\ down\ presentation\ of\ the\ program\ card.\r\n
+numComments=7
