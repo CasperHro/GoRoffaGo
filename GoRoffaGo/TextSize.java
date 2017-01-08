@@ -25,7 +25,7 @@ public class TextSize
             calcSize();
         }
         
-        return (int)Math.round(size * scale);
+        return (int)Math.round(size / scale);
     }
 
     /**
