@@ -190,7 +190,7 @@ public class GoRoffaGo extends World
             btnGame3.show();
             btnGame4.show();
 
-            GreenfootImage txt = new GreenfootImage(payoffs[bgIndex-1], 22, Color.white, new Color(0, 0, 0, 0));
+            GreenfootImage txt = new GreenfootImage(payoffs[bgIndex-1], TextSize.size(22), Color.white, new Color(0, 0, 0, 0));
             nextImage.drawImage(txt, 780 - txt.getWidth(), 10);
             MnuGame btn = getActivatedItem();
             if (btn != null)

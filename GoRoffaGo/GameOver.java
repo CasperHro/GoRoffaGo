@@ -41,7 +41,7 @@ public class GameOver extends Actor
         int top = (height - img.getHeight()) / 2;
         overlay.drawImage(img, left, top);
 
-        GreenfootImage txt = new GreenfootImage("Click or press enter to return to main menu.", 18, new Color(196, 196, 196), new Color(0, 0, 0, 0));
+        GreenfootImage txt = new GreenfootImage("Click or press enter to return to main menu.", TextSize.size(18), new Color(196, 196, 196), new Color(0, 0, 0, 0));
         left = (width - txt.getWidth()) / 2;
         top = (height - txt.getHeight()) * 5 / 6;
         overlay.drawImage(txt, left, top);
