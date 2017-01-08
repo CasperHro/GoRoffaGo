@@ -1,0 +1,5 @@
+projectKey=game2
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/game2
+ceTaskId=AVl2O9WGkcsJMa495Aq2
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVl2O9WGkcsJMa495Aq2

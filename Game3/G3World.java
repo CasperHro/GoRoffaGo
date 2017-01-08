@@ -28,6 +28,7 @@ public class G3World extends World
     private int delay = 0; // Delay before action (decrease counter
     private boolean firstStep = true; // Does the first step routine
     private boolean running = false; // Flag to indicate a running game (may be paused by Greenfoot class)
+    private boolean nextCommandShown = false; // Flag to first show the commands before executing
     private Date startTime; // Used for the countdown timer
     private String lastKey = ""; // For preventing multiple actions on the same keydo
     private GreenfootSound backgroundMusic = new GreenfootSound("lazy_susan.mp3");
@@ -276,39 +277,58 @@ public class G3World extends World
         
         // When all trucks are done moving the next command can be executed
         // First check if at least one truck has more steps
-        if (allDone && hasMore && isDelayed(20))
+        if (allDone && hasMore)
         {
-            doNextStep();
+            if (!nextCommandShown)
+            {
+                showCurrentCommands();
+                nextCommandShown = true;
+            }
+            else if (isDelayed(20))
+            {
+                doNextStep();
+                nextCommandShown = false;
+            }
         }
         
         // When executing is done and there are no more commands in any program 
         // start the evaluate stage.
         if (allDone && !hasMore)
         {
-            showText("No more steps", 700, 60);
-            if (isDelayed(10))
-            {
-                // When all trucks are done go to the next stage
-                setStage(G3GameStage.EVALUATING);
-            }
+            doDone();
         }
     }
-
-    private void doNextStep()
+    
+    private void showCurrentCommands()
     {
         if (programStep == 0)
         {
             createTruckCommands();
         }
-        
+        for(G3Truck t : getObjects(G3Truck.class))
+        {
+            showCurrentCommand(t.getID(), t.getCurrentCommand());
+        }
+    }
+
+    private void doNextStep()
+    {
         programStep++;
         showText("Execute step: " + programStep, 700, 60);
         
         for(G3Truck t : getObjects(G3Truck.class))
         {
-            // Important, first show command because it will be removed on executing
-            showCurrentCommand(t.getID(), t.getCurrentCommand());
             t.executeStep();
+        }
+    }
+    
+    private void doDone()
+    {
+        showText("No more steps", 700, 60);
+        if (isDelayed(10))
+        {
+            // When all trucks are done go to the next stage
+            setStage(G3GameStage.EVALUATING);
         }
     }
     
@@ -475,9 +495,8 @@ public class G3World extends World
     {
         for(G3Truck t : getObjects(G3Truck.class))
         {
-            int tid = t.getID();
-            G3TruckCommand c = new G3TruckCommand(tid);
-            addObject(c, 700, 80 + (tid * 50));
+            G3TruckCommand c = new G3TruckCommand(t);
+            addObject(c, 700, 80 + (t.getID() * 50));
         }
     }
     

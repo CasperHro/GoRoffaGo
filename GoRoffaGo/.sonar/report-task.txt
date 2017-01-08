@@ -1,0 +1,5 @@
+projectKey=GoRoffaGo
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/GoRoffaGo
+ceTaskId=AVl2OtxxkcsJMa495Aqz
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVl2OtxxkcsJMa495Aqz
