@@ -46,7 +46,7 @@ public class G3Tutorial extends Actor
         overlay.drawImage(new GreenfootImage(cmd), 20, 15);        
         
         // Draw the text on the image
-        GreenfootImage txt = new GreenfootImage(text, 22, Color.white, new Color(0, 0, 0, 0));
+        GreenfootImage txt = new GreenfootImage(text, TextSize.size(22), Color.white, new Color(0, 0, 0, 0));
         
         // The draw the text on the image
         overlay.drawImage(txt, 80, (overlay.getHeight() - txt.getHeight()) / 2);

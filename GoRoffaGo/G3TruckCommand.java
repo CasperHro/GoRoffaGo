@@ -43,7 +43,7 @@ public class G3TruckCommand extends Actor
     {
         // Draw the command and a remove cross on the card
         GreenfootImage img = getImage();
-        GreenfootImage txt = new GreenfootImage(String.format("Truck %d", truckID), 22, Color.white, new Color(0, 0, 0, 0));
+        GreenfootImage txt = new GreenfootImage(String.format("Truck %d", truckID), TextSize.size(22), Color.white, new Color(0, 0, 0, 0));
         GreenfootImage cmd;
         int left = 5;
         int top = (50 - txt.getHeight()) / 2;

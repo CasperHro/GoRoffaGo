@@ -57,7 +57,7 @@ public class GameInfo extends Overlay
             overlay.fill();
             
             // Draw the text on the image
-            GreenfootImage txt = new GreenfootImage(textStart, 50, new Color(230, 55, 55), new Color(0, 0, 0, 0));
+            GreenfootImage txt = new GreenfootImage(textStart, TextSize.size(50), new Color(230, 55, 55), new Color(0, 0, 0, 0));
             int left = (width - txt.getWidth()) / 2;
             int top = (height - txt.getHeight()) / 2;
             

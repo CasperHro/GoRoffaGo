@@ -69,7 +69,7 @@ public class Overlay extends Actor
         overlay.fill();
         
         // Draw the text on the image
-        GreenfootImage txt = new GreenfootImage(getText(), 22, Color.white, new Color(0, 0, 0, 0));
+        GreenfootImage txt = new GreenfootImage(getText(), TextSize.size(22), Color.white, new Color(0, 0, 0, 0));
         int left = (width - txt.getWidth()) / 2;
         int top = (height - txt.getHeight()) / 2;
         
