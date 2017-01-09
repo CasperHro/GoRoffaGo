@@ -372,4 +372,18 @@ public class G3Truck extends G3FieldObject
         }
         return "";
     }
+    
+    /**
+     * Visualizes the next command from the truck by ID
+     */
+    public void showTruckCommand()
+    {
+        for(G3TruckCommand c : getWorld().getObjects(G3TruckCommand.class))
+        {
+            if (c.getID() == id)
+            {
+                c.showCommand(getCurrentCommand());
+            }
+        }        
+    }
 }

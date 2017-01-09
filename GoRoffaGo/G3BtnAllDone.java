@@ -15,8 +15,8 @@ public class G3BtnAllDone extends Actor
     protected void addedToWorld(World world)
     {
         // Draw the color under the container sprite
-        GreenfootImage txt = new GreenfootImage("All done", 22, Color.white, new Color(0, 0, 0, 0));
-        GreenfootImage btn = new GreenfootImage(txt.getWidth() + 30, txt.getHeight() + 10);
+        GreenfootImage txt = new GreenfootImage("Click here when all\nprograms are finished", TextSize.size(18), Color.white, new Color(0, 0, 0, 0));
+        GreenfootImage btn = new GreenfootImage(txt.getWidth() + 30, txt.getHeight() + 8);
         btn.setColor(new Color(210, 30, 30));
         btn.fillRect(0, 0, btn.getWidth(), btn.getHeight());
         btn.drawImage(txt, 15, 5);
@@ -33,7 +33,7 @@ public class G3BtnAllDone extends Actor
         // Add your action code here.
         if (Greenfoot.mouseClicked(this))
         {
-            getWorldOfType(G3Dock.class).startStage(G3GameStage.RUNNINGCODE, "So you're done programming, let's see where the trucks go!");
+            getWorldOfType(G3Dock.class).startStage(G3GameStage.RUNNINGCODE, "So you're done programming, let's see where the trucks go!", 3);
         }
     }
 }
