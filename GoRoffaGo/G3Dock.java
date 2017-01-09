@@ -312,6 +312,9 @@ public class G3Dock extends Game
         {
             showTruckCommand(t.getID(), t.getCurrentCommand());
         }
+        
+        programStep++;
+        showText("Execute step: " + programStep, 700, 60);
     }
 
     /**
@@ -319,9 +322,6 @@ public class G3Dock extends Game
      */
     private void doNextStep()
     {
-        programStep++;
-        showText("Execute step: " + programStep, 700, 60);
-        
         for(G3Truck t : getObjects(G3Truck.class))
         {
             t.executeStep();

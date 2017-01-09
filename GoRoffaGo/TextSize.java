@@ -14,15 +14,25 @@ public class TextSize
 {
     // Text size scale
     private static double scale = 0.0;
+    private static boolean calcDone = false;
 
+    /**
+     * private constructor to stop people instantiating it.
+     */
+    private TextSize() 
+    {
+        // This is never run
+    }
+    
     /**
      * Resturns the real size.
      */
     public static int size(int size)
     {
-        if (scale == 0.0)
+        if (!calcDone)
         {
             calcSize();
+            calcDone = true;
         }
         
         return (int)Math.round(size / scale);
