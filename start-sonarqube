@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd "$(dirname "$0")"
+cd sonarqube-6.2/bin/macosx-universal-64/
+./sonar.sh start
