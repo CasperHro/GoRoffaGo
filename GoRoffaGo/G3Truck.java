@@ -125,11 +125,8 @@ public class G3Truck extends G3FieldObject
         executing--;
 
         /*
-         * This lineair movement didn't show nice when rotating. We now implemented 
+         * The lineair movement didn't show nice when rotating. We now implemented 
          * rotation via angular positions based on the radius of the rotation.
-         *    setRotation(endDirection - ((endDirection - startDirection) * executing / EXECUTESTEPS));
-         *    setLocation(endX - ((endX - startX) * executing / EXECUTESTEPS),
-         *                endY - ((endY - startY) * executing / EXECUTESTEPS));
          */
         if (endDirection == startDirection)
         {
@@ -318,37 +315,69 @@ public class G3Truck extends G3FieldObject
     {
         if ("left".equals(command))
         {
-            endDirection = startDirection - 90;
-            endX = startX + (startDirection <= 90 ? gridSize : -gridSize);
-            endY = startY + (startDirection % 270 != 0 ? gridSize : -gridSize);
+            calcLeft();
         }
         else if ("right".equals(command))
         {
-            endDirection = startDirection + 90;
-            endX = startX + (startDirection % 270 == 0 ? gridSize : -gridSize);
-            endY = startY + (startDirection <= 90 ? gridSize : -gridSize);
+            calcRight();
         }
         else if ("forward".equals(command))
         {
-            if (startDirection % 180 == 0)
-            {
-                endX = startX + (startDirection == 0 ? gridSize : -gridSize);
-            }
-            else
-            {
-                endY = startY + (startDirection == 90 ? gridSize : -gridSize);
-            }
+            calcForward();
         }
         else if ("ffwd".equals(command))
         {
-            if (startDirection % 180 == 0)
-            {
-                endX = startX + (startDirection == 0 ? 2 * gridSize : -2 * gridSize);
-            }
-            else
-            {
-                endY = startY + (startDirection == 90 ? 2 * gridSize : -2 * gridSize);
-            }
+            calcFastForward();
+        }
+    }
+    
+    /**
+     * Calculate the end position for the left rotation
+     */
+    private void calcLeft()
+    {
+        endDirection = startDirection - 90;
+        endX = startX + (startDirection <= 90 ? gridSize : -gridSize);
+        endY = startY + (startDirection % 270 != 0 ? gridSize : -gridSize);
+    }
+    
+    /**
+     * Calculate the end position for the right rotation
+     */
+    private void calcRight()
+    {
+        endDirection = startDirection + 90;
+        endX = startX + (startDirection % 270 == 0 ? gridSize : -gridSize);
+        endY = startY + (startDirection <= 90 ? gridSize : -gridSize);
+    }
+    
+    /**
+     * Calculate the end position for the forward movement
+     */
+    private void calcForward()
+    {
+        if (startDirection % 180 == 0)
+        {
+            endX = startX + (startDirection == 0 ? gridSize : -gridSize);
+        }
+        else
+        {
+            endY = startY + (startDirection == 90 ? gridSize : -gridSize);
+        }
+    }
+    
+    /**
+     * Calculate the end position for the fast forward movement
+     */
+    private void calcFastForward()
+    {
+        if (startDirection % 180 == 0)
+        {
+            endX = startX + (startDirection == 0 ? 2 * gridSize : -2 * gridSize);
+        }
+        else
+        {
+            endY = startY + (startDirection == 90 ? 2 * gridSize : -2 * gridSize);
         }
     }
     
