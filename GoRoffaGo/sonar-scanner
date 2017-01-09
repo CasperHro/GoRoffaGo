@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 ../sonar-scanner-2.8/bin/sonar-scanner
-open http://localhost:9000/dashboard?id="${PWD##*/}"
+open http://localhost:9000/dashboard/index?id="${PWD##*/}"
