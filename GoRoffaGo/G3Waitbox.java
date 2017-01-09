@@ -15,14 +15,18 @@ public class G3Waitbox extends Overlay
     private static final String GAMEON = "\n\nPress Enter or click to continue...";
 
     private G3GameStage nextStage;
+    private int timeout;
+    private Date startTime; // Used for the countdown timer
     
     /**
      * Contructor
      */
-    public G3Waitbox(G3GameStage forStage, String message)
+    public G3Waitbox(G3GameStage nextStage, String message, int timeout)
     {
-        text = message;
-        nextStage = forStage;
+        this.text = message;
+        this.nextStage = nextStage;
+        this.timeout = timeout;
+        this.startTime = new Date();
     }
     
     /**
@@ -48,7 +52,9 @@ public class G3Waitbox extends Overlay
             }
         }
         
-        if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter"))
+        // Check if the time is up or clicked
+        if ((timeout > 0 && timeout < Math.toIntExact((new Date().getTime() - startTime.getTime()) / 1000)) ||
+            Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter"))
         {
             isShowing = false;
         }

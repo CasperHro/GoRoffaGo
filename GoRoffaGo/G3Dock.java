@@ -15,7 +15,9 @@ public class G3Dock extends Game
                   "Program each truck with the right movements and prevent accidents!\n\n"+
                   "When a container ends on the right position and in the right direction a \n"+
                   "point is scored. But be fast because the time is ticking...\n\n"+
-                  "Use the mouse to select a truck and to add or remove the program movements.\n\n"+
+                  "Use the mouse to select a truck and to add or remove the program movements.\n"+
+                  "Click on the signs at the bottom to add a command, use the red cross\n"+
+                  "to remove that command from the program.\n\n"+
                   "When you crash 5 trucks, you're game over!\n\n\n"+
                   "Click or press Enter to start...";
     private static final String TEXTSTART = "Get ready...\n\nHere we go!!!";
@@ -161,12 +163,12 @@ public class G3Dock extends Game
         }
         
         // Create the program options
-        addObject(new G3CmdForward(), 700, 505);
-        addObject(new G3CmdLeft(), 655, 505);
-        addObject(new G3CmdRight(), 745, 505);
-        addObject(new G3CmdFFwd(), 725, 565);
-        addObject(new G3CmdPark(), 675, 565);
-        addObject(new G3BtnAllDone(), 700, 20);
+        addObject(new G3CmdForward(), 700, 465);
+        addObject(new G3CmdLeft(), 655, 465);
+        addObject(new G3CmdRight(), 745, 465);
+        addObject(new G3CmdFFwd(), 725, 520);
+        addObject(new G3CmdPark(), 675, 520);
+        addObject(new G3BtnAllDone(), 700, 576);
                 
         // To show the current score call AddScore()
         addScore(0);
@@ -208,11 +210,11 @@ public class G3Dock extends Game
             firstStep();
         }
 
+        checkKeys();
+        
         // Check running, when not running nothing is done. Game info is till visible.
         if (running)
         {
-            checkKeys();
-
             // Check the gamestage and act on what to do in this stage
             if (gameStage == G3GameStage.PROGRAMMING)
             {
@@ -223,7 +225,7 @@ public class G3Dock extends Game
                 // when time is up we must go to the next stage
                 if (timer <= 0)
                 {
-                    startStage(G3GameStage.RUNNINGCODE, "Time is up, let's see where the trucks go!!");
+                    startStage(G3GameStage.RUNNINGCODE, "Time is up, let's see where the trucks go!!", 4);
                 }
             }
             else if (gameStage == G3GameStage.RUNNINGCODE)
@@ -310,7 +312,7 @@ public class G3Dock extends Game
         
         for(G3Truck t : getObjects(G3Truck.class))
         {
-            showTruckCommand(t.getID(), t.getCurrentCommand());
+            t.showTruckCommand();
         }
         
         programStep++;
@@ -339,20 +341,6 @@ public class G3Dock extends Game
             // When all trucks are done go to the next stage
             setStage(G3GameStage.EVALUATING);
         }
-    }
-    
-    /**
-     * Visualizes the next command from the truck by ID
-     */
-    private void showTruckCommand(int truckID, String command)
-    {
-        for(G3TruckCommand c : getObjects(G3TruckCommand.class))
-        {
-            if (c.getID() == truckID)
-            {
-                c.showCommand(command);
-            }
-        }        
     }
 
     /**
@@ -669,9 +657,18 @@ public class G3Dock extends Game
     }
     
     /**
-     * Activates the next stage, but first shows a message overlay.
+     * Activates the next stage, but first shows a message overlay. Waits for the 
+     * player action to proceed
      */
     public void startStage(G3GameStage stage, String message)
+    {
+        startStage(stage, message, 0);
+    }
+    
+    /**
+     * Activates the next stage, but first shows a message overlay.
+     */
+    public void startStage(G3GameStage stage, String message, int timeOut)
     {
         // In program mode the active truck blinks, deactivate all trucks
         if (gameStage == G3GameStage.PROGRAMMING)
@@ -690,7 +687,7 @@ public class G3Dock extends Game
         gameStage = G3GameStage.WAITING;
         
         // And show game info overlay
-        G3Waitbox g3wait = new G3Waitbox(stage, message);
+        G3Waitbox g3wait = new G3Waitbox(stage, message, timeOut);
         addObject(g3wait, getWidth() / 2, getHeight() / 2); // Centered on screen
     }
     
@@ -740,7 +737,7 @@ public class G3Dock extends Game
     {          
         if (programming != null)
         {
-            addObject(new G3ProgramStep(command, programming.addCommand(command)), 700, 300);
+            addObject(new G3ProgramStep(command, programming.addCommand(command)), 700, 280);
             arrangeProgramSteps();
         }
     }
@@ -776,15 +773,15 @@ public class G3Dock extends Game
         {
             if (s.getStep() < cnt - 10)
             {
-                s.setYLocation(130);
+                s.setYLocation(110);
             }
             else if (s.getStep() < cnt - 4)
             {
-                s.setYLocation(180 - ((cnt - 5 - s.getStep()) * 10));
+                s.setYLocation(160 - ((cnt - 5 - s.getStep()) * 10));
             }
             else
             {
-                 s.setYLocation(330 + ((offset - (2* (cnt - s.getStep()))) * 30));
+                 s.setYLocation(310 + ((offset - (2* (cnt - s.getStep()))) * 30));
             }
         }
     }
