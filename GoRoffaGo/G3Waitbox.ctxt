@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=G3Waitbox
 comment0.text=\r\n\ G3GameInfo\ is\ a\ overlay\ to\ interupt\ the\ change\ of\ the\ game\ stages.\r\n\ It\ shows\ information\ about\ the\ next\ stage\ and\ waits\ for\ user\ input\ \r\n\ to\ proceed.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
-comment1.params=forStage\ message
-comment1.target=G3Waitbox(G3GameStage,\ java.lang.String)
+comment1.params=nextStage\ message\ timeout
+comment1.target=G3Waitbox(G3GameStage,\ java.lang.String,\ int)
 comment1.text=\r\n\ Contructor\r\n
 comment2.params=
 comment2.target=void\ act()
