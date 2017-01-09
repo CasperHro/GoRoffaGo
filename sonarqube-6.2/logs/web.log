@@ -1,0 +1,174 @@
+2017.01.09 18:44:01 INFO  web[][o.s.p.ProcessEntryPoint] Starting web
+2017.01.09 18:44:01 INFO  web[][o.s.s.a.TomcatContexts] Webapp directory: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/web
+2017.01.09 18:44:02 INFO  web[][o.a.c.h.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 18:44:02 INFO  web[][o.a.t.u.n.NioSelectorPool] Using a shared selector for servlet write/read
+2017.01.09 18:44:04 INFO  web[][o.e.plugins] [Penance] modules [], plugins [], sites []
+2017.01.09 18:44:09 INFO  web[][o.s.s.e.EsClientProvider] Connected to local Elasticsearch: [127.0.0.1:9001]
+2017.01.09 18:44:09 INFO  web[][o.s.s.p.LogServerVersion] SonarQube Server / 6.2 / 4a28f29f95254b58f3cf0a0871bc632e998403f5
+2017.01.09 18:44:10 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Starting embedded database on port 9092 with url jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 18:44:20 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database started. Data stored in: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/data
+2017.01.09 18:44:20 INFO  web[][o.sonar.db.Database] Create JDBC data source for jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 18:44:20 WARN  web[][o.s.d.DatabaseChecker] H2 database should be used for evaluation purpose only
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerFileSystemImpl] SonarQube home: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Plugin C# [csharp] installed
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Plugin Java [java] installed
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Plugin JavaScript [javascript] installed
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Plugin Git [scmgit] installed
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Plugin SVN [scmsvn] installed
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin C# / 5.5.1.522 / 9a3e26d7843b226a6772b5103e72120c3003d958
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Git / 1.2 / a713dd64daf8719ba4e7f551f9a1966c62690c17
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Java / 4.3.0.7717 / de5bafc9f2e40a91d419c774fffc6d6061ba8da5
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin JavaScript / 2.18.0.3454 / c276cc8dfeb99da907f2ec76ede9f59836da2bc9
+2017.01.09 18:44:22 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin SVN / 1.3 / aff503d48bc77b07c2b62abf93249d0a20bd355c
+2017.01.09 18:44:23 INFO  web[][o.s.s.p.w.RailsAppsDeployer] Deploying Ruby on Rails applications
+2017.01.09 18:44:23 INFO  web[][o.s.s.p.d.m.DatabaseMigrator] Create database
+2017.01.09 18:44:26 INFO  web[][o.s.s.p.UpdateCenterClient] Update center: https://update.sonarsource.org/update-center.properties (no proxy)
+2017.01.09 18:44:26 INFO  web[][o.s.s.e.IndexCreator] Create index tests
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type tests/test
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create index projectmeasures
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type projectmeasures/projectmeasures
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type projectmeasures/authorization
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create index rules
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type rules/activeRule
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type rules/rule
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create index issues
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type issues/issue
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type issues/authorization
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create index users
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type users/user
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create index views
+2017.01.09 18:44:27 INFO  web[][o.s.s.e.IndexCreator] Create type views/view
+2017.01.09 18:44:28 INFO  web[][o.s.s.n.NotificationDaemon] Notification service started (delay 60 sec.)
+2017.01.09 18:44:28 INFO  web[][o.s.s.s.RegisterMetrics] Register metrics
+2017.01.09 18:44:28 INFO  web[][o.s.s.r.RegisterRules] Register rules
+2017.01.09 18:44:32 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register quality profiles
+2017.01.09 18:44:33 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register profile {lang=cs, name=Sonar way}
+2017.01.09 18:44:34 INFO  web[][o.s.s.q.RegisterQualityProfiles] Set default cs profile: Sonar way
+2017.01.09 18:44:34 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register profile {lang=java, name=Sonar way}
+2017.01.09 18:44:34 INFO  web[][o.s.s.q.RegisterQualityProfiles] Set default java profile: Sonar way
+2017.01.09 18:44:34 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register profile {lang=js, name=Sonar way}
+2017.01.09 18:44:35 INFO  web[][o.s.s.q.RegisterQualityProfiles] Set default js profile: Sonar way
+2017.01.09 18:44:35 INFO  web[][o.s.s.s.RegisterPermissionTemplates] Register permission templates
+2017.01.09 18:44:35 INFO  web[][o.s.s.s.RenameDeprecatedPropertyKeys] Rename deprecated property keys
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index authorization
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index issues
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index tests
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index users
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index views
+2017.01.09 18:44:35 INFO  web[][o.s.s.e.IndexerStartupTask] Index project measures
+2017.01.09 18:44:36 INFO  web[][jruby.rack] jruby 1.7.9 (ruby-1.8.7p370) 2013-12-06 87b108a on Java HotSpot(TM) 64-Bit Server VM 1.8.0_112-b16 [darwin-x86_64]
+2017.01.09 18:44:36 INFO  web[][jruby.rack] using a shared (threadsafe!) runtime
+2017.01.09 18:44:47 INFO  web[][jruby.rack] keeping custom (config.logger) Rails logger instance
+2017.01.09 18:44:47 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.ws.WebServiceFilter@19acf73f [pattern=org.sonar.api.web.ServletFilter$UrlPattern@603ade26]
+2017.01.09 18:44:47 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.InitFilter@36641c19 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@488f00e5]
+2017.01.09 18:44:47 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.OAuth2CallbackFilter@20f4a6e5 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@3666f236]
+2017.01.09 18:44:47 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.LoginAction@6ce4cb43 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@6d1263ab]
+2017.01.09 18:44:47 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.ValidateAction@641eef96 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@2e6a9e85]
+2017.01.09 18:44:47 INFO  web[][o.a.c.h.Http11NioProtocol] Starting ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 18:44:47 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is started
+2017.01.09 18:44:47 INFO  web[][o.s.s.a.EmbeddedTomcat] HTTP connector enabled on port 9000
+2017.01.09 19:03:57 INFO  web[][o.s.p.StopWatcher] Stopping process
+2017.01.09 19:03:57 INFO  web[][o.a.c.h.Http11NioProtocol] Pausing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:04:03 INFO  web[][o.s.s.n.NotificationDaemon] Notification service stopped
+2017.01.09 19:04:04 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database stopped
+2017.01.09 19:04:04 INFO  web[][o.a.c.h.Http11NioProtocol] Stopping ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:04:10 INFO  web[][o.a.c.h.Http11NioProtocol] Destroying ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:04:10 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is stopped
+2017.01.09 19:13:38 INFO  web[][o.s.p.ProcessEntryPoint] Starting web
+2017.01.09 19:13:38 INFO  web[][o.s.s.a.TomcatContexts] Webapp directory: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/web
+2017.01.09 19:13:39 INFO  web[][o.a.c.h.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:13:39 INFO  web[][o.a.t.u.n.NioSelectorPool] Using a shared selector for servlet write/read
+2017.01.09 19:13:39 INFO  web[][o.e.plugins] [Roulette] modules [], plugins [], sites []
+2017.01.09 19:13:45 INFO  web[][o.s.s.e.EsClientProvider] Connected to local Elasticsearch: [127.0.0.1:9001]
+2017.01.09 19:13:45 INFO  web[][o.s.s.p.LogServerVersion] SonarQube Server / 6.2 / 4a28f29f95254b58f3cf0a0871bc632e998403f5
+2017.01.09 19:13:45 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Starting embedded database on port 9092 with url jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 19:13:55 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database started. Data stored in: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/data
+2017.01.09 19:13:55 INFO  web[][o.sonar.db.Database] Create JDBC data source for jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 19:13:55 WARN  web[][o.s.d.DatabaseChecker] H2 database should be used for evaluation purpose only
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerFileSystemImpl] SonarQube home: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin C# / 5.5.1.522 / 9a3e26d7843b226a6772b5103e72120c3003d958
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Git / 1.2 / a713dd64daf8719ba4e7f551f9a1966c62690c17
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Java / 4.3.0.7717 / de5bafc9f2e40a91d419c774fffc6d6061ba8da5
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin JavaScript / 2.18.0.3454 / c276cc8dfeb99da907f2ec76ede9f59836da2bc9
+2017.01.09 19:13:56 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin SVN / 1.3 / aff503d48bc77b07c2b62abf93249d0a20bd355c
+2017.01.09 19:13:57 INFO  web[][o.s.s.p.w.RailsAppsDeployer] Deploying Ruby on Rails applications
+2017.01.09 19:13:58 INFO  web[][o.s.s.p.UpdateCenterClient] Update center: https://update.sonarsource.org/update-center.properties (no proxy)
+2017.01.09 19:13:58 INFO  web[][o.s.s.n.NotificationDaemon] Notification service started (delay 60 sec.)
+2017.01.09 19:13:58 INFO  web[][o.s.s.s.RegisterMetrics] Register metrics
+2017.01.09 19:13:58 INFO  web[][o.s.s.r.RegisterRules] Register rules
+2017.01.09 19:14:00 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register quality profiles
+2017.01.09 19:14:01 INFO  web[][o.s.s.s.RegisterPermissionTemplates] Register permission templates
+2017.01.09 19:14:01 INFO  web[][o.s.s.s.RenameDeprecatedPropertyKeys] Rename deprecated property keys
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index authorization
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index issues
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index tests
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index users
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index views
+2017.01.09 19:14:01 INFO  web[][o.s.s.e.IndexerStartupTask] Index project measures
+2017.01.09 19:14:01 INFO  web[][jruby.rack] jruby 1.7.9 (ruby-1.8.7p370) 2013-12-06 87b108a on Java HotSpot(TM) 64-Bit Server VM 1.8.0_112-b16 [darwin-x86_64]
+2017.01.09 19:14:01 INFO  web[][jruby.rack] using a shared (threadsafe!) runtime
+2017.01.09 19:14:08 INFO  web[][jruby.rack] keeping custom (config.logger) Rails logger instance
+2017.01.09 19:14:08 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.ws.WebServiceFilter@5b2b014f [pattern=org.sonar.api.web.ServletFilter$UrlPattern@1648d9c9]
+2017.01.09 19:14:08 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.InitFilter@5985338d [pattern=org.sonar.api.web.ServletFilter$UrlPattern@5a27608b]
+2017.01.09 19:14:08 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.OAuth2CallbackFilter@1415278d [pattern=org.sonar.api.web.ServletFilter$UrlPattern@647c77d9]
+2017.01.09 19:14:08 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.LoginAction@393ec756 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@3efbad17]
+2017.01.09 19:14:08 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.ValidateAction@1947495b [pattern=org.sonar.api.web.ServletFilter$UrlPattern@560c2952]
+2017.01.09 19:14:08 INFO  web[][o.a.c.h.Http11NioProtocol] Starting ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:14:08 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is started
+2017.01.09 19:14:08 INFO  web[][o.s.s.a.EmbeddedTomcat] HTTP connector enabled on port 9000
+2017.01.09 19:31:17 INFO  web[][o.s.p.StopWatcher] Stopping process
+2017.01.09 19:31:17 INFO  web[][o.a.c.h.Http11NioProtocol] Pausing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:31:23 INFO  web[][o.s.s.n.NotificationDaemon] Notification service stopped
+2017.01.09 19:31:23 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database stopped
+2017.01.09 19:31:23 INFO  web[][o.a.c.h.Http11NioProtocol] Stopping ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:31:30 INFO  web[][o.a.c.h.Http11NioProtocol] Destroying ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 19:31:30 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is stopped
+2017.01.09 20:03:47 INFO  web[][o.s.p.ProcessEntryPoint] Starting web
+2017.01.09 20:03:48 INFO  web[][o.s.s.a.TomcatContexts] Webapp directory: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/web
+2017.01.09 20:03:48 INFO  web[][o.a.c.h.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 20:03:48 INFO  web[][o.a.t.u.n.NioSelectorPool] Using a shared selector for servlet write/read
+2017.01.09 20:03:48 INFO  web[][o.e.plugins] [Blue Streak] modules [], plugins [], sites []
+2017.01.09 20:03:54 INFO  web[][o.s.s.e.EsClientProvider] Connected to local Elasticsearch: [127.0.0.1:9001]
+2017.01.09 20:03:54 INFO  web[][o.s.s.p.LogServerVersion] SonarQube Server / 6.2 / 4a28f29f95254b58f3cf0a0871bc632e998403f5
+2017.01.09 20:03:54 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Starting embedded database on port 9092 with url jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 20:04:04 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database started. Data stored in: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2/data
+2017.01.09 20:04:04 INFO  web[][o.sonar.db.Database] Create JDBC data source for jdbc:h2:tcp://localhost:9092/sonar
+2017.01.09 20:04:04 WARN  web[][o.s.d.DatabaseChecker] H2 database should be used for evaluation purpose only
+2017.01.09 20:04:05 INFO  web[][o.s.s.p.ServerFileSystemImpl] SonarQube home: /Users/Casper/Documents/GitHub/GoRoffaGo/sonarqube-6.2
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin C# / 5.5.1.522 / 9a3e26d7843b226a6772b5103e72120c3003d958
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Git / 1.2 / a713dd64daf8719ba4e7f551f9a1966c62690c17
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin Java / 4.3.0.7717 / de5bafc9f2e40a91d419c774fffc6d6061ba8da5
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin JavaScript / 2.18.0.3454 / c276cc8dfeb99da907f2ec76ede9f59836da2bc9
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.ServerPluginRepository] Deploy plugin SVN / 1.3 / aff503d48bc77b07c2b62abf93249d0a20bd355c
+2017.01.09 20:04:06 INFO  web[][o.s.s.p.w.RailsAppsDeployer] Deploying Ruby on Rails applications
+2017.01.09 20:04:07 INFO  web[][o.s.s.p.UpdateCenterClient] Update center: https://update.sonarsource.org/update-center.properties (no proxy)
+2017.01.09 20:04:07 INFO  web[][o.s.s.n.NotificationDaemon] Notification service started (delay 60 sec.)
+2017.01.09 20:04:08 INFO  web[][o.s.s.s.RegisterMetrics] Register metrics
+2017.01.09 20:04:08 INFO  web[][o.s.s.r.RegisterRules] Register rules
+2017.01.09 20:04:09 INFO  web[][o.s.s.q.RegisterQualityProfiles] Register quality profiles
+2017.01.09 20:04:10 INFO  web[][o.s.s.s.RegisterPermissionTemplates] Register permission templates
+2017.01.09 20:04:10 INFO  web[][o.s.s.s.RenameDeprecatedPropertyKeys] Rename deprecated property keys
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index authorization
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index issues
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index tests
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index users
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index views
+2017.01.09 20:04:10 INFO  web[][o.s.s.e.IndexerStartupTask] Index project measures
+2017.01.09 20:04:10 INFO  web[][jruby.rack] jruby 1.7.9 (ruby-1.8.7p370) 2013-12-06 87b108a on Java HotSpot(TM) 64-Bit Server VM 1.8.0_112-b16 [darwin-x86_64]
+2017.01.09 20:04:10 INFO  web[][jruby.rack] using a shared (threadsafe!) runtime
+2017.01.09 20:04:18 INFO  web[][jruby.rack] keeping custom (config.logger) Rails logger instance
+2017.01.09 20:04:18 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.ws.WebServiceFilter@59b235e8 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@18577f61]
+2017.01.09 20:04:18 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.InitFilter@347d56c1 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@7ca838d3]
+2017.01.09 20:04:18 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.OAuth2CallbackFilter@61697d80 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@3f7cf432]
+2017.01.09 20:04:18 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.LoginAction@48a5f07b [pattern=org.sonar.api.web.ServletFilter$UrlPattern@10a04039]
+2017.01.09 20:04:18 INFO  web[][o.s.s.p.w.MasterServletFilter] Initializing servlet filter org.sonar.server.authentication.ws.ValidateAction@5987d0d6 [pattern=org.sonar.api.web.ServletFilter$UrlPattern@3ec6c5b5]
+2017.01.09 20:04:18 INFO  web[][o.a.c.h.Http11NioProtocol] Starting ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 20:04:18 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is started
+2017.01.09 20:04:18 INFO  web[][o.s.s.a.EmbeddedTomcat] HTTP connector enabled on port 9000
+2017.01.09 20:19:27 INFO  web[][o.s.p.StopWatcher] Stopping process
+2017.01.09 20:19:27 INFO  web[][o.a.c.h.Http11NioProtocol] Pausing ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 20:19:33 INFO  web[][o.s.s.n.NotificationDaemon] Notification service stopped
+2017.01.09 20:19:33 INFO  web[][o.s.s.p.d.EmbeddedDatabase] Embedded database stopped
+2017.01.09 20:19:33 INFO  web[][o.a.c.h.Http11NioProtocol] Stopping ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 20:19:39 INFO  web[][o.a.c.h.Http11NioProtocol] Destroying ProtocolHandler ["http-nio-0.0.0.0-9000"]
+2017.01.09 20:19:39 INFO  web[][o.s.s.a.TomcatAccessLog] Web server is stopped

@@ -1,9 +1,9 @@
 @echo OFF
 for %%* in (.) do set CurrDirName=%%~nx*
 
-if exist C:\tmp_install\sonar-scanner-2.8\bin\sonar-scanner.bat (
+if exist ..\sonar-scanner-2.8\bin\sonar-scanner.bat (
 
-    C:\tmp_install\sonar-scanner-2.8\bin\sonar-scanner.bat
+    ..\sonar-scanner-2.8\bin\sonar-scanner.bat
     start "" http://localhost:9000/dashboard?id=%CurrDirName%
 
 ) else (
@@ -16,7 +16,7 @@ if exist C:\tmp_install\sonar-scanner-2.8\bin\sonar-scanner.bat (
     echo Download SonarQube Scanner van:
     echo http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
     echo.
-    echo Start daarna eerst SonarQube met StartSonar.bat uit de bin map en 
+    echo Start daarna eerst SonarQube met StartSonar.bat uit de bin map en
     echo controleer op http://localhost:9000/ of de server draait.
     echo.
     echo Dan dit batch bestand opnieuw gestart worden.
