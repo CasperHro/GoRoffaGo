@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=G4Obstacle
+comment0.text=\n\ Write\ a\ description\ of\ class\ G4_Obstacle\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\n\ Act\ -\ do\ whatever\ the\ G4_Obstacle\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment2.params=value
+comment2.target=void\ setValue(java.lang.String)
+comment3.params=
+comment3.target=void\ explosion()
+numComments=4
