@@ -30,7 +30,7 @@ public class MnuGame extends Actor
     public void show()
     {
         showing = true;
-        active = false;
+        active = mouseOver;
     }
     
     /**

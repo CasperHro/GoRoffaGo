@@ -195,6 +195,10 @@ public class G1Port extends Game
                 gameOver();
             }
         }
+        else
+        {
+            super.act();
+        }
     }
 
     /**
@@ -205,7 +209,7 @@ public class G1Port extends Game
     protected void checkKeys()
     {
         // The s-key selects the next boat for controls.
-        if ((lastKey == "" || !Greenfoot.isKeyDown(lastKey)) && Greenfoot.isKeyDown("s"))
+        if (running && (lastKey == "" || !Greenfoot.isKeyDown(lastKey)) && Greenfoot.isKeyDown("s"))
         {
             lastKey = "s";
             selectNextBoat();
