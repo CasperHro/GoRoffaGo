@@ -22,7 +22,7 @@ public class GoRoffaGo extends World
         "In the city centre there are still some old vessels. \n Compare them to the new ones and see the difference \n in scale between then and now...", 
         "Unloading a containership is a game of tactics. Pick the \n right containers from the ship but keep it in balance!", 
         "The port is the main reason for the development of Rotterdam", 
-        "Efficient and automated trucks relocate containers on the dock. \n Program them yourself with movements and prevent \n crashing then into obstacles and eachother.", 
+        "Automated trucks relocate containers on the dock. \n Program them yourself with movements and prevent \n crashing then into obstacles and eachother.", 
         "The port never sleeps. Seven days a week, \n 24 hours a day ships come and go.", 
         "To keep the port save and secure you have to keep the criminals \n away from the cargo. Catch them as fast as you can!", 
         "This is how the port grows. Even new land is build to make it \n grow into the sea."  

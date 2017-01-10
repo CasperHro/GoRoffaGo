@@ -14,3 +14,4 @@ GoRoffaGo/.sonar/report-task.txt
 sonarqube-6.2/logs/*
 sonarqube-6.2/temp/*
 sonarqube-6.2/data/*
+*.jpg~
