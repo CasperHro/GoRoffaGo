@@ -241,6 +241,10 @@ public class GoRoffaGo extends World
         {
             Greenfoot.setWorld(new G1Port());
         }
+        else if (game == 2)
+        {
+            Greenfoot.setWorld(new G2Dock());
+        }
         else if (game == 3)
         {
             Greenfoot.setWorld(new G3Dock());

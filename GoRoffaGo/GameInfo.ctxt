@@ -1,13 +1,13 @@
 #BlueJ class context
 comment0.target=GameInfo
-comment0.text=\r\n\ GameInfo\ shows\ the\ game\ info\ on\ an\ averlay\ when\ the\ game\ starts.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
+comment0.text=\n\ GameInfo\ shows\ the\ game\ info\ on\ an\ averlay\ when\ the\ game\ starts.\n\ \n\ @author\ C.\ Karreman\ \n\ @version\ 1.0\n
 comment1.params=gameInfo\ play
 comment1.target=GameInfo(java.lang.String,\ java.lang.String)
-comment1.text=\r\n\ Constructor\ of\ the\ info\ box\r\n
+comment1.text=\n\ Constructor\ of\ the\ info\ box\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\r\n\ Check\ the\ mouse\ click\ to\ hide\r\n
+comment2.text=\n\ Check\ the\ mouse\ click\ to\ hide\n
 comment3.params=world
 comment3.target=void\ drawStarting(greenfoot.World)
-comment3.text=\r\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\r\n
+comment3.text=\n\ Draw\ an\ overlaying\ image\ with\ the\ infotext\ rendered\ on\ it\n
 numComments=4
