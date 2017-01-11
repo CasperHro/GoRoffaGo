@@ -387,8 +387,6 @@ public class G2Dock extends World
        }
        windSpeed = halfLeft-halfRight;
         
-       //System.out.println("Balans = "+windSpeed);
-       //System.out.println("halfLeft = "+halfLeft+": halfRight = "+halfRight);
        return windSpeed;
     }
     
@@ -399,7 +397,7 @@ public class G2Dock extends World
                 count+=1;
             }
         }
-        System.out.println("cargo left: "+count);
+
         return count;
     }
     
@@ -409,7 +407,7 @@ public class G2Dock extends World
         if (grid != null){
             while(i < maxHeight){
                 int spot = x+(i*width);
-                //System.out.println("spot no "+spot);
+
                 if(grid[spot]!=null){
                     weight+=grid[spot].getWeight();
                 }
@@ -423,7 +421,7 @@ public class G2Dock extends World
         int stack = 0;
         for(int i = 0;i < maxHeight; i++){
             int spot = x+(i*width);
-            //System.out.println("spot no "+spot);
+
             if(grid[spot]!=null){
                 stack+=1;
             }
