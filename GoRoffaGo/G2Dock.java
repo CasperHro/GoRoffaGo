@@ -41,7 +41,8 @@ public class G2Dock extends Game
     private int p2_looted = 0;
 
     G2Clock clock;
-    G2Counter scoreCounter;
+    G2PlayerCounter playerScoreCounter;
+    G2ComputerCounter computerScoreCounter;
     List<String> transportOrder = new ArrayList<String>();
     
     private boolean firstStep = true; // Does the first step routine
@@ -59,11 +60,9 @@ public class G2Dock extends Game
      */
     public G2Dock()
     {
-        
-        // TODO: Set the paintorder for the overlaying classes
         setPaintOrder(G2GameInfo.class,
                   //G2_Waitbox.class,
-                  G2GameOver.class,
+                  GameOver.class,
                   G2Water.class,// Foreground water
                   G2Deck.class,
                   G2Hook.class,
@@ -95,9 +94,12 @@ public class G2Dock extends Game
         
         addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
         addObject(p2_hook, getWidth() - 35, 300);
+
+        playerScoreCounter = new G2PlayerCounter();
+        addObject(playerScoreCounter, 320, 50);
         
-        scoreCounter = new G2Counter();
-        addObject(scoreCounter, 750, 20);
+        computerScoreCounter = new G2ComputerCounter();
+        addObject(computerScoreCounter, 550, 50);
 
         G2Water water = new G2Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
@@ -149,7 +151,7 @@ public class G2Dock extends Game
         
         // Clock
         clock = new G2Clock(false, true, 0, null);
-        addObject(clock, 750, 40);
+        addObject(clock, 400, 40);
 
         gameOver = false;
         running = true;
@@ -205,21 +207,23 @@ public class G2Dock extends Game
                     // player looses
                     gameOver = true;
                     endGame();
-                    G2GameOver gameover = new G2GameOver();
-                    addObject(gameover, getWidth()/2, getHeight()/2);
+                    
+                    Actor gameOver = new GameOver("gameover001.png");
+                    addObject(gameOver, getWidth()/2, getHeight()/2);
                 }else if (p2_deck.getStepCount() > 10 || p2_deck.getStepCount() < -10 || checkCargoLeft(p1_grid)==0){
                     // computer looses
                     gameOver = true;
                     endGame();
-                    G2GameOver gameover = new G2GameOver();
-                    addObject(gameover, getWidth()/2, getHeight()/2);
+
+                    Actor gameOver = new GameOver("gameover001.png");
+                    addObject(gameOver, getWidth()/2, getHeight()/2);
                 }
                 counter=0;
             }  
         }else if (running && gameOver){
-            endGame();
-                    G2GameOver gameover = new G2GameOver();
-                    addObject(gameover, getWidth()/2, getHeight()/2);
+                    endGame();
+                    Actor gameOver = new GameOver("gameover001.png");
+                    addObject(gameOver, getWidth()/2, getHeight()/2);
         }
     }
     

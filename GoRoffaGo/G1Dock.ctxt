@@ -1,19 +1,19 @@
 #BlueJ class context
 comment0.target=G1Dock
-comment0.text=\r\n\ G1Dock\ is\ where\ the\ boats\ must\ go\ to\ score\ a\ point.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ G1Dock\ is\ where\ the\ boats\ must\ go\ to\ score\ a\ point.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=void\ act()
-comment1.text=\r\n\ When\ a\ boat\ is\ docked\ a\ wait\ loop\ is\ started.\ When\ the\ delay\ is\ over\ the\ \r\n\ ship\ is\ removed\ from\ the\ world.\r\n
+comment1.text=\n\ When\ a\ boat\ is\ docked\ a\ wait\ loop\ is\ started.\ When\ the\ delay\ is\ over\ the\ \n\ ship\ is\ removed\ from\ the\ world.\n
 comment2.params=boat
 comment2.target=void\ dockBoat(G1Boat)
-comment2.text=\r\n\ dockBoat\ lockes\ the\ boat\ to\ the\ dock\ and\ initializes\ the\ wait\ timer\r\n\ to\ remove\ the\ boat\ after\ a\ while.\ A\ point\ is\ scored\!\!\!\r\n
+comment2.text=\n\ dockBoat\ lockes\ the\ boat\ to\ the\ dock\ and\ initializes\ the\ wait\ timer\n\ to\ remove\ the\ boat\ after\ a\ while.\ A\ point\ is\ scored\!\!\!\n
 comment3.params=
 comment3.target=void\ clearDock()
-comment3.text=\r\n\ Removes\ the\ boat\ from\ the\ dock\ and\ from\ the\ world\r\n
+comment3.text=\n\ Removes\ the\ boat\ from\ the\ dock\ and\ from\ the\ world\n
 comment4.params=
 comment4.target=java.lang.String\ getCargo()
-comment4.text=\r\n\ Returns\ the\ cargo\ type\r\n
+comment4.text=\n\ Returns\ the\ cargo\ type\n
 comment5.params=value
 comment5.target=void\ setCargo(java.lang.String)
-comment5.text=\r\n\ Sets\ the\ cargo\ type\r\n
+comment5.text=\n\ Sets\ the\ cargo\ type\n
 numComments=6

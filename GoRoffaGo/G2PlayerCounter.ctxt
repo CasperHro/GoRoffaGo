@@ -1,8 +1,8 @@
 #BlueJ class context
-comment0.target=G2Counter
+comment0.target=G2PlayerCounter
 comment0.text=\n\ Counter\ that\ displays\ a\ text\ and\ number.\n
 comment1.params=
-comment1.target=G2Counter()
+comment1.target=G2PlayerCounter()
 comment2.params=
 comment2.target=void\ act()
 comment3.params=value
