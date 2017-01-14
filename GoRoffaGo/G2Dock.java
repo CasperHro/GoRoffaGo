@@ -72,6 +72,9 @@ public class G2Dock extends Game
                   G2BoatBack.class
                   );
 
+        backgroundMusic = new GreenfootSound("game_2_music.mp3");
+        backgroundMusic.setVolume(70);
+                  
         // Prepare all initial actors
         prepare();
     }
@@ -114,7 +117,7 @@ public class G2Dock extends Game
         firstStep = false;
         
         // Start music
-        //backgroundMusic.playLoop();
+        backgroundMusic.playLoop();
         
         // And show game info overlay
         G2GameInfo g2_info = new G2GameInfo();
@@ -161,7 +164,8 @@ public class G2Dock extends Game
     
     public void endGame()
     {
-        // Stop game and show results, then prepare for next level
+        backgroundMusic.stop();
+        // Stop game and show results.
         running = false;
         p1_hook.setRunning(running);
         p2_hook.setRunning(running);
