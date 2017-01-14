@@ -191,6 +191,12 @@ public class G2ComputerHook extends G2Hook
                 G2Transport transportIntersect = (G2Transport)getOneObjectAtOffset(0, cargoheight, G2Transport.class); 
                 if (transportIntersect != null && transportIntersect.setCargo(cargoOnHook))
                 {
+                    // Add score.
+                    G2ComputerCounter c = getWorld().getObjects(G2ComputerCounter.class).get(0);
+                    if (c != null) {
+                        c.addTransportScore(1);
+                    }
+                    
                     cargoOnHook = null;
                     cargoInTransport = true;
                 }

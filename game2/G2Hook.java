@@ -132,6 +132,12 @@ public class G2Hook extends Actor
         
         if (cargo != null && Greenfoot.isKeyDown("d")) {
             if (transport != null && transport.setCargo(cargo)) {
+                // Add score.
+                G2PlayerCounter c = getWorld().getObjects(G2PlayerCounter.class).get(0);
+                if (c != null) {
+                    c.addTransportScore(1);
+                }
+                
                 cargo = null;
                 transport = null;
             }

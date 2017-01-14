@@ -46,14 +46,8 @@ public class G2Transport extends Actor
     {
         if (cargo == null) {
             if (container.getColor() == getColor()) {
-             cargo = container;   
-                // Add score ???
-                //Counter c = getWorld().getObjects(Counter.class).get(0);
-                //if (c != null) {
-                //    c.addTransportScore(1);
-                //}
+                cargo = container;
 
-                
                 resetTransport = 1;
                 return true;
             }

@@ -41,7 +41,8 @@ public class G2Dock extends World
     private int p2_looted = 0;
 
     G2Clock clock;
-    G2Counter scoreCounter;
+    G2PlayerCounter playerScoreCounter;
+    G2ComputerCounter computerScoreCounter;
     List<String> transportOrder = new ArrayList<String>();
     
     private boolean firstStep = true; // Does the first step routine
@@ -98,9 +99,12 @@ public class G2Dock extends World
         
         addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
         addObject(p2_hook, getWidth() - 35, 300);
+
+        playerScoreCounter = new G2PlayerCounter();
+        addObject(playerScoreCounter, 320, 50);
         
-        scoreCounter = new G2Counter();
-        addObject(scoreCounter, 750, 20);
+        computerScoreCounter = new G2ComputerCounter();
+        addObject(computerScoreCounter, 550, 50);
 
         G2Water water = new G2Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
@@ -152,7 +156,7 @@ public class G2Dock extends World
         
         // Clock
         clock = new G2Clock(false, true, 0, null);
-        addObject(clock, 750, 40);
+        addObject(clock, 400, 40);
 
         gameOver = false;
         running = true;
