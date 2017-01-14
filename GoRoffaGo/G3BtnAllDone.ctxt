@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.target=G3BtnAllDone
-comment0.text=\n\ G3BtnAllDone\ is\ a\ button\ the\ user\ can\ click\ when\ done\ programming.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ G3BtnAllDone\ is\ a\ button\ the\ user\ can\ click\ when\ done\ programming.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=world
 comment1.target=void\ addedToWorld(greenfoot.World)
-comment1.text=\n\ When\ added\ to\ the\ world\ create\ a\ container\ on\ the\ truck\n
+comment1.text=\r\n\ When\ added\ to\ the\ world\ create\ a\ container\ on\ the\ truck\r\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\n\ Only\ act\ on\ mouse\ clicks\ to\ end\ programming\n
+comment2.text=\r\n\ Only\ act\ on\ mouse\ clicks\ to\ end\ programming\r\n
 numComments=3
