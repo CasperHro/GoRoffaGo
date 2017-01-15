@@ -52,6 +52,7 @@ public class MnuGame extends Actor
     {
         selected = false;
         setImage(new GreenfootImage(String.format("mnuGame%d.png", game)));
+        getImage().setTransparency(transparency);
     }
     
     /**
