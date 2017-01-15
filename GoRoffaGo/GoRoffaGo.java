@@ -249,5 +249,9 @@ public class GoRoffaGo extends World
         {
             Greenfoot.setWorld(new G3Dock());
         }
+        else if (game == 4)
+        {
+            Greenfoot.setWorld(new Game4Hunter());
+        }
     }
 }
