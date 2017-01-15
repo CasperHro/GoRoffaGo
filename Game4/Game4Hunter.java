@@ -219,7 +219,7 @@ public class Game4Hunter extends World
             int indexY = Greenfoot.getRandomNumber(rndYs.length);
             rndY = rndYs[indexY];
             rndX = rndXs[indexX];
-            System.out.println(rndY+", "+rndX);
+            
             if(CargoPlaced[indexY*4+indexX]!=true){
                 CargoPlaced[indexY*4+indexX]=true;
                 foundEmpty=true;
@@ -293,7 +293,7 @@ public class Game4Hunter extends World
         score += increase;
         showText("Score: " +score, 740,20);
         
-        if (score >= newContainerInterval*14 + 1){
+        if (score >= newContainerInterval*15 + 1){
             missionComplete();
         }
         
