@@ -14,6 +14,7 @@ public class MnuGame extends Actor
     private int game;
     private boolean showing = false;
     private boolean active = false;
+    private boolean selected = false;
     private boolean mouseOver = false;
     private int transparency = 0;
     
@@ -41,6 +42,18 @@ public class MnuGame extends Actor
         active = true;
     }
     
+    public void select()
+    {
+        selected = true;
+        getImage().drawImage(new GreenfootImage("mnuSelected.png"), 0, 0);
+    }
+    
+    public void deselect()
+    {
+        selected = false;
+        setImage(new GreenfootImage(String.format("mnuGame%d.png", game)));
+    }
+    
     /**
      * Act - do whatever the MnuGame wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -51,16 +64,19 @@ public class MnuGame extends Actor
         
         if (showing && transparency < NORMALTRANSPARENCY)
         {
+            // This happens after the timeout, the item becomes visible
             transparency = Math.min(transparency + STEP, NORMALTRANSPARENCY);
             getImage().setTransparency(transparency);
         }
-        if (showing && active && transparency < 255)
+        if (showing && (active || selected) && transparency < 255)
         {
+            // When active or selected the item is shown opaque
             transparency = Math.min(transparency + STEP, 255);
             getImage().setTransparency(transparency);
         }
-        if (showing && !active && transparency > NORMALTRANSPARENCY)
+        if (showing && !active && !selected && transparency > NORMALTRANSPARENCY)
         {
+            // When not active return to normal transparancy
             transparency = Math.max(transparency - STEP, NORMALTRANSPARENCY);
             getImage().setTransparency(transparency);
         }

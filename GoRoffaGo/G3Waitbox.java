@@ -54,7 +54,7 @@ public class G3Waitbox extends Overlay
         
         // Check if the time is up or clicked
         if ((timeout > 0 && timeout < Math.toIntExact((new Date().getTime() - startTime.getTime()) / 1000)) ||
-            Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter"))
+            Greenfoot.mouseClicked(this) || checkKey("Enter"))
         {
             isShowing = false;
         }

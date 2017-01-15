@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=G3Waitbox
-comment0.text=\n\ G3GameInfo\ is\ a\ overlay\ to\ interupt\ the\ change\ of\ the\ game\ stages.\n\ It\ shows\ information\ about\ the\ next\ stage\ and\ waits\ for\ user\ input\ \n\ to\ proceed.\n\ \n\ @author\ C.\ Karreman\ \n\ @version\ 1.0\n
+comment0.text=\r\n\ G3GameInfo\ is\ a\ overlay\ to\ interupt\ the\ change\ of\ the\ game\ stages.\r\n\ It\ shows\ information\ about\ the\ next\ stage\ and\ waits\ for\ user\ input\ \r\n\ to\ proceed.\r\n\ \r\n\ @author\ C.\ Karreman\ \r\n\ @version\ 1.0\r\n
 comment1.params=nextStage\ message\ timeout
 comment1.target=G3Waitbox(G3GameStage,\ java.lang.String,\ int)
-comment1.text=\n\ Contructor\n
+comment1.text=\r\n\ Contructor\r\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\n\ Check\ the\ mouse\ click\ to\ hide\n
+comment2.text=\r\n\ Check\ the\ mouse\ click\ to\ hide\r\n
 comment3.params=
 comment3.target=java.lang.String\ getText()
 numComments=4
