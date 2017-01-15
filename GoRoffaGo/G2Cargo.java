@@ -10,10 +10,11 @@ public class G2Cargo extends Actor
 {
     
     protected int weight;
-    public String color;
+    protected String color;
     
     public G2Cargo()
     {
+        // This is only a base for the real cargo, no actions here
     }
     
     /**

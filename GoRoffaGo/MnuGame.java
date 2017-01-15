@@ -69,18 +69,28 @@ public class MnuGame extends Actor
             transparency = Math.min(transparency + STEP, NORMALTRANSPARENCY);
             getImage().setTransparency(transparency);
         }
-        if (showing && (active || selected) && transparency < 255)
+        if (checkActive())
         {
             // When active or selected the item is shown opaque
             transparency = Math.min(transparency + STEP, 255);
             getImage().setTransparency(transparency);
         }
-        if (showing && !active && !selected && transparency > NORMALTRANSPARENCY)
+        if (checkInActive())
         {
             // When not active return to normal transparancy
             transparency = Math.max(transparency - STEP, NORMALTRANSPARENCY);
             getImage().setTransparency(transparency);
         }
+    }
+    
+    private boolean checkActive()
+    {
+        return showing && (active || selected) && transparency < 255;
+    }
+    
+    private boolean checkInActive()
+    {
+        return showing && !active && !selected && transparency > NORMALTRANSPARENCY;
     }
     
     /**

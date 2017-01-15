@@ -8,15 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class G2Deck extends Actor
 {
-    private int centerX;
-    private int tilt;
     private int stepcount = 0;
-    
     G2BoatBack back = new G2BoatBack();
-    
-    public G2Deck()
-    {
-    }
     
     /**
      * When added to a world also add the back of the ship

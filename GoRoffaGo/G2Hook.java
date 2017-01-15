@@ -9,14 +9,13 @@ import java.util.*;
  */
 public class G2Hook extends Actor
 {
+    protected static final int RUNNEROFFSET = 140;
+    
     protected G2Cargo cargo = null;
     protected G2Transport transport = null;
-    protected int indexCargo;
-    protected G2EmptyCargo emptySpot = null;
     protected int movingSpeed = 4;
     protected boolean running = false;
 
-    private static final int runnerOffset = 140;
     private G2Cables cable = new G2Cables();
     private G2HookRunner runner = new G2HookRunner();
     
@@ -26,9 +25,9 @@ public class G2Hook extends Actor
     protected void addedToWorld(World world)
     {
         // Runner only moves on a horizontal line
-        world.addObject(runner, getX(), runnerOffset);
-        world.addObject(cable, getX(), runnerOffset + ((getY() - runnerOffset) / 2));
-        cable.setLength(getY() - runnerOffset);
+        world.addObject(runner, getX(), RUNNEROFFSET);
+        world.addObject(cable, getX(), RUNNEROFFSET + ((getY() - RUNNEROFFSET) / 2));
+        cable.setLength(getY() - RUNNEROFFSET);
     }
     
     /**
@@ -36,43 +35,65 @@ public class G2Hook extends Actor
      */
     public void setLocation(int x, int y)
     {
+        int newX;
+        int newY;
+        int offset = 10;
+        
         if (getX() < getWorld().getWidth() / 2)
         {
-            x = Math.min((getWorld().getWidth() / 2) - 40, Math.max(35, x));
+            newX = Math.min((getWorld().getWidth() / 2) - 40, Math.max(35, x));
         }
         else
         {
-            x = Math.max((getWorld().getWidth() / 2) + 40, Math.min(getWorld().getWidth() - 35, x));
+            newX = Math.max((getWorld().getWidth() / 2) + 40, Math.min(getWorld().getWidth() - 35, x));
         }
-        y = Math.min(450, Math.max(runnerOffset + 40, y));
+        newY = Math.min(450, Math.max(RUNNEROFFSET + 40, y));
         // Also check other objects on the location
-        int offset = 10;
         if (cargo != null)
         {
             offset += cargo.getImage().getHeight();
         }
         
-        List<G2Transport> t = getWorld().getObjectsAt(x, y + offset, G2Transport.class);
-        List<G2Cargo> l = getWorld().getObjectsAt(x - (getImage().getWidth() / 2), y + offset, G2Cargo.class);
-        List<G2Cargo> r = getWorld().getObjectsAt(x + (getImage().getWidth() / 2), y + offset, G2Cargo.class);
+        List<G2Transport> t = getWorld().getObjectsAt(newX, newY + offset, G2Transport.class);
+        List<G2Cargo> l = getWorld().getObjectsAt(newX - (getImage().getWidth() / 2), newY + offset, G2Cargo.class);
+        List<G2Cargo> r = getWorld().getObjectsAt(newX + (getImage().getWidth() / 2), newY + offset, G2Cargo.class);
         l.remove(cargo);
         r.remove(cargo);
         // Up is always good, downwards we check what's beneath
-        if (getY() > y || (l.isEmpty() && r.isEmpty() && (t.isEmpty() || t.get(0).getY() -43 > y)))
+        if (getY() > newY || (emptyCargo(l, r) && checkTransport(t, newY)))
         {
-            super.setLocation(x, y);
-            runner.setLocation(getX(), runnerOffset);
-            cable.setLocation(getX(), runnerOffset + ((getY() - runnerOffset) / 2));
-            cable.setLength(getY() - runnerOffset);
+            super.setLocation(newX, newY);
+            runner.setLocation(getX(), RUNNEROFFSET);
+            cable.setLocation(getX(), RUNNEROFFSET + ((getY() - RUNNEROFFSET) / 2));
+            cable.setLength(getY() - RUNNEROFFSET);
             if (cargo != null) {
                 cargo.setLocation(getX(), getY() + 10 + (cargo.getImage().getHeight() / 2));
             }
         }
     }
     
+    private boolean emptyCargo(List<G2Cargo> l, List<G2Cargo> r)
+    {
+        return l.isEmpty() && r.isEmpty();
+    }
+    
+    private boolean checkTransport(List<G2Transport> t, int newY)
+    {
+        return t.isEmpty() || t.get(0).getY() -43 > newY;
+    }
+    
     public void setRunning(boolean value)
     {
+        cargo = null;
+        transport = null;
         running = value;
+    }
+
+    public void reset(int x, int y)
+    {
+        cargo = null;
+        transport = null;
+        setLocation(x, y);
     }
     
     /**
@@ -122,7 +143,7 @@ public class G2Hook extends Actor
     public void EmptyCargoCheck(){
         G2Dock world = getWorldOfType(G2Dock.class);
         if (cargo != null && Greenfoot.isKeyDown("d") &&
-            getWorldOfType(G2Dock.class).putCargoAtSpot(cargo, (G2EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), G2EmptyCargo.class))) {
+            world.putCargoAtSpot(cargo, (G2EmptyCargo)getOneObjectAtOffset(0, cargo.getImage().getHeight(), G2EmptyCargo.class))) {
             cargo = null;
         }
         
@@ -130,17 +151,15 @@ public class G2Hook extends Actor
             transport = (G2Transport)getOneObjectAtOffset(0, 40, G2Transport.class);
         }
         
-        if (cargo != null && Greenfoot.isKeyDown("d")) {
-            if (transport != null && transport.setCargo(cargo)) {
-                // Add score.
-                G2PlayerCounter c = getWorld().getObjects(G2PlayerCounter.class).get(0);
-                if (c != null) {
-                    c.addTransportScore(1);
-                }
-                
-                cargo = null;
-                transport = null;
-            }
+        if (transport != null && cargo != null && Greenfoot.isKeyDown("d") && transport.setCargo(cargo)) {
+            cargo = null;
+            transport = null;
+            world.addScore(this);
         }
+    }
+    
+    public boolean hasCargo()
+    {
+        return cargo != null;
     }
 }

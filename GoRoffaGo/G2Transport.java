@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Color;
 
 /**
  * Write a description of class G2Transport here.
@@ -9,13 +8,11 @@ import java.awt.Color;
  */
 public class G2Transport extends Actor
 {
-    G2Cargo cargo = null;
-    public int resetTransport = 0;
-    public int transportCount = 0;
-    int pause = 60;
-    protected String color;
-    int scale = 0;
-    int counter = 2;
+    private G2Cargo cargo = null;
+    private int pause = 60;
+    private String color;
+    private int scale = 0;
+    private int counter = 2;
     
     public G2Transport(String value)
     {
@@ -35,6 +32,9 @@ public class G2Transport extends Actor
             case "blue":
                 setImage("g2_truckBlue.png");
                 break;
+            default:
+                setImage("g2_truckGreen.png");
+                break;
         }
     }
     
@@ -44,19 +44,10 @@ public class G2Transport extends Actor
      */
     public boolean setCargo(G2Cargo container)
     {
-        if (cargo == null) {
-            if (container.getColor() == getColor()) {
-             cargo = container;   
-                // Add score ???
-                //Counter c = getWorld().getObjects(Counter.class).get(0);
-                //if (c != null) {
-                //    c.addTransportScore(1);
-                //}
-
-                
-                resetTransport = 1;
-                return true;
-            }
+        if (cargo == null && container.getColor() == getColor()) {
+            cargo = container;
+            cargo.setLocation(getX(), getY()-12);
+            return true;
         }
 
         return false;
@@ -64,24 +55,25 @@ public class G2Transport extends Actor
     
     public void act() 
     {
-        if (resetTransport == 1) {
-            G2Dock world = (G2Dock) getWorld();
-            world.removeObject(cargo);
-            cargo = null;
-            GreenfootImage image = getImage();
+        if (cargo != null) {
             if(pause > 0) {
-                if (image.getWidth() > 9) {
-                    if (scale == 1) {
-                        image.scale(image.getWidth() - 1, image.getHeight() - 1);
-                        setLocation(getX(), getY()+1);
-                        setImage(image);
-                    }
+                GreenfootImage image = getImage();
+                GreenfootImage cimage = cargo.getImage();
+                if (image.getWidth() > 9 && scale == 1) {
+                    image.scale(image.getWidth() - 1, image.getHeight() - 1);
+                    setLocation(getX(), getY()+1);
+                    
+                    cimage.scale(cimage.getWidth() - 1, cimage.getHeight() - 1);
+                    cargo.setLocation(cargo.getX(), cargo.getY()+1);
                 }
 
                 
                 pause--;
             } else {
+                G2Dock world = (G2Dock)getWorld();
+                world.removeObject(cargo);
                 world.removeTransport(this);
+                cargo = null;
             }
             
             if (counter > 0) {
@@ -100,7 +92,7 @@ public class G2Transport extends Actor
         return color;
     }
     
-    public int getResetTransport() {
-        return resetTransport;
+    public boolean hasCargo() {
+        return cargo != null;
     }
 }

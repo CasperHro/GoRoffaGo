@@ -8,8 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class G2EmptyCargo extends Actor
 {
-    
-    public int gridID;
+    private int gridID;
     
     public G2EmptyCargo()
     {
