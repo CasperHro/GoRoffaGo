@@ -4,6 +4,7 @@ for %%* in (.) do set CurrDirName=%%~nx*
 if exist ..\sonar-scanner-2.8\bin\sonar-scanner.bat (
 
     ..\sonar-scanner-2.8\bin\sonar-scanner.bat
+    timeout /T 2 /NOBREAK
     start "" http://localhost:9000/dashboard/index?id=%CurrDirName%
 
 ) else (

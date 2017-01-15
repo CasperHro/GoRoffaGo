@@ -39,7 +39,7 @@ public class Game4Hunter extends World
     private String lastKey = "";
     private int newContainerInterval = 3;
     
-    private GreenfootSound backgroundMusic = new GreenfootSound("club_dance.mp3");
+    private GreenfootSound backgroundMusic = new GreenfootSound("g4club_dance.mp3");
     
     
     public Game4Hunter()
@@ -59,14 +59,14 @@ public class Game4Hunter extends World
     private void prepare()
     {
        
-        G4_Officer g4_officer = new G4_Officer();
+        G4Officer g4_officer = new G4Officer();
         addObject(g4_officer, 100, 550);
         
-        G4_Entry g4_entry = new G4_Entry();
+        G4Entry g4_entry = new G4Entry();
         addObject(g4_entry, 20, 270);
         g4_entry.setRotation(90);
         
-        setPaintOrder(G4_GameOver.class, G4_Complete.class, G4_Cloud.class, G4_Staff.class, G4_Officer.class);
+        setPaintOrder(G4GameOver.class, G4Complete.class, G4Cloud.class, G4Staff.class, G4Officer.class);
        
     }
     
@@ -78,7 +78,7 @@ public class Game4Hunter extends World
         backgroundMusic.playLoop();
         
         //Add show game info overlay
-        G4_Gameinfo g4_info = new G4_Gameinfo();
+        G4Gameinfo g4_info = new G4Gameinfo();
         addObject(g4_info, getWidth()/2, getHeight()/2);
     }
     
@@ -167,7 +167,7 @@ public class Game4Hunter extends World
         int rndY = Greenfoot.getRandomNumber(40);
         String role = roles[Greenfoot.getRandomNumber(roles.length)];
         
-        G4_Staff man = new G4_Staff();
+        G4Staff man = new G4Staff();
         addObject(man, 5, 270 + rndY);
         man.setRotation(rndY/-5);
         man.setRole(role);
@@ -181,7 +181,7 @@ public class Game4Hunter extends World
         
         if (role == "criminal")
         {
-            Greenfoot.playSound("alarm.mp3");
+            Greenfoot.playSound("g4alarm.mp3");
         }
         
         if (manCounter % 9 == 0)
@@ -194,15 +194,15 @@ public class Game4Hunter extends World
     {
         String obstacle = obstacles[Greenfoot.getRandomNumber(obstacles.length)];
         
-        G4_Obstacle obs1 = new G4_Obstacle();
+        G4Obstacle obs1 = new G4Obstacle();
         addObject(obs1, 600, 570);
         obs1.setValue(obstacle);
         
-        G4_Obstacle obs2 = new G4_Obstacle();
+        G4Obstacle obs2 = new G4Obstacle();
         addObject(obs2, 100, 30);
         obs2.setValue(obstacle);
         
-        G4_Obstacle obs3 = new G4_Obstacle();
+        G4Obstacle obs3 = new G4Obstacle();
         addObject(obs3, 650, 30);
         obs3.setValue(obstacle);
         
@@ -219,7 +219,7 @@ public class Game4Hunter extends World
             int indexY = Greenfoot.getRandomNumber(rndYs.length);
             rndY = rndYs[indexY];
             rndX = rndXs[indexX];
-            System.out.println(rndY+", "+rndX);
+            
             if(CargoPlaced[indexY*4+indexX]!=true){
                 CargoPlaced[indexY*4+indexX]=true;
                 foundEmpty=true;
@@ -228,7 +228,7 @@ public class Game4Hunter extends World
         
         String cargo = cargos[Greenfoot.getRandomNumber(cargos.length)];
         
-        G4_Container container = new G4_Container();
+        G4Container container = new G4Container();
         addObject(container, rndX, rndY);
         container.setCargo(cargo);
     }
@@ -237,14 +237,14 @@ public class Game4Hunter extends World
     {
         int rndY = Greenfoot.getRandomNumber(400);
         
-        G4_Cloud cloud = new G4_Cloud();
+        G4Cloud cloud = new G4Cloud();
         addObject(cloud, 5, rndY+100);
 
     }
     
     private void checkClouds()
     {
-        for(G4_Cloud cloud : getObjects(G4_Cloud.class))
+        for(G4Cloud cloud : getObjects(G4Cloud.class))
             if (cloud.isAtEdge())
             {
                 removeObject(cloud);
@@ -256,11 +256,11 @@ public class Game4Hunter extends World
 
         running = false;
         
-        Actor gameOver = new G4_GameOver();
+        Actor gameOver = new G4GameOver();
         addObject(gameOver, getWidth()/2, getHeight()/2);
         
         backgroundMusic.pause();
-        Greenfoot.playSound("down_scale.mp3");
+        Greenfoot.playSound("g4down_scale.mp3");
         Greenfoot.stop();
         
     }
@@ -269,11 +269,11 @@ public class Game4Hunter extends World
     {
         running = false;
         
-        Actor missionComplete = new G4_Complete();
+        Actor missionComplete = new G4Complete();
         addObject(missionComplete, getWidth()/2, getHeight()/2);
         
         backgroundMusic.pause();
-        Greenfoot.playSound("up_scale.mp3");
+        Greenfoot.playSound("g4up_scale.mp3");
         Greenfoot.stop();
     }
     
@@ -282,7 +282,7 @@ public class Game4Hunter extends World
         int rndY = Greenfoot.getRandomNumber(400);
         int rndX = Greenfoot.getRandomNumber(650);
         
-        G4_Staff man = new G4_Staff();
+        G4Staff man = new G4Staff();
         addObject(man, rndX + 100, rndY + 100);
         man.setRotation(rndY/-2);
         man.setRole("criminal");
@@ -293,7 +293,7 @@ public class Game4Hunter extends World
         score += increase;
         showText("Score: " +score, 740,20);
         
-        if (score >= newContainerInterval*14 + 1){
+        if (score >= newContainerInterval*15 + 1){
             missionComplete();
         }
         
