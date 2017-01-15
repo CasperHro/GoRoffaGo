@@ -50,6 +50,7 @@ public class G2Dock extends Game
     private boolean gameOver = false;
     private int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     private int counter = 0;
+    private int counterLimit = 90;
     private int cycle;
     
     int level = 0; // Game level
@@ -184,7 +185,7 @@ public class G2Dock extends Game
         if (running && !gameOver)
         {
             counter++;
-            if(counter == 90) { //om de 7(1~sec) ticks code uitvoeren
+            if(counter == counterLimit) { //om de 7(1~sec) ticks code uitvoeren
                 delayTiltTimer++; //
                 
                 if(cycle == 1) { //adjust ship once every 2 cycles
@@ -391,7 +392,7 @@ public class G2Dock extends Game
             i++;
        }
        windSpeed = halfLeft-halfRight;
-        
+        counterLimit = windSpeed;
        return windSpeed;
     }
     
