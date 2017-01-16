@@ -1,5 +1,11 @@
 #!/bin/sh
 
 cd "$(dirname "$0")"
-cd sonarqube-6.2/bin/macosx-universal-64/
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    cd sonarqube-6.2/bin/macosx-universal-64/
+else
+    # Linux
+    cd sonarqube-6.2/bin/linux-x86-64/
+fi
 ./sonar.sh start

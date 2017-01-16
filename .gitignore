@@ -16,3 +16,7 @@ sonarqube-6.2/temp/*
 sonarqube-6.2/data/*
 *.jpg~
 Promo/playlist
+
+*.pid
+
+*.log
