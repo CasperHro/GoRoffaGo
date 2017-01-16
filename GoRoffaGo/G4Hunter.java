@@ -10,19 +10,20 @@ import java.util.*;
 public class G4Hunter extends Game
 {
     private static final String TEXT = "Navigator : game info\n\n"+
-                  "Your mission is to direct the ships to the right harbour.\n"+
-                  "When a ship is docked a point is scored!\n\n"+
+                  "Your mission is to catch all criminals which come inside the port.\n"+
+                  "When a criminal is catched a point is scored!\n\n"+
+                  "Be alert! They can reach warehouses and they are missed.\n\n"+
+                  "They can also hide inside the containers and appear anywhere again!\n\n"+
                   "Use the arrows to navigate:\n"+
-                  "up/down - speed up or slow down\n"+
+                  "up/down - go ahead/ go back\n"+
                   "left/right - rotate left/right\n\n"+
-                  "Use 'S' to select a boat.\n\n"+
-                  "When you crash 5 boats, you're game over!\n\n\n"+
+                  "When you miss 3 criminanls, you're game over!\n\n\n"+
                   "Click or press Enter to start...";
     private static final String TEXTSTART = "Get ready...\n\nHere we go!!!";
     
     private static final String CRIMINAL = "criminal";
 
-    protected static final String[] roles = {CRIMINAL, CRIMINAL, "pop1",CRIMINAL, "pop2", "pop3"};
+    protected static final String[] roles = {CRIMINAL, CRIMINAL, "pop1",CRIMINAL, "pop2"};
     protected static final String[] obstacles = {"obs1", "obs2", "obs3"};
     protected static final String[] cargos = {"cont1", "cont2","cont3","cont4"};
     protected static final int[] rndYs = {140, 240, 340, 440};
@@ -116,14 +117,18 @@ public class G4Hunter extends Game
                 createMan();
             }
             checkKeys();
+            if (missed >= maxMissed)
+            {
+                gameOver();
+            }
+            
+            if (score >= newContainerInterval*15 + 1)
+            {
+                missionComplete();
+            }
         }
         
         checkClouds();
-        
-        if (missed >= maxMissed)
-        {
-            gameOver();
-        }
         
         if (hidden >= 1) 
         {
@@ -236,7 +241,7 @@ public class G4Hunter extends Game
         
         addObject(new GameOver("G4GameOver.png"), getWidth()/2, getHeight()/2);
         
-        backgroundMusic.pause();
+        backgroundMusic.stop();
         Greenfoot.playSound("g4down_scale.mp3");
     }
     
@@ -246,7 +251,7 @@ public class G4Hunter extends Game
         
         addObject(new GameOver("G4MissionComplete.png"), getWidth()/2, getHeight()/2);
         
-        backgroundMusic.pause();
+        backgroundMusic.stop();
         Greenfoot.playSound("g4up_scale.mp3");
     }
     
@@ -265,10 +270,6 @@ public class G4Hunter extends Game
     {
         score += increase;
         showText("Score: " +score, 740,20);
-        
-        if (score >= newContainerInterval*15 + 1){
-            missionComplete();
-        }
         
         if (score % newContainerInterval == 0){
             setContainer();

@@ -1,18 +1,18 @@
 #BlueJ class context
 comment0.target=G3Destination
-comment0.text=\r\n\ G3Destination\ is\ the\ location\ where\ the\ trucks\ must\ end\ after\ executing\ the\ program.\r\n\ It\ shows\ a\ half\ transparent\ container\ with\ the\ color\ of\ the\ cargo\ that\ must\ be\ parked\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ G3Destination\ is\ the\ location\ where\ the\ trucks\ must\ end\ after\ executing\ the\ program.\n\ It\ shows\ a\ half\ transparent\ container\ with\ the\ color\ of\ the\ cargo\ that\ must\ be\ parked\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=containerColor
 comment1.target=G3Destination(java.lang.String)
-comment1.text=\r\n\ Contructor,\ requires\ a\ color\r\n
+comment1.text=\n\ Contructor,\ requires\ a\ color\n
 comment2.params=world
 comment2.target=void\ addedToWorld(greenfoot.World)
-comment2.text=\r\n\ When\ added\ to\ the\ world\ create\ the\ visual\ for\ the\ container.\r\n
+comment2.text=\n\ When\ added\ to\ the\ world\ create\ the\ visual\ for\ the\ container.\n
 comment3.params=
 comment3.target=void\ act()
-comment3.text=\r\n\ Nothing\ to\ do\ in\ the\ act.\r\n
+comment3.text=\n\ Nothing\ to\ do\ in\ the\ act.\n
 comment4.params=
 comment4.target=java.lang.String\ getColor()
 comment5.params=
 comment5.target=G3Truck\ getParkedTruck()
-comment5.text=\r\n\ Return\ the\ truck\ that\ is\ parked\ correctly\ on\ the\ destination\r\n
+comment5.text=\n\ Return\ the\ truck\ that\ is\ parked\ correctly\ on\ the\ destination\n
 numComments=6

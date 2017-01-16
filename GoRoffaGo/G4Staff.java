@@ -38,10 +38,6 @@ public class G4Staff extends Actor
         {
             setImage(new GreenfootImage("G4pop2.png"));
         }
-        else if ("pop3".equals(role))
-        {
-            setImage(new GreenfootImage("G4pop3.png"));
-        }
         else 
         {
             setImage(new GreenfootImage("G4crimineel.png"));
