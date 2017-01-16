@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
 
 /**
  * Write a description of class G4Staff here.
@@ -9,19 +8,17 @@ import java.util.List;
  */
 public class G4Staff extends Actor
 {
+    private static final int TIMEOUT = 40;
+
     //Vars for the staff
-   
     private int speed = 7;
     private int missed = 0;
     private String role = "criminal";
     private boolean criminal = false;
-    private int hided = 0;
-    private static int TIMEOUT = 40;
     private int moveCounter = 0;
     
     
     public String getRole()
-    
     {
         return role;
     }
@@ -33,15 +30,15 @@ public class G4Staff extends Actor
     public void setRole(String value) 
     {
         role = value;
-        if (role.equals("G4pop1"))
+        if ("pop1".equals(role))
         {
             setImage(new GreenfootImage("G4pop1.png"));
         }
-        else if (role.equals("pop2"))
+        else if ("pop2".equals(role))
         {
             setImage(new GreenfootImage("G4pop2.png"));
         }
-        else if (role.equals("pop3"))
+        else if ("pop3".equals(role))
         {
             setImage(new GreenfootImage("G4pop3.png"));
         }
@@ -56,7 +53,30 @@ public class G4Staff extends Actor
     {
         move(speed);
         
-        G4Officer officer = (G4Officer) getOneIntersectingObject(G4Officer.class);
+        if (!checkOfficer() || !checkObstacle() || !checkContainer())
+        {
+            return;
+        }
+        checkStaff();
+        doTurns();
+        
+        if (moveCounter >= TIMEOUT && criminal)
+        {
+            missed++;
+            Greenfoot.playSound("g4click_and_slide.mp3");
+            ((G4Hunter)getWorld()).addMissed(1);
+            getWorld().removeObject(this);
+        }
+        else if (moveCounter >= TIMEOUT)
+        {
+            getWorld().removeObject(this);
+        }
+        
+    }
+    
+    private boolean checkOfficer()
+    {
+        G4Officer officer = (G4Officer)getOneIntersectingObject(G4Officer.class);
         if (officer != null)
         {
             if (criminal)
@@ -65,65 +85,77 @@ public class G4Staff extends Actor
                 officer.move(0);
                 this.move(0);
                 officer.scoredOfficer();
-                ((Game4Hunter)getWorld()).addScore(1);
+                ((G4Hunter)getWorld()).addScore(1);
                 getWorld().removeObject(this);
-                return;
+                return false;
             }
             else
             {
                 officer.turn(Greenfoot.getRandomNumber(30));
                 officer.move(-10);
-                return;
+                return false;
             }
         }
-        
-        G4Obstacle obstacle = (G4Obstacle) getOneIntersectingObject(G4Obstacle.class);
+        return true;
+    }
+    
+    private boolean checkObstacle()
+    {
+        G4Obstacle obstacle = (G4Obstacle)getOneIntersectingObject(G4Obstacle.class);
         if (obstacle != null)
         {
-            if (criminal == false)
+            if (criminal)
+            {
+                // make sure that criminal can hide in the container and apper agin next to one of other or the same
+                Greenfoot.playSound("g4two_explosions.mp3");
+                obstacle.explosion();
+                ((G4Hunter)getWorld()).addMissed(1);
+                getWorld().removeObject(this);
+                return false;
+            }
+            else
             {
                 move(-10);
                 turn(90);
             }
-            
-            else if (criminal == true)
-            {
-                // make sure that criminal can hide in the container and apper agin next to one of other or the same
-               
-                Greenfoot.playSound("g4two_explosions.mp3");
-                obstacle.explosion();
-                ((Game4Hunter)getWorld()).addMissed(1);
-                getWorld().removeObject(this);
-                return;
-            }
         }
-        
-        
+        return true;
+    }
+    
+    private boolean checkContainer()
+    {        
         G4Container container = (G4Container) getOneIntersectingObject(G4Container.class);
         if (container != null)
         {
-            if (criminal == false)
+            if (criminal)
+            {
+                // make sure that criminal can hide in the container and appear again next to one of other or the same
+                Greenfoot.playSound("g4glovebox_open.mp3");
+                ((G4Hunter)getWorld()).addHidden(1);
+                getWorld().removeObject(this);
+                return false;
+            }
+            else
             {
                 move(-10);
                 turn(Greenfoot.getRandomNumber(30));
             }
             
-            else if (criminal == true)
-            {
-                // make sure that criminal can hide in the container and appear again next to one of other or the same
-                Greenfoot.playSound("g4glovebox_open.mp3");
-                ((Game4Hunter)getWorld()).addHidden(1);
-                getWorld().removeObject(this);
-                return;
-            }
         }
-        
+        return true;
+    }
+    
+    private void checkStaff()
+    {
         G4Staff staff = (G4Staff) getOneIntersectingObject(G4Staff.class);
         if (staff != null)
         {
             move(-10);
         }
-        
+    }
+    
+    private void doTurns()
+    {
         if (Greenfoot.getRandomNumber(100) < 10)
         {
             turn(Greenfoot.getRandomNumber(90) - 45);
@@ -139,21 +171,6 @@ public class G4Staff extends Actor
             turn(180);
             moveCounter ++;
         }
-        
-        if (moveCounter >= TIMEOUT && criminal)
-        {
-            missed++;
-            Greenfoot.playSound("g4click_and_slide.mp3");
-            ((Game4Hunter)getWorld()).addMissed(1);
-            getWorld().removeObject(this);
-        }
-      
-        else if (moveCounter >= TIMEOUT)
-        {
-            getWorld().removeObject(this);
-        }
-        
     }
-    
 }
 

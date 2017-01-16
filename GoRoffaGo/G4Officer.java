@@ -1,6 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
-import java.lang.Math;
 
 /**
  * Write a description of class G4_Officer here.
@@ -16,8 +14,6 @@ public class G4Officer extends Actor
      */
     
     private int speed = 4;
-    private G4OfficerScored scored;
- 
 
     public void act() 
     
@@ -65,7 +61,7 @@ public class G4Officer extends Actor
     }    
     public void scoredOfficer()
     {
-        scored = new G4OfficerScored();
+        G4OfficerScored scored = new G4OfficerScored();
         getWorld().addObject(scored, getX(), getY());
         scored.setRotation(getRotation());
 

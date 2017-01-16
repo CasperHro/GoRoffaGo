@@ -16,6 +16,7 @@ public class Overlay extends Actor
     protected boolean isShowing = true;
     protected int showStep = 25;
     protected int hideStep = 10;
+    private String lastKey = ""; // For preventing multiple actions on the same keydo
 
     /**
      * Set game info over the complete world
@@ -24,6 +25,7 @@ public class Overlay extends Actor
     {
         // Only here we know the world dimensions so start making a filling overlay
         drawInfobox(world);
+        checkKey("Enter");
     }
     
     /**
@@ -42,12 +44,33 @@ public class Overlay extends Actor
             getImage().setTransparency(opacity);
         }
         
-        if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter"))
+        if (Greenfoot.mouseClicked(this) || checkKey("Enter"))
         {
             isShowing = false;
         }
     }    
 
+    /**
+     * Checks if key is pressed, and not still down from previous action
+     */
+    protected boolean checkKey(String key)
+    {
+        // Remember the last keystroke to prevent multiple actions
+        if (lastKey == "" || !Greenfoot.isKeyDown(lastKey))
+        {
+            if (Greenfoot.isKeyDown(key))
+            {
+                lastKey = key;
+                return true;
+            }
+            else
+            {
+                lastKey = "";
+            }
+        }
+        return false;
+    }
+    
     
     /**
      * Get the text

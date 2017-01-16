@@ -42,6 +42,7 @@ public class GoRoffaGo extends World
     private GreenfootImage nextImage = null; // Next image for image overflow
     private int bgIndex = 0; // Background index
     private boolean payoffShown = false;
+    private int selectedGame = 0; // When keys are used this is the selected game
     
     /**
      * Constructor for objects of class MyWorld.
@@ -89,7 +90,7 @@ public class GoRoffaGo extends World
         startTime = new Date();
         
         // Start music
-        backgroundMusic.playLoop();
+        startMusic();
     }
 
     /**
@@ -137,18 +138,37 @@ public class GoRoffaGo extends World
             if (Greenfoot.isKeyDown("m"))
             {
                 lastKey = "m";
-                if (backgroundMusic.isPlaying())
-                {
-                    backgroundMusic.stop();
-                }
+                stopMusic();
             }
             else if (Greenfoot.isKeyDown("p"))
             {
                 lastKey = "p";
-                if (!backgroundMusic.isPlaying())
-                {
-                    backgroundMusic.playLoop();
-                }
+                startMusic();
+            }
+            else if (Greenfoot.isKeyDown("Enter"))
+            {
+                lastKey = "Enter";
+                startSelected();
+            }
+            else if (Greenfoot.isKeyDown("Left"))
+            {
+                lastKey = "Left";
+                selectLeft();
+            }
+            else if (Greenfoot.isKeyDown("Right"))
+            {
+                lastKey = "Right";
+                selectRight();
+            }
+            else if (Greenfoot.isKeyDown("Up"))
+            {
+                lastKey = "Up";
+                selectUp();
+            }
+            else if (Greenfoot.isKeyDown("Down"))
+            {
+                lastKey = "Down";
+                selectDown();
             }
             else
             {
@@ -157,6 +177,133 @@ public class GoRoffaGo extends World
         }
     }
 
+    /**
+     * Stops the background music
+     */
+    private void stopMusic()
+    {
+        if (backgroundMusic.isPlaying())
+        {
+            backgroundMusic.stop();
+        }
+    }
+
+    /**
+     * Starts the background music
+     */
+    private void startMusic()
+    {
+        if (!backgroundMusic.isPlaying())
+        {
+            backgroundMusic.playLoop();
+        }
+    }
+
+    /**
+     * Start the selected game
+     */
+    private void startSelected()
+    {
+        startGame(selectedGame);
+    }
+    
+    private void selectLeft()
+    {
+        unselectButton(selectedGame);
+        if (selectedGame > 1)
+        {
+            selectButton(selectedGame - 1);
+        }
+        else
+        {
+            selectButton(4);
+        }
+    }
+    
+    private void selectRight()
+    {
+        unselectButton(selectedGame);
+        if (selectedGame < 4)
+        {
+            selectButton(selectedGame + 1);
+        }
+        else
+        {
+            selectButton(1);
+        }
+    }
+    
+    private void selectUp()
+    {
+        if (selectedGame == 0)
+        {
+            selectButton(1);
+        }
+        else if (selectedGame == 3 || selectedGame == 4)
+        {
+            unselectButton(selectedGame);
+            selectButton(selectedGame - 2);
+        }
+    }
+    
+    private void selectDown()
+    {
+        if (selectedGame == 0)
+        {
+            selectButton(1);
+        }
+        else if (selectedGame == 1 || selectedGame == 2)
+        {
+            unselectButton(selectedGame);
+            selectButton(selectedGame + 2);
+        }
+    }
+    
+    private void selectButton(int index)
+    {
+        selectedGame = index;
+        switch(index)
+        {
+            case 1:
+                btnGame1.select();
+                break;
+            case 2:
+                btnGame2.select();
+                break;
+            case 3:
+                btnGame3.select();
+                break;
+            case 4:
+                btnGame4.select();
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+    }
+    
+    private void unselectButton(int index)
+    {
+        switch(index)
+        {
+            case 1:
+                btnGame1.deselect();
+                break;
+            case 2:
+                btnGame2.deselect();
+                break;
+            case 3:
+                btnGame3.deselect();
+                break;
+            case 4:
+                btnGame4.deselect();
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+    }
+    
     /**
      * Shows the next background image
      */
@@ -233,9 +380,12 @@ public class GoRoffaGo extends World
      */
     public void startGame(int game)
     {
-        // First remove everything and stop the music
-        backgroundMusic.stop();
-        removeObjects(getObjects(Actor.class));
+        if (game > 0)
+        {
+            // First remove everything and stop the music
+            backgroundMusic.stop();
+            removeObjects(getObjects(Actor.class));
+        }
         
         if (game == 1)
         {
@@ -251,7 +401,7 @@ public class GoRoffaGo extends World
         }
         else if (game == 4)
         {
-            Greenfoot.setWorld(new Game4Hunter());
+            Greenfoot.setWorld(new G4Hunter());
         }
     }
 }

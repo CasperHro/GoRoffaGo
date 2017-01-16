@@ -1,58 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
 import java.awt.Color;
  
 public class G2Clock extends Actor
 {
-    private int startingTime;
-     
-    private int seconds = 180;
-    private int clockType = 0;
-     
-    private long lastCurrentSecond;
-    private long timeSaved = 0;
-     
-    private boolean timeUp = false;
-    private boolean count = false;
-    private boolean displayTime;
-    private boolean countDown;
-     
-    private String text;
-     
-    private Actor alertedActor;
-     
-    private World alertedWorld;
+    private boolean running = false;
+    private Date startTime; // Initial time
+    private int timeout = 0; // timeout in seconds
      
     /**
      * Create a new Clock with your own text or other values.
      * 
-     * @param countDown
-     *      Set the kind of the clock. If true the clock will cound down from the given starting time. Otherwise it'll count up from 0.
-     * 
-     * @param displayTime
-     *      Set the clock's visibility. If true the clock is visible.
-     * 
-     * @param startingTime
-     *      The starting time for countdown clocks. If you restart the clock it'll start from this value.
-     * 
-     * @param text
-     *      The text above the clock. If text is null the clock will be centered and there is no text.
+     * @param timeout
+     *      timeout in seconds.
      */
-    public G2Clock(boolean countDown, boolean displayTime, int startingTime, String text) {
-        this.countDown = countDown;
-        this.displayTime = displayTime;
-        this.startingTime = startingTime;
-        this.text = text;
-        this.alertedActor = null;
-        this.alertedWorld = null;
-        seconds = startingTime;
-        getImage().clear();
-        if (!countDown) {
-            seconds = 0;
-        }
-        if (displayTime) {
-            getImage().scale(100, 40);
-        }
-        this.startClock();
+    public G2Clock() {
+        GreenfootImage img = new GreenfootImage(100, 40);
+        img.setColor(Color.white);
+        img.fill();
+        setImage(img);
     }
    
     /**
@@ -61,38 +27,7 @@ public class G2Clock extends Actor
      * The Clock is irrespective of the acting speed of the scenario so that it doesn't mater how fast the other act methods are executed.
      */
     public void act() {
-        if (countDown) {
-            if (count && !timeUp) {
-                if (System.currentTimeMillis() - lastCurrentSecond >= 1000) {
-                    lastCurrentSecond += 1000;
-                    seconds--;
-                    if (displayTime) {
-                        drawTime();
-                    }
-                }
-                if (seconds == 0) {
-                    //alertActor();
-                    //alertWorld();
-                    timeUp = true;
-                }
-            }
-        }
-        else {
-            if (count) {
-                if (System.currentTimeMillis() - lastCurrentSecond >= 1000) {
-                    lastCurrentSecond += 1000;
-                    seconds++;
-                    if (displayTime) {
-                        drawTime();
-                    }
-                }
-            }
-        }
-         
-        
-         
-        
-         
+        drawTime();
     }
  
     /**
@@ -100,54 +35,28 @@ public class G2Clock extends Actor
      * This method draws the current value of your clock onto the clock object.
      */
     private void drawTime() {
-        //int min = (int) (seconds / 60);
-        int sec = seconds;
-        String remainingTime;
-        if (sec < 10) {
-            remainingTime = "0" + sec;
+        int time;
+        if (timeout > 0) {
+            time = timeout - getTimeSpend();
+        } else {
+            time = getTimeSpend();
         }
-        else {
-            remainingTime = " " + sec;
-        }
-        
-        // Seconds to minutes and seconds.
-        remainingTime = getDurationString(sec);
-        
-        getImage().setColor(Color.white);
-        getImage().fill();
-        GreenfootImage text = new GreenfootImage((this.text == null ? "" : this.text), 30, Color.black, new Color(0, 0, 0, 0));
-        GreenfootImage time = new GreenfootImage(remainingTime, 10, Color.black, new Color(0, 0, 0, 0));
-        if (text.getWidth() > getImage().getWidth()) {
-            getImage().clear();
-            getImage().scale(text.getWidth() + 10, 70);
-            getImage().setColor(Color.gray);
-            getImage().fill();
-        }
-        getImage().drawImage(text, (getImage().getWidth()/2)-(text.getWidth()/2), 5);
-        getImage().drawImage(time, (getImage().getWidth()/2)-(time.getWidth()/2), (this.text == null ? (getImage().getHeight()/2)-(time.getHeight()/2) : 30));
-    }
-    
-    private String getDurationString(int seconds) {
 
-        int hours = seconds / 3600;
-        int minutes = (seconds % 3600) / 60;
-        seconds = seconds % 60;
-    
-        return twoDigitString(minutes) + " : " + twoDigitString(seconds);
+        String timeAsString = String.format("%1$d:%2$02d", (time - (time % 60)) / 60, time % 60);
+        GreenfootImage timg = new GreenfootImage(timeAsString, TextSize.size(14), Color.black, new Color(0, 0, 0, 0));
+        getImage().fill();
+        getImage().drawImage(timg, (getImage().getWidth() - timg.getWidth()) / 2, (getImage().getHeight() - timg.getHeight()) / 2);
     }
     
-    private String twoDigitString(int number) {
-        if (number == 0) {
-            return "00";
+    private int getTimeSpend()
+    {
+        if (running) {
+            return Math.toIntExact((new Date().getTime() - startTime.getTime()) / 1000);
+        } else {
+            return 0;
         }
-    
-        if (number / 10 == 0) {
-            return "0" + number;
-        }
-    
-        return String.valueOf(number);
     }
-     
+    
     /**
      * Check whether the time is up.
      * 
@@ -155,35 +64,25 @@ public class G2Clock extends Actor
      *      Returns true if the time is up. If the clock is no countdown clock the method will return false.
      */
     public boolean timeUp() {
-        return timeUp;
+        return timeout != 0 && running && getTimeSpend() > timeout;
     }
      
+    public void startClock() {  
+        startClock(0);
+    }
+    
     /**
      * Start the clock.
      */
-    public void startClock() {  
-        lastCurrentSecond = System.currentTimeMillis() - timeSaved;  
-        count = true;
+    public void startClock(int timeout) {  
+        this.timeout = timeout;
+        startTime = new Date(); 
+        running = true;
     }
     /**
-     * Pause the clock.
+     * Stop the clock.
      */
     public void stopClock() {  
-        timeSaved = System.currentTimeMillis() - lastCurrentSecond;  
-        count = false; 
+        running = false;
     }
-    /**
-     * Reset the clock.
-     */
-    public void resetClock() {
-        seconds = startingTime;
-        timeUp = false;
-    }
-     
-     
-    long initialTime;  
-    public void TimeChecker() {  
-        initialTime = System.currentTimeMillis();  
-    }  
-       
-    }
+}

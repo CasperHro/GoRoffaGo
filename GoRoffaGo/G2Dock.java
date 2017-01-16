@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
@@ -11,6 +10,22 @@ import java.util.*;
  */
 public class G2Dock extends Game
 {   
+    private static final String TEXT = "Unload containers : game info\n"+
+                  "Your mission is to unload the ships.\n"+
+                  "Pick the right container from the ship and place it on the\n"+
+                  "transport, but keep the ship in balance!!\n\n"+
+                  "Use the arrow keys to navigate the container hook and\n"+
+                  "press 's' to select a container or 'd' to release a container.\n\n"+
+                  "Be fast or the computer wins...\n\n"+
+                  "\n\n"+
+                  "Click or press Enter to start...";
+    private static final String TEXTSTART = "Get ready...\n\nHere we go!!!";
+    private static final String YOUWIN = "Gongratulations, you won!!!\n\n"+
+                  "Get ready for the next level. Play faster\n"+
+                  "and beat the computer again.\n"+
+                  "\n\n"+
+                  "Click or press Enter to start...";
+
     int shipCentre = 260;
     int deckLevel = 473;
     int width = 4; //number of cargo
@@ -20,37 +35,32 @@ public class G2Dock extends Game
     int maxHeight = 4;
     int maxWidth = width;
     
-    boolean aiOn = false;
-    
     // Player 1
-    private G2Hook p1_hook;
-    private G2Deck p1_deck;
-    private G2Cargo[] p1_grid;
-    private G2EmptyCargo[] p1_emptyGrid;
-    private G2Transport p1_transport;
-    private int p1_TransportIndex = -1;
-    private int p1_looted = 0;
+    private G2Hook p1hook;
+    private G2Deck p1deck;
+    private G2Cargo[] p1grid;
+    private G2EmptyCargo[] p1emptyGrid;
+    private G2Transport p1transport;
+    private G2ScoreCounter p1scoreCounter;
+    private int p1TransportIndex = -1;
 
     // Player 2
-    private G2Hook p2_hook;
-    private G2Deck p2_deck;
-    private G2Cargo[] p2_grid;
-    private G2EmptyCargo[] p2_emptyGrid;
-    private G2Transport p2_transport;
-    private int p2_TransportIndex = -1;
-    private int p2_looted = 0;
+    private G2Hook p2hook;
+    private G2Deck p2deck;
+    private G2Cargo[] p2grid;
+    private G2EmptyCargo[] p2emptyGrid;
+    private G2Transport p2transport;
+    private G2ScoreCounter p2scoreCounter;
+    private int p2TransportIndex = -1;
 
     G2Clock clock;
-    G2PlayerCounter playerScoreCounter;
-    G2ComputerCounter computerScoreCounter;
-    List<String> transportOrder = new ArrayList<String>();
+    List<String> transportOrder = new ArrayList<>();
     
     private boolean firstStep = true; // Does the first step routine
     private boolean running = false;
-    private boolean gameOver = false;
+    private boolean gameover = false;
     private int delayTiltTimer; //Timestamp van de laatste Tilt Actie
     private int counter = 0;
-    private int counterLimit = 90;
     private int cycle;
     
     int level = 0; // Game level
@@ -61,7 +71,7 @@ public class G2Dock extends Game
      */
     public G2Dock()
     {
-        setPaintOrder(G2GameInfo.class,
+        setPaintOrder(GameInfo.class,
                   //G2_Waitbox.class,
                   GameOver.class,
                   G2Water.class,// Foreground water
@@ -72,6 +82,9 @@ public class G2Dock extends Game
                   G2Cables.class,
                   G2BoatBack.class
                   );
+
+        // This is a setting for the speed of the game. Tested to be playable.
+        Greenfoot.setSpeed(50);
 
         backgroundMusic = new GreenfootSound("game_2_music.mp3");
         backgroundMusic.setVolume(70);
@@ -87,23 +100,26 @@ public class G2Dock extends Game
     public void prepare()
     {
 
-        p1_hook = new G2Hook();
-        p1_deck = new G2Deck();
+        p1hook = new G2Hook();
+        p1deck = new G2Deck();
 
-        addObject(p1_deck, shipCentre, deckLevel - 52);
-        addObject(p1_hook, 35, 300);
+        addObject(p1deck, shipCentre, deckLevel - 52);
+        addObject(p1hook, 35, 300);
 
-        p2_hook = new G2ComputerHook();
-        p2_deck = new G2Deck();
+        p2hook = new G2ComputerHook();
+        p2deck = new G2Deck();
         
-        addObject(p2_deck, getWidth() - shipCentre, deckLevel - 52);
-        addObject(p2_hook, getWidth() - 35, 300);
+        addObject(p2deck, getWidth() - shipCentre, deckLevel - 52);
+        addObject(p2hook, getWidth() - 35, 300);
 
-        playerScoreCounter = new G2PlayerCounter();
-        addObject(playerScoreCounter, 320, 50);
+        p1scoreCounter = new G2ScoreCounter("Player score: ");
+        addObject(p1scoreCounter, 270, 40);
         
-        computerScoreCounter = new G2ComputerCounter();
-        addObject(computerScoreCounter, 550, 50);
+        p2scoreCounter = new G2ScoreCounter("Computer score: ");
+        addObject(p2scoreCounter, 530, 40);
+
+        clock = new G2Clock();
+        addObject(clock, 400, 40);
 
         G2Water water = new G2Water();
         addObject(water, 400, getHeight() - (water.getImage().getHeight() / 2));
@@ -121,8 +137,8 @@ public class G2Dock extends Game
         backgroundMusic.playLoop();
         
         // And show game info overlay
-        G2GameInfo g2_info = new G2GameInfo();
-        addObject(g2_info, getWidth() / 2, getHeight() / 2); // Centered on screen
+        GameInfo ginfo = new GameInfo(TEXT, TEXTSTART);
+        addObject(ginfo, getWidth() / 2, getHeight() / 2); // Centered on screen
     }
 
     public void startGame()
@@ -134,13 +150,12 @@ public class G2Dock extends Game
         createGrid(maxHeight, maxWidth);
 
         // Reset tilt
-        p1_deck.resetShip();
-        p2_deck.resetShip();
+        p1deck.resetShip();
+        p2deck.resetShip();
 
         // Hook initial location
-        p1_hook.setLocation(35, 300);
-        p2_hook.setLocation(getWidth() - 35, 300);
-
+        p1hook.reset(35, 300);
+        p2hook.reset(getWidth() - 35, 300);
         
         // Now create the new cargo for this level
         level = level + 1;
@@ -148,30 +163,25 @@ public class G2Dock extends Game
         setEmpty();
         
         // Call create for first transport
-        p1_TransportIndex = -1;
-        p2_TransportIndex = -1;
-        set_p1_Transport();
-        set_p2_Transport();
+        p1TransportIndex = -1;
+        p2TransportIndex = -1;
+        set_p1Transport();
+        set_p2Transport();
         
-        // Clock
-        clock = new G2Clock(false, true, 0, null);
-        addObject(clock, 400, 40);
-
-        gameOver = false;
+        gameover = false;
         running = true;
-        p1_hook.setRunning(running);
-        p2_hook.setRunning(running);
+        p1hook.setRunning(running);
+        p2hook.setRunning(running);
+        clock.startClock(3 * 60 + 15 - (level * 15));
     }
     
     public void endGame()
     {
-        backgroundMusic.stop();
         // Stop game and show results.
         running = false;
-        p1_hook.setRunning(running);
-        p2_hook.setRunning(running);
+        p1hook.setRunning(running);
+        p2hook.setRunning(running);
         clock.stopClock();
-        
     }
 
     public void act()
@@ -182,162 +192,180 @@ public class G2Dock extends Game
             firstStep();
         }
         
-        if (running && !gameOver)
+        if (running && !gameover)
         {
             counter++;
-            if(counter == counterLimit) { //om de 7(1~sec) ticks code uitvoeren
+            if(counter == 90) { //om de 7(1~sec) ticks code uitvoeren
                 delayTiltTimer++; //
+                adjustShips();
                 
-                if(cycle == 1) { //adjust ship once every 2 cycles
-                    int p1_tilt = getTilt(p1_grid);
-                    int p1_step = p1_deck.adjustShip(p1_tilt); //pas de hoek van het schip aan
-                    int p2_tilt = getTilt(p2_grid);
-                    int p2_step = p2_deck.adjustShip(p2_tilt); //pas de hoek van het schip aan
-                    
-                    for(int i = 0; i < p1_grid.length; i++) {//pas de hoek en plek van de cargo aan
-                        if(p1_grid[i] != null && p1_grid[i] instanceof G2Cargo) {
-                            p1_grid[i].adjustBooty(p1_tilt, p1_step);
-                        }
-                        if(p2_grid[i] != null && p2_grid[i] instanceof G2Cargo) {
-                            p2_grid[i].adjustBooty(p2_tilt, p2_step);
-                        }
-                    }
-                    
-                    cycle=0;
-                }else{
-                    cycle++;
+                if (clock.timeUp() || deck1HeelOver() || player2Wins()) {
+                    gameOver();
                 }
-                
-                if (p1_deck.getStepCount() > 10 || p1_deck.getStepCount() < -10 || checkCargoLeft(p2_grid)==0){
-                    // player looses
-                    gameOver = true;
+                else if (player1Wins() || deck2HeelOver()) {
+                    // Next level
                     endGame();
-                    
-                    Actor gameOver = new GameOver("gameover001.png");
-                    addObject(gameOver, getWidth()/2, getHeight()/2);
-                }else if (p2_deck.getStepCount() > 10 || p2_deck.getStepCount() < -10 || checkCargoLeft(p1_grid)==0){
-                    // computer looses
-                    gameOver = true;
-                    endGame();
-
-                    Actor gameOver = new GameOver("gameover001.png");
-                    addObject(gameOver, getWidth()/2, getHeight()/2);
+                    GameInfo ginfo = new GameInfo(YOUWIN, TEXTSTART);
+                    addObject(ginfo, getWidth() / 2, getHeight() / 2); // Centered on screen
                 }
                 counter=0;
-            }  
-        }else if (running && gameOver){
-                    endGame();
-                    Actor gameOver = new GameOver("gameover001.png");
-                    addObject(gameOver, getWidth()/2, getHeight()/2);
+            }
         }
+        super.act();
+    }
+
+    private boolean deck1HeelOver()
+    {
+        return Math.abs(p1deck.getStepCount()) > 10;
+    }
+
+    private boolean deck2HeelOver()
+    {
+        return Math.abs(p2deck.getStepCount()) > 10;
     }
     
+    private boolean player1Wins() {
+        return checkCargoLeft(p1grid)==0 && !p1hook.hasCargo();
+    }
+    
+    private boolean player2Wins() {
+        return checkCargoLeft(p2grid)==0 && !p2hook.hasCargo();
+    }
+
+    private void gameOver()
+    {
+        gameover = true;
+        endGame();
+        backgroundMusic.stop();
+        addObject(new GameOver("gameover001.png"), getWidth()/2, getHeight()/2);
+    }
         
     public void liftCargo(G2Cargo cargo){
-        int i =0;
-        
-        if(!aiOn){
-            for(G2Cargo c : p1_grid){
-                if(c==cargo){
-                    p1_looted += c.getWeight();
-                    p1_grid[i] = null;
-                    break;
-                }
-                i++;
+        for(int i = 0; i < p1grid.length; i++) {
+            if(p1grid[i]==cargo){
+                p1grid[i] = null;
+                break;
             }
-        }else{
-            for(G2Cargo c : p2_grid){
-                if(c==cargo){
-                    p2_looted += c.getWeight();
-                    p2_grid[i] = null;
-                    break;
-                }
-                i++;
+        }
+
+        for(int i = 0; i < p2grid.length; i++) {
+            if(p2grid[i]==cargo){
+                p2grid[i] = null;
+                break;
             }
         }
         
         setEmpty();
     }
     
-    public void set_p1_Transport()
+    private void adjustShips()
     {
-        p1_TransportIndex++;
-        p1_transport = new G2Transport(transportOrder.get(p1_TransportIndex));
-        addObject(p1_transport, 50, 441);
+        if(cycle == 1) { //adjust ship once every 2 cycles
+            int p1tilt = getTilt(p1grid);
+            int p1step = p1deck.adjustShip(p1tilt); //pas de hoek van het schip aan
+            int p2tilt = getTilt(p2grid);
+            int p2step = p2deck.adjustShip(p2tilt); //pas de hoek van het schip aan
+            
+            for(int i = 0; i < p1grid.length; i++) {//pas de hoek en plek van de cargo aan
+                if(p1grid[i] != null && p1grid[i] instanceof G2Cargo) {
+                    p1grid[i].adjustBooty(p1tilt, p1step);
+                }
+                if(p2grid[i] != null && p2grid[i] instanceof G2Cargo) {
+                    p2grid[i].adjustBooty(p2tilt, p2step);
+                }
+            }
+            
+            cycle=0;
+        }else{
+            cycle++;
+        }
     }
 
-    public void set_p2_Transport()
+    public void set_p1Transport()
     {
-        p2_TransportIndex++;
-        p2_transport = new G2Transport(transportOrder.get(p2_TransportIndex));
-        addObject(p2_transport, 750, 441);
+        p1TransportIndex++;
+        if (p1TransportIndex < transportOrder.size()) {
+            p1transport = new G2Transport(transportOrder.get(p1TransportIndex));
+            addObject(p1transport, 50, 441);
+        }
+    }
+
+    public void set_p2Transport()
+    {
+        p2TransportIndex++;
+        if (p2TransportIndex < transportOrder.size()) {
+            p2transport = new G2Transport(transportOrder.get(p2TransportIndex));
+            addObject(p2transport, 750, 441);
+        }
     }
     
     public void removeTransport(G2Transport truck)
     {
-        if (truck == p1_transport)
+        if (truck == p1transport)
         {
-            set_p1_Transport();
+            set_p1Transport();
         }
-        if (truck == p2_transport)
+        if (truck == p2transport)
         {
-            set_p2_Transport();
+            set_p2Transport();
         }
         removeObject(truck);
         
     }
     
     public void setCargo() {
-        int StackHeight = deckLevel-(cargoHeight/2);
+        int stackHeight = deckLevel-(cargoHeight/2);
         int height = maxHeight-1;
         int i = 0;
-        int hi = 0;                                     //how high the cargo is stacked
         int x = shipCentre-(width/2*(cargoWidth+space))+((cargoWidth+space)/2);
         
-        List<String> containers = new ArrayList<String>();
+        List<String> containers = new ArrayList<>();
         
         while(i<width*height){
-            if(getWeightPerX(p1_grid, i%width)<=25){
+            if(getWeightPerX(p1grid, i%width)<=25){
                 int randomCargoType = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-                G2Cargo p1_cargo = null;
-                G2Cargo p2_cargo = null;
-                if(randomCargoType==1){
-                    p1_cargo = new G2Red();
-                    p2_cargo = new G2Red();
-                }
-                if(randomCargoType==2){
-                    p1_cargo = new G2Green();
-                    p2_cargo = new G2Green();
-                }
-                if(randomCargoType==3){
-                    p1_cargo = new G2Blue();
-                    p2_cargo = new G2Blue();
-                }
+                G2Cargo p1cargo = createCargo(randomCargoType);
+                G2Cargo p2cargo = createCargo(randomCargoType);
                 
-                if (p1_cargo != null && p2_cargo != null)
+                if (p1cargo != null && p2cargo != null)
                 {
-                    containers.add(p1_cargo.getColor());
-                    p1_grid[i] = p1_cargo;
-                    p2_grid[i - (i % 4) + (width-1) - (i % 4)] = p2_cargo;
-                    addObject(p1_cargo,x,StackHeight);
-                    addObject(p2_cargo, getWidth() - x, StackHeight);
+                    containers.add(p1cargo.getColor());
+                    p1grid[i] = p1cargo;
+                    p2grid[i - (i % 4) + (width-1) - (i % 4)] = p2cargo;
+                    addObject(p1cargo,x,stackHeight);
+                    addObject(p2cargo, getWidth() - x, stackHeight);
                 }
             }
             x += cargoWidth+4;// spacing 6 pixles
             i++;
             if(i%width==0){
                 x = shipCentre-(width/2*(cargoWidth+space))+((cargoWidth+space)/2);
-                StackHeight-=cargoHeight;
+                stackHeight-=cargoHeight;
             }
         }
         
         shuffleTransportOrder(containers);
     }
     
+    private G2Cargo createCargo(int type)
+    {
+        switch(type)
+        {
+            case 1:
+                return new G2Red();
+            case 2:
+                return new G2Green();
+            case 3:
+                return new G2Blue();
+            default:
+                return null;
+        }
+    }
+    
     public void setEmpty()
     {
-        setEmpty(p1_emptyGrid, p1_grid);
-        setEmpty(p2_emptyGrid, p2_grid);
+        setEmpty(p1emptyGrid, p1grid);
+        setEmpty(p2emptyGrid, p2grid);
     }
     
     public void setEmpty(G2EmptyCargo[] emptyGrid, G2Cargo[] grid)
@@ -347,23 +375,21 @@ public class G2Dock extends Game
                 emptyGrid[i] = new G2EmptyCargo();
                 emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
                 addObject(emptyGrid[i],grid[i].getX(),grid[i].getY()+(getCargoPerX(grid, i)*-45));
-            }else{
-               if(emptyGrid[i]!=null){  //update EmptyCargo placeholders
-                    int heightperX = getCargoPerX(grid, i);
-                    if(heightperX==0){//set to first row
-                        int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
-                        int StackHeight = deckLevel-(cargoHeight/2);
-                        emptyGrid[i].setLocation(x,StackHeight);
-                        emptyGrid[i].setId(heightperX*width+i);
-                    }  
-                    else if(heightperX<maxHeight){//max Height not reached?
-                        emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(heightperX*-45));
-                        emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
-                    } else {//at the max height
-                        emptyGrid[i].setLocation(0,0);
-                        emptyGrid[i].setId(0);
-                    }     
-                }
+            }else{  //update EmptyCargo placeholders
+                int heightperX = getCargoPerX(grid, i);
+                if(heightperX==0){//set to first row
+                    int x = shipCentre+15-(cargoWidth*(width/2)-40)+i*cargoWidth;
+                    int stackHeight = deckLevel-(cargoHeight/2);
+                    emptyGrid[i].setLocation(x,stackHeight);
+                    emptyGrid[i].setId(heightperX*width+i);
+                }  
+                else if(heightperX<maxHeight){//max Height not reached?
+                    emptyGrid[i].setLocation(grid[i].getX(),grid[i].getY()+(heightperX*-45));
+                    emptyGrid[i].setId(getCargoPerX(grid, i)*width+i);
+                } else {//at the max height
+                    emptyGrid[i].setLocation(0,0);
+                    emptyGrid[i].setId(0);
+                }     
             }
         }
     }
@@ -371,7 +397,7 @@ public class G2Dock extends Game
     private void shuffleTransportOrder(List<String> containers)
     {
         transportOrder.clear();
-        while(containers.size() > 0)
+        while(!containers.isEmpty())
         {
             int rnd = Greenfoot.getRandomNumber(containers.size());
             transportOrder.add(containers.get(rnd));
@@ -392,7 +418,7 @@ public class G2Dock extends Game
             i++;
        }
        windSpeed = halfLeft-halfRight;
-        counterLimit = windSpeed;
+        
        return windSpeed;
     }
     
@@ -445,10 +471,10 @@ public class G2Dock extends Game
     //@@@ Grid functies
     public void createGrid(int x,int y){
         int gridSize = getSizeGrid(x,y);
-        p1_grid = new G2Cargo[gridSize];
-        p2_grid = new G2Cargo[gridSize];
-        p1_emptyGrid = new G2EmptyCargo[x];
-        p2_emptyGrid = new G2EmptyCargo[x];
+        p1grid = new G2Cargo[gridSize];
+        p2grid = new G2Cargo[gridSize];
+        p1emptyGrid = new G2EmptyCargo[x];
+        p2emptyGrid = new G2EmptyCargo[x];
     }
   
     public boolean putCargoAtSpot(G2Cargo cargo, G2EmptyCargo emptySpot)
@@ -457,16 +483,28 @@ public class G2Dock extends Game
         {
             if (emptySpot.getX() < getWidth() / 2)
             {
-                p1_grid[emptySpot.getId()] = cargo;
-                setEmpty(p1_emptyGrid, p1_grid);
+                p1grid[emptySpot.getId()] = cargo;
+                setEmpty(p1emptyGrid, p1grid);
             }
             else
             {
-                p2_grid[emptySpot.getId()] = cargo;
-                setEmpty(p2_emptyGrid, p2_grid);
+                p2grid[emptySpot.getId()] = cargo;
+                setEmpty(p2emptyGrid, p2grid);
             }
             return true;
         }
         return false;
+    }
+    
+    public void addScore(G2Hook player)
+    {
+        if (player == p1hook)
+        {
+            p1scoreCounter.addTransportScore(1);
+        }
+        if (player == p2hook)
+        {
+            p2scoreCounter.addTransportScore(1);
+        }
     }
 }

@@ -36,7 +36,7 @@ public class GameInfo extends Overlay
             world.removeObject(this);
         }
         
-        if (Greenfoot.mouseClicked(this) || Greenfoot.isKeyDown("Enter"))
+        if (Greenfoot.mouseClicked(this) || checkKey("Enter"))
         {
             drawStarting(getWorld());
         }

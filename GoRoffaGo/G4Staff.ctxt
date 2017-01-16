@@ -1,11 +1,21 @@
 #BlueJ class context
 comment0.target=G4Staff
-comment0.text=\n\ Write\ a\ description\ of\ class\ G4Staff\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ G4Staff\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=java.lang.String\ getRole()
 comment2.params=value
 comment2.target=void\ setRole(java.lang.String)
-comment2.text=\n\ \n\ \n
+comment2.text=\r\n\ \r\n\ \r\n
 comment3.params=
 comment3.target=void\ act()
-numComments=4
+comment4.params=
+comment4.target=boolean\ checkOfficer()
+comment5.params=
+comment5.target=boolean\ checkObstacle()
+comment6.params=
+comment6.target=boolean\ checkContainer()
+comment7.params=
+comment7.target=void\ checkStaff()
+comment8.params=
+comment8.target=void\ doTurns()
+numComments=9

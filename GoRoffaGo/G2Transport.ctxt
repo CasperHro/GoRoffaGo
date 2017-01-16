@@ -13,5 +13,5 @@ comment4.target=void\ act()
 comment5.params=
 comment5.target=java.lang.String\ getColor()
 comment6.params=
-comment6.target=int\ getResetTransport()
+comment6.target=boolean\ hasCargo()
 numComments=7
